@@ -1,19 +1,36 @@
 from django.conf import settings
 from django.db import models
 
+
 class Room(models.Model):
     name = models.CharField(max_length=32)
+    def __str__(self):
+        return self.name
+
 
 class TimeSlot(models.Model):
-    time = models.TimeField()
+    datetime = models.DateTimeField()
+    def __str__(self):
+        return self.datetime
+
 
 class Author(models.Model):
     name = models.CharField(max_length=64)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,null=True,blank=True)
+    contact_info = models.CharField(max_length=64,null=True,blank=True)
+    def __str__(self):
+        return self.name
+
 
 class Talk(models.Model):
     title = models.CharField(max_length=256)
-    author = models.ForeignKey(Author,on_delete=models.SET_NULL,null=True,blank=True)
+    authors = models.ManyToManyField(Author)
+    description = models.TextField(blank=True)
+    room = models.ForeignKey(Room,on_delete=models.SET_NULL,null=True,blank=True)
+    timeslot = models.ForeignKey(TimeSlot,on_delete=models.SET_NULL,null=True,blank=True)
+    def __str__(self):
+        return self.title
+
 
 class TalkVote(models.Model):
     VOTE_CHOICES = [
@@ -24,6 +41,7 @@ class TalkVote(models.Model):
     talk = models.ForeignKey(Talk,on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     vote = models.IntegerField(choices=VOTE_CHOICES)
+
 
 class TalkAttendance(models.Model):
     talk = models.ForeignKey(Talk,on_delete=models.CASCADE)
