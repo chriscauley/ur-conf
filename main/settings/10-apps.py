@@ -9,6 +9,7 @@ INSTALLED_APPS = [
     'graphene_django',
     # project apps
     'main',
+    'client',
 ]
 
 GRAPHENE = {

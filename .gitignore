@@ -2,3 +2,7 @@ __pycache__
 .envrc
 .venv
 main/db.sqlite3
+.cache
+
+client/static
+node_modules
