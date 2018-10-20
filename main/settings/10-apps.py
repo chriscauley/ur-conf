@@ -5,5 +5,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 3rd party apps
+    'graphene_django',
+    # project apps
     'main',
 ]
+
+GRAPHENE = {
+    'SCHEMA': 'main.schema.schema'
+}

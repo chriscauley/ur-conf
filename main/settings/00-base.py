@@ -13,7 +13,7 @@ SECRET_KEY = '#ttbedni9*d6+cpmef)a-vz3#oo_l-@2qyh#08sp28q==nzw71'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 MIDDLEWARE = [
