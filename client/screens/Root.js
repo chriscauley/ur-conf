@@ -1,6 +1,7 @@
 import React from 'react';
 import Nav from './Nav';
 import TalkList from "./TalkList";
+import Schedule from "./Schedule";
 import { loadData } from "../utils/ajax";
 import prepData from "../utils/prepData";
 
@@ -16,12 +17,15 @@ export default class Root extends React.PureComponent {
     window.ROOT = this;
   }
   render () {
-    const MainTag = TalkList;
+    let MainTag = TalkList;
+    if (window.location.pathname == "/schedule/") {
+      MainTag = Schedule;
+    }
     return (
 <div id="wrapper">
   <Nav></Nav>
   <main>
-    <MainTag parent={this}></MainTag>
+    <MainTag root={this}></MainTag>
   </main>
 </div>
 )

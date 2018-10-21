@@ -8,6 +8,7 @@ export const loadData = () => {
       title,
       authors { id },
       roomId,
+      timeslotId,
     },
     authors {
       id,
@@ -22,6 +23,10 @@ export const loadData = () => {
       id,
       name,
     },
+    timeslots {
+      id,
+      datetime,
+    }
   }`;
   const url = "/graphql?"+querystring.stringify({query: query});
   return fetch(url).then(r=>r.json())
