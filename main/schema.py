@@ -20,6 +20,7 @@ class AuthorType(DjangoObjectType):
 
 
 class TalkType(DjangoObjectType):
+    room_id = graphene.Int(source='room_id')
     class Meta:
         model = Talk
 
@@ -45,7 +46,7 @@ class Query(graphene.ObjectType):
     talkattendance = graphene.Field(TalkAttendanceType)
 
     def resolve_talks(self,info):
-        return Talk.objects.all()
+        return Talk.objects.all().prefetch_related("authors")
 
     def resolve_rooms(self,info):
         return Room.objects.all()

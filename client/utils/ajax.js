@@ -12,11 +12,15 @@ export const loadData = () => {
       id,
       name,
       contactInfo,
-    }
+    },
     talkvotes {
       vote,
       talkId,
-    }
+    },
+    rooms {
+      id,
+      name,
+    },
   }`;
   const url = "/graphql?"+querystring.stringify({query: query});
   return fetch(url).then(r=>r.json())
