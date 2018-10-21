@@ -6,7 +6,8 @@ export const loadData = () => {
     talks {
       id,
       title,
-      authors { id }
+      authors { id },
+      roomId,
     },
     authors {
       id,

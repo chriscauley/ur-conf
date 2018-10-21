@@ -10,17 +10,30 @@ export default class Root extends React.PureComponent {
   }
   componentDidMount() {
     loadData().then(json => {
-      const author_map = {};
-      const talk_map = {};
-      json.data.authors.forEach(author => {
-        author_map[author.id] = author;
+      const data = json.data;
+
+      data.author_map = {};
+      data.authors.forEach(author => {
+        data.author_map[author.id] = author;
       });
-      json.data.talks.forEach(talk => {
-        talk.authors = talk.authors.map(a => author_map[a.id]);
-        talk_map[talk.id] = talk
+
+      data.room_map = {};
+      data.rooms.forEach(room => {
+        data.room_map[room.id] = room;
+      })
+
+      data.talk_map = {};
+      data.talks.forEach(talk => {
+        talk.authors = talk.authors.map(a => data.author_map[a.id]);
+        console.log(data.room_map,talk.roomId);
+        talk.room = data.room_map[talk.roomId];
+        data.talk_map[talk.id] = talk
       });
-      json.data.talkvotes.forEach(vote => talk_map[vote.talkId].vote = vote.vote )
-      this.setState(json.data);
+
+      data.talkvotes.forEach(vote => {
+        data.talk_map[vote.talkId].vote = vote.vote
+      })
+      this.setState(data);
     })
     window.ROOT = this;
   }

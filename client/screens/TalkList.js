@@ -32,6 +32,7 @@ export default class TalkList extends React.Component {
       <div className="card-content">
         <div className="card-title">{ talk.title }</div>
         <p>with { talk.authors[0].name }</p>
+        <small>Room: { talk.room.name }</small>
       </div>
       <div className="card-action">
         { this.getVotes(talk).map( v=> (
