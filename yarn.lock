@@ -1255,6 +1255,10 @@ convert-source-map@^1.1.0, convert-source-map@^1.5.1:
   dependencies:
     safe-buffer "~5.1.1"
 
+cookie-parse@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/cookie-parse/-/cookie-parse-0.4.0.tgz#f9e8b1dcad4cd03e7a4c9dd12cee18fde3e4a6ea"
+
 copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"

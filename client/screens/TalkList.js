@@ -1,8 +1,17 @@
 import React from "react";
+import { post } from "../utils/ajax"
+
+
 export default class TalkList extends React.Component {
-  vote(v) {
+  vote(vote,talk) {
     return () => {
-      console.log(v)
+      post("/api/vote/",{
+        talk_id: talk.id,
+        vote,
+      }).then(() => {
+        talk.vote = vote;
+        this.forceUpdate();
+      });
     }
   }
   getVotes(talk) {
@@ -14,9 +23,10 @@ export default class TalkList extends React.Component {
     return votes
   }
   render() {
+    const visible_talks = this.props.parent.state.talks.filter(t => t.vote == undefined)
     return (
 <div className="row">
-  { this.props.parent.state.talks.map( talk => (
+  { visible_talks.map( talk => (
   <div className="col s12" key={talk.id}>
     <div className="card">
       <div className="card-content">
@@ -25,7 +35,7 @@ export default class TalkList extends React.Component {
       </div>
       <div className="card-action">
         { this.getVotes(talk).map( v=> (
-          <a onClick={this.vote(v.value)}>
+          <a key={v.value} onClick={this.vote(v.value,talk)}>
             <span className={v.icon}></span> {v.verbose}
           </a>
         ) ) }

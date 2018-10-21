@@ -11,12 +11,15 @@ export default class Root extends React.PureComponent {
   componentDidMount() {
     loadData().then(json => {
       const author_map = {};
+      const talk_map = {};
       json.data.authors.forEach(author => {
         author_map[author.id] = author;
       });
       json.data.talks.forEach(talk => {
         talk.authors = talk.authors.map(a => author_map[a.id]);
+        talk_map[talk.id] = talk
       });
+      json.data.talkvotes.forEach(vote => talk_map[vote.talkId].vote = vote.vote )
       this.setState(json.data);
     })
     window.ROOT = this;
