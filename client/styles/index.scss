@@ -1,3 +1,9 @@
 body {
-  background-color: rgb(29, 110, 194);
+  .sidenav.sidenav-fixed {
+    transform: translateX(0%);
+  }
+}
+
+body main {
+  padding-left: 300px;
 }

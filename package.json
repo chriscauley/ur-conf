@@ -5,17 +5,20 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build ./client/index.js -d ./client/static/",
-    "watch": "parcel watch ./client/index.js -d ./client/static/"
+    "build": "parcel build ./client/index.js -d ./client/static/ --public-url /static/",
+    "watch": "parcel watch ./client/index.js -d ./client/static/ --public-url /static/"
   },
   "author": "chriscauley <chris@lablackey.com>",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "parcel": "^1.10.3",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "react-router": "^4.3.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
     "sass": "^1.14.3"
   }
 }
