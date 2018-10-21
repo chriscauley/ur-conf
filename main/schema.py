@@ -25,6 +25,8 @@ class TalkType(DjangoObjectType):
 
 
 class TalkVoteType(DjangoObjectType):
+    talk_id = graphene.Int(source='talk_id')
+    vote = graphene.Int(source="vote")
     class Meta:
         model = TalkVote
 
