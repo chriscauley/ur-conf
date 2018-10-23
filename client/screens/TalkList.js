@@ -1,5 +1,6 @@
 import React from "react";
-import { post } from "../utils/ajax"
+import { post } from "../utils/ajax";
+import { vote_list, setVote, getTalkIcon } from "../utils/vote";
 
 
 export default class TalkList extends React.Component {
@@ -14,14 +15,6 @@ export default class TalkList extends React.Component {
       });
     }
   }
-  getVotes(talk) {
-    const votes = [
-      { verbose: "no", value: -1, icon: "em em--1" },
-      { verbose: "maybe", value: 0, icon: "em em-thinking_face" },
-      { verbose: "yes", value: 1, icon: "em em---1" },
-    ]
-    return votes
-  }
   render() {
     const visible_talks = this.props.root.state.talks.filter(t => t.vote == undefined)
     return (
@@ -35,9 +28,9 @@ export default class TalkList extends React.Component {
         <small>Room: { talk.room.name }</small>
       </div>
       <div className="card-action">
-        { this.getVotes(talk).map( v=> (
-        <a key={v.value} onClick={this.vote(v.value,talk)}>
-          <span className={v.icon}></span> {v.verbose}
+        { vote_list.map( vote => (
+        <a key={vote.value} onClick={this.vote(vote.value,talk)}>
+          <span className={getTalkIcon(talk,vote)}></span> {vote.verbose}
         </a>
         ) ) }
       </div>

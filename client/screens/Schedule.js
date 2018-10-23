@@ -17,7 +17,8 @@ export default class Schedule extends React.Component {
         <ul className="collection">
           { sortBy(timeslot.talk_list,['vote','title']).map(talk => (
           <li className="collection-item" key={ talk.id }>
-            { talk.title }{ talk.vote }
+            { talk.vote && <span className={ talk.vote.icon }></span> }
+            { talk.title }
           </li>
           ) ) }
         </ul>

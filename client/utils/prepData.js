@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-
+import { setVote } from "./vote";
 
 export default function prepData(data) {
   data.author_map = {};
@@ -20,7 +20,7 @@ export default function prepData(data) {
   });
 
   data.talkvotes.forEach(vote => {
-    data.talk_map[vote.talkId].vote = vote.vote;
+    setVote(data.talk_map[vote.talkId],vote.vote)
   });
                                                                                                                
   data.timeslot_map = {};
