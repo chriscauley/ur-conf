@@ -3,18 +3,22 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 
-export const LoginRequired = (props) => (
+export const TalkQuery = (props) => (
   <Query query={gql`{
-    user {
-      id,
-      talkvoteSet { id }
+    talks {
+      title,
+      datetime,
     }
   }`}>
-    {(auth) => {
-
-      if (auth.loading) return <p>Loading...</p>;
-      if (autherror) return <p>Error!</p>;
-      return props.children
+    {(talk_query) => {
+      if (talk_query.loading) return <p>Loading...</p>;
+      if (talk_query.error) {
+        return <p>An unknown error has occurred</p>
+      }
+      const children = (Array.isArray(props.children)?props.children:[props.children]);
+      return children.map( (child,i) => (
+        React.cloneElement(child, {talk_query, key:i})
+      ));
     } }
   </Query>
 )
