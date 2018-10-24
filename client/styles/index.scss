@@ -1,4 +1,9 @@
+html, body, #root, #wrapper {
+  height: 100%;
+}
+
 body {
+  background: #e0e0e0;
   .sidenav.sidenav-fixed {
     transform: translateX(0%);
   }
@@ -6,6 +11,10 @@ body {
 
 body main {
   padding-left: 300px;
+}
+
+#wrapper {
+  background: white;
 }
 
 .card-action a {

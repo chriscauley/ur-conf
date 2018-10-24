@@ -1,8 +1,13 @@
 import graphene
 from graphene_django import DjangoObjectType
 
+from django.contrib.auth.models import User
 from main.models import Room, TimeSlot, Author, Talk, TalkVote, TalkAttendance
 
+
+class UserType(DjangoObjectType):
+    class Meta:
+        model = User
 
 class RoomType(DjangoObjectType):
     class Meta:
@@ -39,12 +44,16 @@ class TalkAttendanceType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
+    user = graphene.Field(UserType)
     rooms = graphene.List(RoomType)
     timeslots = graphene.List(TimeSlotType)
     authors = graphene.List(AuthorType)
     talks = graphene.List(TalkType)
     talkvotes = graphene.List(TalkVoteType)
     talkattendance = graphene.Field(TalkAttendanceType)
+
+    def resolve_user(self,info):
+        return info.context.user
 
     def resolve_talks(self,info):
         return Talk.objects.all().prefetch_related("authors")
