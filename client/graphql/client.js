@@ -22,5 +22,5 @@ export const client = new ApolloClient({
   connectToDevTools: true,
   ssrMode: false, // Disables forceFetch on the server (so queries are only run once)
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache({addTypename: false}),
+  cache: new InMemoryCache({ addTypename: false }),
 })
