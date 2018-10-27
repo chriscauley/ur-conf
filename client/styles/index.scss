@@ -5,6 +5,7 @@ html, body, #root {
 #root > .container {
   max-width: 600px;
 }
+
 body {
   background: #e0e0e0;
   .sidenav.sidenav-fixed {
@@ -16,6 +17,12 @@ body {
 #wrapper {
   background: white;
   min-height: 100%;
+}
+
+.w300 {
+  max-width: 300px;
+  margin: auto;
+  float: none;
 }
 
 .rjsf fieldset {
