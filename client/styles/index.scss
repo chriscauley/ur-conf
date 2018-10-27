@@ -1,4 +1,4 @@
-html, body, #root, #wrapper {
+html, body, #root {
   height: 100%;
 }
 
@@ -9,12 +9,9 @@ body {
   }
 }
 
-body main {
-  padding-left: 300px;
-}
-
 #wrapper {
   background: white;
+  min-height: 100%;
 }
 
 .card-action a {
