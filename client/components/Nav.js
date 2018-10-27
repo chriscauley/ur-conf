@@ -7,7 +7,8 @@ import Dropdown from '../components/Dropdown'
 const no_auth = (
   <ul id="nav-mobile" className="right">
     <li>
-      <Link to="/login/">{_`Login or Sign Up`}</Link>
+      <Link to="/login/">{_`Login`}</Link>
+      <Link to="/sign-up/">{_`Sign Up`}</Link>
     </li>
   </ul>
 )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import Root from './screens/Root'
+import Root from './Root'
 
 import './styles/index.scss'
 
