@@ -1,31 +1,30 @@
-import React from 'react';
-import Nav from './Nav';
-import TalkList from "./TalkList";
-import Schedule from "./Schedule";
-import Derp from "./Derp";
-import { loadData } from "../utils/ajax";
-import { client, talk_query, LoginRequired } from "../gql";
-import { ApolloProvider } from "react-apollo";
-import prepData from "../utils/prepData";
+import React from 'react'
+import { Router } from '@reach/router'
+import { ApolloProvider } from 'react-apollo'
+
+import Nav from './Nav'
+import TalkList from './TalkList'
+import Schedule from './Schedule'
+import Login from './Login'
+import Home from './Home'
+import { client } from '../graphql'
 
 export default class Root extends React.PureComponent {
-  render () {
-    let MainTag = TalkList;
-    MainTag = Derp;
-    if (window.location.pathname == "/schedule/") {
-      MainTag = Schedule;
-    }
+  render() {
     return (
-<ApolloProvider client={client}>
-  <div id="wrapper" class="container">
-    <Nav></Nav>
-    <main>
-      <LoginRequired>
-        <MainTag root={this}></MainTag>
-      </LoginRequired>
-    </main>
-  </div>
-</ApolloProvider>
+      <ApolloProvider client={client}>
+        <div id="wrapper" className="container">
+          <Nav />
+          <main>
+            <Router>
+              <Home path="/" />
+              <TalkList path="/talklist/" />
+              <Schedule path="/schedule/" />
+              <Login path="/login/" />
+            </Router>
+          </main>
+        </div>
+      </ApolloProvider>
     )
   }
 }
