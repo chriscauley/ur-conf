@@ -5,9 +5,9 @@ import cookie from 'cookie'
 const rootQuery = gql`
   {
     user {
-      id,
-      username,
-      email,
+      id
+      username
+      email
     }
   }
 `
@@ -18,7 +18,6 @@ export const withAuth = graphql(rootQuery, {
       auth: {
         ...data,
         logout: () => {
-          console.log('doot')
           return fetch('/api/logout/', { method: 'GET' }).then(data.refetch)
         },
         login: ({ formData }) => {

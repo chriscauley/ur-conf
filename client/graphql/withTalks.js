@@ -33,9 +33,9 @@ const talkQuery = gql`
 `
 
 export const withTalks = graphql(talkQuery, {
-  props: ({data}) => {
+  props: ({ data }) => {
     return {
       talkQuery: data,
     }
-  }
+  },
 })
