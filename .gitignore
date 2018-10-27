@@ -3,6 +3,8 @@ __pycache__
 .venv
 main/db.sqlite3
 .cache
+.static
 
 client/static
 node_modules
+yarn-error.log
