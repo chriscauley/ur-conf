@@ -1,0 +1,55 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "prettier",
+    "prettier/react",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:import/errors"
+  ],
+
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+        ]
+      }
+    }
+  },
+
+  "plugins": [
+    "prettier",
+    "react",
+    "promise"
+  ],
+
+  "rules": {
+    "prettier/prettier": ["error", {
+      "singleQuote": true,
+      "trailingComma": "all",
+      "semi": false,
+    }],
+    "react/prop-types": 0,
+    "no-var": 2,
+    "no-console": [2, { "allow": ["warn", "error"] }],
+    "eol-last": [2, "always"],
+    "no-multiple-empty-lines": [2, {"max": 1, "maxEOF": 0}],
+    "react/jsx-no-bind": 2,
+    "react/jsx-no-literals": 2,
+    "eqeqeq": 2,
+    "prefer-const": ["error", { "destructuring": "all" }],
+    "no-unused-vars": ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+  },
+
+  "env": {
+    "browser": true,
+    "jest": true,
+    "es6": true,
+  },
+
+  "globals": {
+    "document": false,
+    "window": false,
+  }
+}
