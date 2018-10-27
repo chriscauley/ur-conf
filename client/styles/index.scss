@@ -2,6 +2,9 @@ html, body, #root {
   height: 100%;
 }
 
+#root > .container {
+  max-width: 600px;
+}
 body {
   background: #e0e0e0;
   .sidenav.sidenav-fixed {
@@ -13,6 +16,12 @@ body {
 #wrapper {
   background: white;
   min-height: 100%;
+}
+
+.rjsf fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .card-action a {

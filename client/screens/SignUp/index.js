@@ -13,7 +13,7 @@ class SignUp extends React.Component {
     const { auth } = this.props
     return (
 <div className="row">
-  <div className="col m6 offset-m3">
+  <div className="col m6 offset-m3 s12">
     <h2 className="red-text lighten-2">Sign Up</h2>
     <Form
        onSubmit={this.createAccount}

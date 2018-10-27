@@ -11,18 +11,18 @@ console.log(TalkList)
 export default class Root extends React.PureComponent {
   render() {
     return (
-      <ApolloProvider client={client}>
-        <div id="wrapper" className="container">
-          <Nav />
-          <main>
-            <Router>
-              <SignUp path="/" />
-              <TalkList path="/talklist/" />
-              <Schedule path="/schedule/" />
-            </Router>
-          </main>
-        </div>
-      </ApolloProvider>
+<ApolloProvider client={client}>
+  <div id="wrapper" className="container">
+    <Nav />
+    <main>
+      <Router>
+        <SignUp path="/" />
+        <TalkList path="/talklist/" />
+        <Schedule path="/schedule/" />
+      </Router>
+    </main>
+  </div>
+</ApolloProvider>
     )
   }
 }
