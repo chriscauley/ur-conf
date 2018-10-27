@@ -1,13 +1,17 @@
 import React from 'react'
+import { navigate } from '@reach/router'
 import Form from 'react-jsonschema-form'
 
 import formSchema from './schema'
 import _ from '../../lib/translate'
+import { post } from '../../lib/ajax'
 import { withAuth } from '../../graphql'
 
 class SignUp extends React.Component {
-  createAccount = () => {
-
+  createAccount = ({formData={}}) => {
+    post("/api/nopass/create/",formData).then(
+      ()=> navigate("/help/")
+    )
   }
   render() {
     const { auth } = this.props
@@ -25,7 +29,7 @@ class SignUp extends React.Component {
     </button></p>
   </Form>
   <p className="center">
-    <button className="btn btn-blue" onclick={this.createAccount}>
+    <button className="btn btn-blue" onClick={this.createAccount}>
       {_`Continue as Guest`}
     </button>
   </p>

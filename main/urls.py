@@ -12,5 +12,6 @@ urlpatterns = [
     path('api/login/', main.views.ajax_login),
     path('api/logout/', main.views.ajax_logout),
     path('',include('nopass.urls')),
-    re_path("", client.views.index),
+    re_path("^$", client.views.index),
+    re_path("^(help|schedule|talklist)/$", client.views.index),
 ]

@@ -1,13 +1,33 @@
 from django.http import JsonResponse
-from django.contrib.auth import login
+from django.contrib.auth import login, get_user_model
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 
 import json
+import random
+
+
+def create_account(request):
+    data = json.loads(request.body.decode("utf-8"))
+    username = email = data.get("email",None)
+    User = get_user_model()
+    if email and User.objects.filter(email=email):
+        raise NotImplemented()
+    while not username or User.objects.filter(username=username):
+        _hash = "{:032x}".format(random.getrandbits(128))
+        username = "guest-{}".format(_hash[:8])
+        email = username + "@example.com"
+    user = User.objects.create(
+        username=username,
+        email=email
+    )
+    user.backend = "django.contrib.auth.backends.ModelBackend"
+    login(request,user)
+    return JsonResponse({"status": "ok"})
 
 
 def send_login(request):
-    data = json.loads(request.body)
+    data = json.loads(request.body.decode("utf-8"))
     form = PasswordResetForm(data)
     if form.is_valid():
         form.save(

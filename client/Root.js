@@ -6,8 +6,6 @@ import Nav from "./components/Nav"
 import { TalkList, Schedule, SignUp } from "./screens"
 import { client } from './graphql'
 
-console.log(TalkList)
-
 export default class Root extends React.PureComponent {
   render() {
     return (
