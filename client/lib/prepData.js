@@ -1,8 +1,10 @@
 import { format } from 'date-fns'
 import { setVote } from './vote'
 
-export const prepData = (data) => {
-  if (!data.authors) { return }
+export const prepData = data => {
+  if (!data.authors) {
+    return
+  }
   data.author_map = {}
   data.authors.forEach(author => {
     data.author_map[author.id] = author
