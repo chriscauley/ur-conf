@@ -53,6 +53,8 @@ class Query(graphene.ObjectType):
     talkattendance = graphene.Field(TalkAttendanceType)
 
     def resolve_user(self,info):
+        if not info.context.user.is_authenticated:
+            return
         return info.context.user
 
     def resolve_talks(self,info):
