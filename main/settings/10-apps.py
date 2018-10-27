@@ -7,9 +7,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd party apps
     'graphene_django',
+    'mailer',
     # project apps
     'main',
     'client',
+    'nopass'
 ]
 
 GRAPHENE = {
