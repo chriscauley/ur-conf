@@ -1,10 +1,9 @@
 {
-  "name": "barcamp",
-  "version": "1.0.0",
+  "name": "ur-conf",
+  "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "client/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "parcel build ./client/index.js -d .static/ --public-url /static/",
     "watch": "parcel watch ./client/index.js -d .static/ --public-url /static/",
     "lint": "eslint ./client/**/*.js --quiet"
