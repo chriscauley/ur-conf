@@ -50,8 +50,8 @@ class Help extends React.Component {
   <h4 className="red-text lighten-2">Step 2: View Schedule</h4>
   <p className="flow-text">
     After voting, your schedule will only show
-    <span class="em em---1"></span> and
-    <span class="em em-thinking_face"></span>
+    <span className="em em---1"></span> and
+    <span className="em em-thinking_face"></span>
     votes for each time slot.
   </p>
   <div className="center mb">
@@ -67,6 +67,15 @@ class Help extends React.Component {
   </p>
   <hr />
   <p className="flow-text" style={{whiteSpace:"pre-line"}} onClick={() => this.forceUpdate()}>{randText}</p>
+  <p className="flow-text">
+    What are you waiting for?
+  </p>
+  <div className="center mb">
+    <Link to="/vote/">
+      <button className="btn btn-blue">Start Voting</button>
+    </Link>
+  </div>
+
 </div>
     )
   }
