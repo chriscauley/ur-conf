@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
-
+import { prepData } from '../lib/prepData'
 const talkQuery = gql`
   {
     talks {
@@ -34,6 +34,7 @@ const talkQuery = gql`
 
 export const withTalks = graphql(talkQuery, {
   props: ({ data }) => {
+    prepData(data)
     return {
       talkQuery: data,
     }
