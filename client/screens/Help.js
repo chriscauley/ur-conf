@@ -36,7 +36,7 @@ class Help extends React.Component {
       </li>
       )}
       <li className="mb">
-        <span className="em em-no_entry_sign"></span>
+        <span className="em em-no_question"></span>
         No vote cast
       </li>
     </ul>
