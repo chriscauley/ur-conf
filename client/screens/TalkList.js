@@ -1,8 +1,8 @@
 import React from 'react'
 import { post } from '../lib/ajax'
-import { vote_list, setVote, getTalkIcon } from '../lib/vote'
+import { vote_list, setVote, getTalkIcon, prepVote } from '../lib/vote'
 import { withTalks } from '../graphql'
-import { first } from 'lodash'
+import { shuffle } from 'lodash'
 
 class TalkList extends React.Component {
   state = {
@@ -22,7 +22,7 @@ class TalkList extends React.Component {
     let talk, timeslot
     const filter = t => !t.vote
     for (timeslot of timeslots) {
-      talk = first(timeslot.talk_list, filter)
+      talk = shuffle(timeslot.talk_list).filter(filter)[0]
       if (talk) {
         break
       }
@@ -38,7 +38,7 @@ class TalkList extends React.Component {
         talk_id: talk.id,
         vote,
       }).then(() => {
-        talk.vote = vote
+        setVote(talk, vote)
         this.forceUpdate()
       })
     }
@@ -88,6 +88,7 @@ class TalkList extends React.Component {
             <small>
               Room: {talk.room.name} @ {talk.timeslot.time_display}
             </small>
+            {talk.vote}
           </div>
           <div className="card-action">
             {vote_list.map(vote => (
