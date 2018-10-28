@@ -3,7 +3,7 @@ import _ from '../lib/translate'
 import { post } from '../lib/ajax'
 import { vote_list, setVote, getTalkIcon } from '../lib/vote'
 import { withTalks } from '../graphql'
-import { shuffle } from 'lodash'
+import { orderBy, shuffle } from 'lodash'
 
 class TalkList extends React.Component {
   state = {
@@ -21,7 +21,8 @@ class TalkList extends React.Component {
       timeslots = timeslots.filter(ts => ts.id === timeslotId)
     }
     let talk, timeslot
-    const filter = t => !t.vote
+    const filter = t =>
+      filter_key === undefined ? !t.vote : t.vote && t.vote.value === filter_key
     for (timeslot of timeslots) {
       talk = shuffle(timeslot.talk_list).filter(filter)[0]
       if (talk) {
@@ -56,31 +57,29 @@ class TalkList extends React.Component {
     const selectableTimeslots = timeslots.filter(
       ts => ts && ts.talk_list.length,
     )
+    const nullvote = { value: 5, className: 'box grey' }
+    let _votes = talk.timeslot.talk_list.map(({ id, vote = nullvote }) => ({
+      ...vote,
+      key: id,
+    }))
+    _votes = orderBy(_votes, ['value', 'asc'])
     return (
       <div className="w400">
-        <div className="row">
-          <div className="col s6">
-            <select
-              onChange={this.setTimeSlot}
-              className="browser-default"
-              defaultValue={talk.timeslot.id}
-            >
-              {selectableTimeslots.map(ts => (
-                <option key={ts.id} value={ts.id}>
-                  {ts.time_display}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="col s6">
-            <select
-              onChange={this.setFilter}
-              className="browser-default"
-              defaultValue=""
-            >
-              <option value="">{_`No Vote`}</option>
-            </select>
-          </div>
+        <select
+          onChange={this.setTimeSlot}
+          className="browser-default"
+          defaultValue={talk.timeslot.id}
+        >
+          {selectableTimeslots.map(ts => (
+            <option key={ts.id} value={ts.id} onClick={this.SetVote}>
+              {ts.time_display}
+            </option>
+          ))}
+        </select>
+        <div className="talkbreakdown">
+          {_votes.map(vote => (
+            <div {...vote} key={vote.key} />
+          ))}
         </div>
         <div className="card" key={talk.id}>
           <div className="card-content">

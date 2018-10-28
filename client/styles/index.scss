@@ -52,7 +52,22 @@ p > .em {
     display: flex;
     justify-content: space-around;
     a { cursor: pointer; }
+    .fa {
+      font-size: 2em;
+      height: 21px;
+      vertical-align: top;
+    }
   }
   .collection:last-child { margin-bottom: 0 }
   .collection-item.card-action { padding: 10px 20px; }
+}
+
+.talkbreakdown {
+  display: flex;
+  width: 100%;
+  > .box {
+    display: block;
+    flex-grow: 1;
+    height: 30px;
+  }
 }
