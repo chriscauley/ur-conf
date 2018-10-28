@@ -1,25 +1,46 @@
-html, body, #root {
+html, body, #root, #wrapper {
   height: 100%;
 }
 
 #root > .container {
   max-width: 600px;
+  width: 100%;
 }
 
 body {
   background: #e0e0e0;
-  main { padding-bottom: 20px; }
 }
 
 #wrapper {
   background: white;
-  min-height: 100%;
+  &, & [role="group"] {
+    display: flex;
+    flex-direction: column;
+  }
+  [role="group"] {
+    flex-grow: 1;
+  }
 }
 
 #nav-mobile {
   display: flex;
   justify-content: space-around;
   i { height: auto; }
+}
+
+#vote {
+  flex-grow: 1;
+  position: relative;
+  .card {
+    position: static;
+    margin: 40px 10px;
+    .card-action {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      width: 100%;
+    }
+  }
 }
 
 .w300 {

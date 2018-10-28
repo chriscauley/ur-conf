@@ -64,7 +64,7 @@ class TalkList extends React.Component {
     }))
     _votes = orderBy(_votes, ['value', 'asc'])
     return (
-      <div className="w400">
+      <div className="w400" id="vote">
         <select
           onChange={this.setTimeSlot}
           className="browser-default"
