@@ -3,7 +3,7 @@ import { Router } from '@reach/router'
 import { ApolloProvider } from 'react-apollo'
 
 import Nav from "./components/Nav"
-import { TalkList, Schedule, SignUp } from "./screens"
+import { TalkList, Schedule, SignUp, Help } from "./screens"
 import { client } from './graphql'
 
 export default class Root extends React.PureComponent {
@@ -15,6 +15,7 @@ export default class Root extends React.PureComponent {
     <main>
       <Router>
         <SignUp path="/" />
+        <Help path="/help/" />
         <TalkList path="/talklist/" />
         <Schedule path="/schedule/" />
       </Router>

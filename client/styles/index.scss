@@ -22,7 +22,11 @@ body {
 .w300 {
   max-width: 300px;
   margin: auto;
-  float: none;
+}
+
+.w400 {
+  max-width: 400px;
+  margin: auto;
 }
 
 .rjsf fieldset {
@@ -34,3 +38,15 @@ body {
 .card-action a {
   cursor: pointer;
 }
+
+.hr {
+  border-bottom: 1px solid rgba(0,0,0,0.14)
+}
+
+.mr, li > .em { margin-right: 0.8em }
+p > .em {
+  margin: 0 0.4em;
+}
+.mb { margin-bottom: 0.8em }
+.mt { margin-top: 0.8em }
+.ml { margin-left: 0.8em }

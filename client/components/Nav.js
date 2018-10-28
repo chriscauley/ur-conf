@@ -4,12 +4,8 @@ import { withAuth } from '../graphql'
 import _ from '../lib/translate'
 import Dropdown from '../components/Dropdown'
 
-const no_auth = (
-  <ul id="nav-mobile" className="right">
-  </ul>
-)
 const links = auth => (
-  <ul id="nav-mobile" className="right">
+  <ul id="nav-mobile" className="right mr">
     <li>
       <Link to="/schedule/">{_`Schedule`}</Link>
     </li>
@@ -27,8 +23,8 @@ class Nav extends React.Component {
     return (
       <nav>
         <div className="nav-wrapper">
-          <Link to="/" className="brand-logo left">{_`uR.conf`}</Link>
-          {auth.user ? links(auth) : no_auth}
+          <Link to="/" className="brand-logo left ml">{_`uR.conf`}</Link>
+          {auth.user && links(auth)}
         </div>
       </nav>
     )
