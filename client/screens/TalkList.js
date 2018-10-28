@@ -9,12 +9,15 @@ class TalkList extends React.Component {
   state = {
     timeslotId: undefined,
     filter_key: undefined,
+    isLoading: false,
   }
   setTimeSlot = event => {
+    this._visibleTalk = undefined;
     this.setState({ timeslotId: event.target.value })
   }
   getVisible() {
     // find the current talk being voted on and it's timeslot
+    if (this._visibleTalk) { return this._visibleTalk }
     const { timeslotId, filter_key } = this.state
     let { timeslots } = this.props.talkQuery
     if (timeslotId) {
@@ -25,23 +28,21 @@ class TalkList extends React.Component {
       filter_key === undefined ? !t.vote : t.vote && t.vote.value === filter_key
     for (timeslot of timeslots) {
       talk = shuffle(timeslot.talk_list).filter(filter)[0]
-      if (talk) {
-        break
-      }
+      if (talk) { break }
     }
-    return {
-      talk,
-      timeslot,
-    }
+    this._visibleTalk = talk
+    return talk
   }
   vote(vote, talk) {
     return () => {
+      this.setState({isLoading: true})
       post('/api/vote/', {
         talk_id: talk.id,
         vote,
       }).then(() => {
         setVote(talk, vote)
-        this.forceUpdate()
+        this._visibleTalk = undefined;
+        this.setState({isLoading: false})
       })
     }
   }
@@ -50,7 +51,7 @@ class TalkList extends React.Component {
     if (loading) {
       return <div>{`Loading`}</div>
     }
-    const { talk } = this.getVisible()
+    const talk = this.getVisible()
     if (!talk) {
       return <div>{_`Timeslot cleared!`}</div>
     }
@@ -63,8 +64,9 @@ class TalkList extends React.Component {
       key: id,
     }))
     _votes = orderBy(_votes, ['value', 'asc'])
+    let actionClassName = "card-action " + (this.state.isLoading?"is-loading":"ready")
     return (
-      <div className="w400" id="vote">
+      <div id="vote">
         <select
           onChange={this.setTimeSlot}
           className="browser-default"
@@ -92,12 +94,15 @@ class TalkList extends React.Component {
             </small>
             {talk.vote}
           </div>
-          <div className="card-action">
+          <div className={actionClassName}>
             {vote_list.map(vote => (
               <a key={vote.value} onClick={this.vote(vote.value, talk)}>
                 <span className={getTalkIcon(talk, vote)} /> {vote.verbose}
               </a>
             ))}
+            <div class="progress">
+              <div class="indeterminate"></div>
+            </div>
           </div>
         </div>
       </div>

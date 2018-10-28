@@ -2,9 +2,9 @@ html, body, #root, #wrapper {
   height: 100%;
 }
 
-#root > .container {
-  max-width: 600px;
-  width: 100%;
+#root {
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 body {
@@ -13,6 +13,7 @@ body {
 
 #wrapper {
   background: white;
+  width: 100%;
   &, & [role="group"] {
     display: flex;
     flex-direction: column;
@@ -39,6 +40,14 @@ body {
       left: 0;
       position: absolute;
       width: 100%;
+      z-index: 1;
+      &.ready .progress { display: none; }
+    }
+    .progress {
+      bottom: 0;
+      margin-bottom: 0;
+      position: absolute;
+      width: 100%;
     }
   }
 }
@@ -46,11 +55,9 @@ body {
 .w300 {
   max-width: 300px;
   margin: auto;
-}
-
-.w400 {
-  max-width: 400px;
-  margin: auto;
+  @media (min-width: 300px) {
+    width: 300px;
+  }
 }
 
 .rjsf fieldset {
@@ -75,7 +82,10 @@ p > .em {
   .card-action {
     display: flex;
     justify-content: space-around;
-    a { cursor: pointer; }
+    a {
+      cursor: pointer;
+      margin-right: 0;
+    }
     .fa {
       font-size: 2em;
       height: 21px;
