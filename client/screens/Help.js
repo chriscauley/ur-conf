@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from '@reach/router'
 import { withAuth } from '../graphql'
-import { prepData } from '../lib/prepData'
 import { vote_list } from '../lib/vote'
 import _ from '../lib/translate'
 
@@ -12,7 +11,7 @@ const randTexts = [
   "The rules are made up, and the points don't matter.",
   "That's all. That's all this app does. What did you expect?",
   'Step 4: ...\nStep 5: ...\n...\n Profit?',
-]
+].map(_)
 
 class Help extends React.Component {
   render() {
@@ -31,7 +30,7 @@ class Help extends React.Component {
           values:
           <ul className="browser-default">
             {vote_list.map(vote => (
-              <li className="mb">
+              <li className="mb" key={vote.value}>
                 <span className={vote.icon} />
                 {vote.verbose}
               </li>
@@ -70,7 +69,7 @@ class Help extends React.Component {
         <p
           className="flow-text"
           style={{ whiteSpace: 'pre-line' }}
-          onClick={() => this.forceUpdate()}
+          onClick={this.forceUpdate}
         >
           {randText}
         </p>

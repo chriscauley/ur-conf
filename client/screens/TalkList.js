@@ -1,6 +1,7 @@
 import React from 'react'
+import _ from '../lib/translate'
 import { post } from '../lib/ajax'
-import { vote_list, setVote, getTalkIcon, prepVote } from '../lib/vote'
+import { vote_list, setVote, getTalkIcon } from '../lib/vote'
 import { withTalks } from '../graphql'
 import { shuffle } from 'lodash'
 
@@ -46,11 +47,11 @@ class TalkList extends React.Component {
   render() {
     const { loading, timeslots } = this.props.talkQuery
     if (loading) {
-      return <div>Loading</div>
+      return <div>{`Loading`}</div>
     }
-    const { talk, timeslot } = this.getVisible()
+    const { talk } = this.getVisible()
     if (!talk) {
-      return <div>Timeslot cleared!</div>
+      return <div>{_`Timeslot cleared!`}</div>
     }
     const selectableTimeslots = timeslots.filter(
       ts => ts && ts.talk_list.length,
@@ -77,16 +78,18 @@ class TalkList extends React.Component {
               className="browser-default"
               defaultValue=""
             >
-              <option value="">No Vote</option>
+              <option value="">{_`No Vote`}</option>
             </select>
           </div>
         </div>
         <div className="card" key={talk.id}>
           <div className="card-content">
             <div className="card-title">{talk.title}</div>
-            <p>with {talk.authors[0].name}</p>
+            <p>
+              {_`with`} {talk.authors[0].name}
+            </p>
             <small>
-              Room: {talk.room.name} @ {talk.timeslot.time_display}
+              {_`Room:`} {talk.room.name} {_`@`} {talk.timeslot.time_display}
             </small>
             {talk.vote}
           </div>

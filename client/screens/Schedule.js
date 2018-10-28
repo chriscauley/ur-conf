@@ -15,7 +15,9 @@ class Schedule extends React.Component {
       ts.visibleTalks = sortBy(ts.visibleTalks, t => t.vote && -t.vote.value)
 
       ts.nullVotes = ts.talk_list.filter(t => !t.vote).length
-      ts.noVotes = ts.talk_list.filter(t => t.vote && t.vote.value == -1).length
+      ts.noVotes = ts.talk_list.filter(
+        t => t.vote && t.vote.value === -1,
+      ).length
     })
     return (
       <div className="w400 container">
