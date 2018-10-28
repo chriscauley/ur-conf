@@ -8,15 +8,18 @@ html, body, #root {
 
 body {
   background: #e0e0e0;
-  .sidenav.sidenav-fixed {
-    transform: translateX(0%);
-  }
   main { padding-bottom: 20px; }
 }
 
 #wrapper {
   background: white;
   min-height: 100%;
+}
+
+#nav-mobile {
+  display: flex;
+  justify-content: space-around;
+  i { height: auto; }
 }
 
 .w300 {
