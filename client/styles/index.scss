@@ -35,10 +35,6 @@ body {
   margin: 0;
 }
 
-.card-action a {
-  cursor: pointer;
-}
-
 .hr {
   border-bottom: 1px solid rgba(0,0,0,0.14)
 }
@@ -50,3 +46,13 @@ p > .em {
 .mb { margin-bottom: 0.8em }
 .mt { margin-top: 0.8em }
 .ml { margin-left: 0.8em }
+
+.card {
+  .card-action {
+    display: flex;
+    justify-content: space-around;
+    a { cursor: pointer; }
+  }
+  .collection:last-child { margin-bottom: 0 }
+  .collection-item.card-action { padding: 10px 20px; }
+}

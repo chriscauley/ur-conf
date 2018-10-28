@@ -19,26 +19,24 @@ export default class TalkList extends React.Component {
       t => t.vote == undefined,
     )
     return (
-      <div className="row">
-        <div className="col s12 m6">
-          {visible_talks.map(talk => (
-            <div className="card" key={talk.id}>
-              <div className="card-content">
-                <div className="card-title">{talk.title}</div>
-                <p>with {talk.authors[0].name}</p>
-                <small>Room: {talk.room.name}</small>
-              </div>
-              <div className="card-action">
-                {vote_list.map(vote => (
-                  <a key={vote.value} onClick={this.vote(vote.value, talk)}>
-                    <span className={getTalkIcon(talk, vote)} /> {vote.verbose}
-                  </a>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+<div className="w400">
+  {visible_talks.map(talk => (
+  <div className="card" key={talk.id}>
+    <div className="card-content">
+      <div className="card-title">{talk.title}</div>
+      <p>with {talk.authors[0].name}</p>
+      <small>Room: {talk.room.name}</small>
+    </div>
+    <div className="card-action">
+      {vote_list.map(vote => (
+      <a key={vote.value} onClick={this.vote(vote.value, talk)}>
+        <span className={getTalkIcon(talk, vote)} /> {vote.verbose}
+      </a>
+      ))}
+    </div>
+  </div>
+  ))}
+</div>
     )
   }
 }
