@@ -28,6 +28,8 @@ class Talk(models.Model):
     description = models.TextField(blank=True)
     room = models.ForeignKey(Room,on_delete=models.SET_NULL,null=True,blank=True)
     timeslot = models.ForeignKey(TimeSlot,on_delete=models.SET_NULL,null=True,blank=True)
+    external_id = models.CharField(max_length=32,null=True,blank=True)
+    external_url = models.CharField(max_length=512,null=True,blank=True)
     def __str__(self):
         return self.title
 

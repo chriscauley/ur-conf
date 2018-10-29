@@ -43,18 +43,29 @@ for row in soup.findAll("tr",{"class":"sorting"}):
         if not text:
             # nothing in this slot
             continue
-        title = div.find("a").text.strip()
+        anchor = div.find("a")
+        title = anchor.text.strip()
+        url = anchor.attrs['href']
+        external_id = int(url.split("/")[-1])
         authors = text.replace(title,"").strip()
         authors = authors.replace(" and ",",").replace("&",",")
         authors = [a.strip() for a in authors.split(",")]
         authors = [Author.objects.get_or_create(
             name=name
         )[0] for name in authors]
-        talk, new = Talk.objects.get_or_create(
+        defaults = dict(
             title=title,
             timeslot=timeslots[i],
             room=room,
+            external_url=url
         )
+        talk, new = Talk.objects.get_or_create(
+            external_id=external_id,
+            defaults=defaults
+        )
+        for key,value in defaults.items():
+            setattr(talk,key,value)
+        talk.save()
         [talk.authors.add(a) for a in authors]
         if new:
             print("new talk",talk)
