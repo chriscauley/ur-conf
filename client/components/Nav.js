@@ -8,7 +8,7 @@ const links = auth => (
   <ul id="nav-mobile">
     <li>
       <Link to="/help/">
-        <i className="fa fa-question fa-2x" />
+        <i className="fa fa-info-circle fa-2x" />
       </Link>
     </li>
     <li>

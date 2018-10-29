@@ -34,11 +34,11 @@ class Schedule extends React.Component {
                 ))}
                 {(timeslot.noVotes || timeslot.nullVotes || '') && (
                   <li className="collection-item card-action">
-                    <Link to="/">
+                    <Link to="/talks/">
                       <i className="em em--1" /> x {timeslot.noVotes}
                     </Link>
-                    <Link to="/">
-                      <i className="em em-question" /> x {timeslot.nullVotes}
+                    <Link to="/talks/">
+                      <i class="em em-question"></i> x {timeslot.nullVotes}
                     </Link>
                   </li>
                 )}

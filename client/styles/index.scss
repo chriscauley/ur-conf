@@ -1,3 +1,4 @@
+
 html, body, #root, #wrapper {
   height: 100%;
   min-height: 100%;
@@ -29,9 +30,7 @@ body {
   display: flex;
   justify-content: space-around;
   i { height: auto; }
-  .fa-question {
-    padding-top: 13px;
-  }
+  .fa { line-height: 2 }
 }
 
 #vote {
