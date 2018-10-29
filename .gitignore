@@ -8,3 +8,4 @@ main/db.sqlite3
 client/static
 node_modules
 yarn-error.log
+.bc/*.html
