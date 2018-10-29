@@ -9,7 +9,7 @@ export const vote_list = [
   {
     verbose: 'yes',
     value: 1,
-    icon: 'fa fa-check green-text',
+    icon: 'fa fa-check green-text fa-em',
     className: 'box green',
   },
 ]

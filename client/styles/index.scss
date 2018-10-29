@@ -1,5 +1,6 @@
 html, body, #root, #wrapper {
   height: 100%;
+  min-height: 100%;
 }
 
 #root {
@@ -20,6 +21,7 @@ body {
   }
   [role="group"] {
     flex-grow: 1;
+    overflow: scroll;
   }
 }
 
@@ -27,6 +29,9 @@ body {
   display: flex;
   justify-content: space-around;
   i { height: auto; }
+  .fa-question {
+    padding-top: 13px;
+  }
 }
 
 #vote {
@@ -70,14 +75,20 @@ body {
   border-bottom: 1px solid rgba(0,0,0,0.14)
 }
 
-.mr, li > .em { margin-right: 0.8em }
-p > .em {
-  margin: 0 0.4em;
+.mr, li > .em, li .fa-em { margin-right: 0.8rem }
+.fa-em {
+  font-size: 1.8em;
+  height: 21px;
+  vertical-align: top;
 }
-.mb { margin-bottom: 0.8em }
-.mt { margin-top: 0.8em }
-.ml { margin-left: 0.8em }
+p > .em, p > .fa-em {
+  margin: 0 0.4rem;
+}
+.mb { margin-bottom: 0.8rem }
+.mt { margin-top: 0.8rem }
+.ml { margin-left: 0.8rem }
 
+.mx { margin-left: 0.8rem; margin-right: 0.8rem; }
 .card {
   .card-action {
     display: flex;
@@ -85,11 +96,6 @@ p > .em {
     a {
       cursor: pointer;
       margin-right: 0;
-    }
-    .fa {
-      font-size: 2em;
-      height: 21px;
-      vertical-align: top;
     }
   }
   .collection:last-child { margin-bottom: 0 }

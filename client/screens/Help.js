@@ -21,7 +21,7 @@ class Help extends React.Component {
     }
     const randText = randTexts[Math.floor(Math.random() * randTexts.length)]
     return (
-      <div className="w400">
+      <div className="w400 mx">
         <h2 className="red-text lighten-2">Help!</h2>
         <hr />
         <h4 className="red-text lighten-2">Step 1: Vote on Talks</h4>
@@ -36,16 +36,11 @@ class Help extends React.Component {
               </li>
             ))}
             <li className="mb">
-              <span className="em em-no_question" />
+              <span className="em em-question" />
               No vote cast
             </li>
           </ul>
         </p>
-        <div className="center mb">
-          <Link to="/vote/">
-            <button className="btn btn-blue">Vote Now</button>
-          </Link>
-        </div>
         <hr />
         <h4 className="red-text lighten-2">Step 2: View Schedule</h4>
         <p className="flow-text">
@@ -54,11 +49,6 @@ class Help extends React.Component {
           <span className="em em-thinking_face" />
           votes for each time slot.
         </p>
-        <div className="center mb">
-          <Link to="/schedule/">
-            <button className="btn btn-blue">View Schedule</button>
-          </Link>
-        </div>
         <hr />
         <h4 className="red-text lighten-2">Step 3: Attend Talks</h4>
         <p className="flow-text">
@@ -69,7 +59,7 @@ class Help extends React.Component {
         <p
           className="flow-text"
           style={{ whiteSpace: 'pre-line' }}
-          onClick={this.forceUpdate}
+          onClick={() => this.forceUpdate()}
         >
           {randText}
         </p>
