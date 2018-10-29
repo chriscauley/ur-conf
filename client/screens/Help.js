@@ -14,6 +14,7 @@ const randTexts = [
 ].map(_)
 
 class Help extends React.Component {
+  updoot = () => this.forceUpdate()
   render() {
     const { loading } = this.props.auth
     if (loading) {
@@ -59,7 +60,7 @@ class Help extends React.Component {
         <p
           className="flow-text"
           style={{ whiteSpace: 'pre-line' }}
-          onClick={() => this.forceUpdate()}
+          onClick={this.updoot}
         >
           {randText}
         </p>

@@ -7,7 +7,9 @@ import Dropdown from '../components/Dropdown'
 const links = auth => (
   <ul id="nav-mobile">
     <li>
-      <Link to="/help/"><i className="fa fa-question fa-2x"/></Link>
+      <Link to="/help/">
+        <i className="fa fa-question fa-2x" />
+      </Link>
     </li>
     <li>
       <Link to="/schedule/">{_`Schedule`}</Link>

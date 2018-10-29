@@ -39,7 +39,6 @@ body {
   position: relative;
   .card {
     position: static;
-    margin: 40px 10px;
     .card-action {
       bottom: 0;
       left: 0;
@@ -53,6 +52,23 @@ body {
       margin-bottom: 0;
       position: absolute;
       width: 100%;
+    }
+  }
+  .actual-card {
+    left: 0;
+    margin: 40px 10px;
+    opacity: 1;
+    position: relative;
+    top: 0;
+    &.fade {
+      background: red;
+      opacity: 0;
+      transition: 0.25s;
+    }
+    &.fade {
+      background: green;
+      opacity: 0;
+      transition: 0.25s;
     }
   }
 }

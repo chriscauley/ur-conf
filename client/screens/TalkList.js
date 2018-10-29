@@ -4,6 +4,7 @@ import { post } from '../lib/ajax'
 import { vote_list, setVote, getTalkIcon } from '../lib/vote'
 import { withTalks } from '../graphql'
 import { orderBy, shuffle } from 'lodash'
+import Swipeable from 'react-swipeable'
 
 class TalkList extends React.Component {
   state = {
@@ -12,12 +13,14 @@ class TalkList extends React.Component {
     isLoading: false,
   }
   setTimeSlot = event => {
-    this._visibleTalk = undefined;
+    this._visibleTalk = undefined
     this.setState({ timeslotId: event.target.value })
   }
   getVisible() {
     // find the current talk being voted on and it's timeslot
-    if (this._visibleTalk) { return this._visibleTalk }
+    if (this._visibleTalk) {
+      return this._visibleTalk
+    }
     const { timeslotId, filter_key } = this.state
     let { timeslots } = this.props.talkQuery
     if (timeslotId) {
@@ -28,23 +31,44 @@ class TalkList extends React.Component {
       filter_key === undefined ? !t.vote : t.vote && t.vote.value === filter_key
     for (timeslot of timeslots) {
       talk = shuffle(timeslot.talk_list).filter(filter)[0]
-      if (talk) { break }
+      if (talk) {
+        break
+      }
     }
     this._visibleTalk = talk
     return talk
   }
   vote(vote, talk) {
     return () => {
-      this.setState({isLoading: true})
+      this.setState({ isLoading: true })
       post('/api/vote/', {
         talk_id: talk.id,
         vote,
       }).then(() => {
         setVote(talk, vote)
-        this._visibleTalk = undefined;
-        this.setState({isLoading: false})
+        this._visibleTalk = undefined
+        this.setState({ isLoading: false })
+        this.card.style.left = 0
+        this.card.style.top = 0
       })
     }
+  }
+  swiped = (_e, deltaX, deltaY, isFlick, _velocity) => {
+    if (!isFlick) {
+      this.card.style.left = 0
+      this.card.style.top = 0
+    }
+  }
+  swiping = (_e, deltaX, deltaY, _absX, _absY, _velocity) => {
+    this.card = this.card || document.querySelector('.actual-card')
+    this.card.style.left = -deltaX + 'px'
+    this.card.style.top = -deltaY + 'px'
+  }
+  swipedLeft = talk => () => {
+    this.vote(-1, talk)()
+  }
+  swipedRight = talk => () => {
+    this.vote(1, talk)()
   }
   render() {
     const { loading, timeslots } = this.props.talkQuery
@@ -64,9 +88,16 @@ class TalkList extends React.Component {
       key: id,
     }))
     _votes = orderBy(_votes, ['value', 'asc'])
-    let actionClassName = "card-action " + (this.state.isLoading?"is-loading":"ready")
+    const actionClassName =
+      'card-action ' + (this.state.isLoading ? 'is-loading' : 'ready')
     return (
-      <div id="vote">
+      <Swipeable
+        onSwiping={this.swiping}
+        onSwipedLeft={this.swipedLeft(talk)}
+        onSwipedRight={this.swipedRight(talk)}
+        onSwiped={this.swiped}
+        id="vote"
+      >
         <select
           onChange={this.setTimeSlot}
           className="browser-default"
@@ -83,7 +114,7 @@ class TalkList extends React.Component {
             <div {...vote} key={vote.key} />
           ))}
         </div>
-        <div className="card" key={talk.id}>
+        <div className="card actual-card">
           <div className="card-content">
             <div className="card-title">{talk.title}</div>
             <p>
@@ -94,18 +125,20 @@ class TalkList extends React.Component {
             </small>
             {talk.vote}
           </div>
+        </div>
+        <div className="card">
           <div className={actionClassName}>
             {vote_list.map(vote => (
               <a key={vote.value} onClick={this.vote(vote.value, talk)}>
                 <span className={getTalkIcon(talk, vote)} /> {vote.verbose}
               </a>
             ))}
-            <div class="progress">
-              <div class="indeterminate"></div>
+            <div className="progress">
+              <div className="indeterminate" />
             </div>
           </div>
         </div>
-      </div>
+      </Swipeable>
     )
   }
 }
