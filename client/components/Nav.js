@@ -15,7 +15,7 @@ const links = auth => (
       <Link to="/schedule/">{_`Schedule`}</Link>
     </li>
     <li>
-      <Link to="/talks/">{_`Talks`}</Link>
+      <Link to="/vote/">{_`Talks`}</Link>
     </li>
     <Dropdown triggerContent={auth.user.username} icon="mr fa fa-user">
       <a onClick={auth.logout}>{_`Logout`}</a>
