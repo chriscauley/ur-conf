@@ -131,3 +131,9 @@ p > .em, p > .fa-em {
     font-weight: bold;
     font-size: 2em;
 }
+
+.auth a {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

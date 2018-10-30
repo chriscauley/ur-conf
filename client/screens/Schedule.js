@@ -38,7 +38,7 @@ class Schedule extends React.Component {
                       <i className="em em--1" /> x {timeslot.noVotes}
                     </Link>
                     <Link to="/vote/">
-                      <i class="em em-question"></i> x {timeslot.nullVotes}
+                      <i className="em em-question"></i> x {timeslot.nullVotes}
                     </Link>
                   </li>
                 )}
