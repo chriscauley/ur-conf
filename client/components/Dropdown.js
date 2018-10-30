@@ -19,7 +19,7 @@ export default class Dropdown extends React.Component {
         transform: 'scaleX(1) scaleY(1)',
       })
     }
-    const className = "dropdown-wrapper "+this.props.className
+    const className = 'dropdown-wrapper ' + this.props.className
     return (
       <li className={className}>
         <a onClick={this.trigger} className={triggerClass} href="#">

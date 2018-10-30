@@ -32,10 +32,10 @@ class Help extends React.Component {
         </p>
         <ul className="browser-default">
           {vote_list.map(vote => (
-          <li className="mb" key={vote.value}>
-            <span className={vote.icon} />
-            {vote.verbose}
-          </li>
+            <li className="mb" key={vote.value}>
+              <span className={vote.icon} />
+              {vote.verbose}
+            </li>
           ))}
           <li className="mb">
             <span className="em em-question" />
