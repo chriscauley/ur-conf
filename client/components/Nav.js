@@ -3,13 +3,12 @@ import { Link } from '@reach/router'
 import { withAuth } from '../graphql'
 import _ from '../lib/translate'
 import Dropdown from '../components/Dropdown'
+import Clock from "./Clock"                                                           
 
 const links = auth => (
   <ul id="nav-mobile">
     <li>
-      <Link to="/help/">
-        <i className="fa fa-info-circle fa-2x" />
-      </Link>
+      <Clock/>
     </li>
     <li>
       <Link to="/schedule/">{_`Schedule`}</Link>
@@ -28,8 +27,7 @@ class Nav extends React.Component {
     return (
       <nav>
         <div className="nav-wrapper">
-          {/*<Link to="/" className="brand-logo left ml">{_`uR.conf`}</Link>*/}
-          {auth.user && links(auth)}
+          {auth.user?links(auth):<ul id="nav-mobile"><li><Clock /></li></ul>}
         </div>
       </nav>
     )

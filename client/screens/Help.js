@@ -29,19 +29,19 @@ class Help extends React.Component {
         <p className="flow-text">
           First vote on each talk in each time slot. Votes can take one of four
           values:
-          <ul className="browser-default">
-            {vote_list.map(vote => (
-              <li className="mb" key={vote.value}>
-                <span className={vote.icon} />
-                {vote.verbose}
-              </li>
-            ))}
-            <li className="mb">
-              <span className="em em-question" />
-              No vote cast
-            </li>
-          </ul>
         </p>
+        <ul className="browser-default">
+          {vote_list.map(vote => (
+          <li className="mb" key={vote.value}>
+            <span className={vote.icon} />
+            {vote.verbose}
+          </li>
+          ))}
+          <li className="mb">
+            <span className="em em-question" />
+            No vote cast
+          </li>
+        </ul>
         <hr />
         <h4 className="red-text lighten-2">Step 2: View Schedule</h4>
         <p className="flow-text">
