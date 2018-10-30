@@ -1,45 +1,33 @@
 import React from 'react'
+import { navigate } from '@reach/router'
 import Swipeable from 'react-swipeable'
-import { orderBy, shuffle } from 'lodash'
 
 import _ from '../lib/translate'
 import { post } from '../lib/ajax'
 import { setVote } from '../lib/vote'
-import { withTalks } from '../graphql'
+import { withTalks, withAuth } from '../graphql'
 import TalkCard from '../components/TalkCard'
 
 class TalkList extends React.Component {
   state = {
     timeslotId: undefined,
-    filter_key: undefined,
     isLoading: false,
   }
   setTimeSlot = event => {
     this._visibleTalk = undefined
     this.setState({ timeslotId: event.target.value })
   }
-  getVisible() {
+  getVisibleTimeslot() {
     // find the current talk being voted on and it's timeslot
-    if (this._visibleTalk) {
-      return this._visibleTalk
-    }
-    const { timeslotId, filter_key } = this.state
+    const { timeslotId } = this.state
     let { timeslots } = this.props.talkQuery
     if (timeslotId) {
       timeslots = timeslots.filter(ts => ts.id === timeslotId)
     }
-    let talk, timeslot
-    const filter = t =>
-      filter_key === undefined ? !t.vote : t.vote && t.vote.value === filter_key
-    for (timeslot of timeslots) {
-      talk = shuffle(timeslot.talk_list).filter(filter)[0]
-      if (talk) {
-        break
-      }
-    }
-    this._visibleTalk = talk
-    return talk
+    return timeslots.filter(ts => ts.talk_list.length)[0]
   }
+  preVote = () => this.setState({ isLoading: true })
+  postVote = () => this.setState({ isLoading: false })
   vote(vote, talk) {
     return () => {
       this.setState({ isLoading: true })
@@ -72,41 +60,35 @@ class TalkList extends React.Component {
     this.vote(1, talk)()
   }
   render() {
+    const { auth } = this.props
     const { loading, timeslots } = this.props.talkQuery
-    if (loading) {
+    if (loading || auth.loading) {
       return <div>{`Loading`}</div>
     }
-    const talk = this.getVisible()
-    if (!talk) {
-      return <div>{_`Timeslot cleared!`}</div>
+    if (!auth.user) {
+      navigate('/')
+      return null
     }
+    window.TL = this
+    const timeslot = this.getVisibleTimeslot()
+    /*if (!talk) {
+      return <div>{_`Timeslot cleared!`}</div>
+    }*/
     const selectableTimeslots = timeslots.filter(
       ts => ts && ts.talk_list.length,
     )
-    const nullvote = { value: 5, className: 'box grey' }
-    let _votes = talk.timeslot.talk_list.map(({ id, vote = nullvote }) => ({
-      ...vote,
-      key: id,
-    }))
-    _votes = orderBy(_votes, ['value', 'asc'])
-    const _l = this.state.isLoading
-    const talkProps = {
-      actionClassName: 'card-action ' + (_l ? 'is-loading' : 'ready'),
-      vote: this.vote,
-      talk,
-    }
     return (
       <Swipeable
         onSwiping={this.swiping}
-        onSwipedLeft={this.swipedLeft(talk)}
-        onSwipedRight={this.swipedRight(talk)}
+        onSwipedLeft={this.swipedLeft}
+        onSwipedRight={this.swipedRight}
         onSwiped={this.swiped}
         id="vote"
       >
         <select
           onChange={this.setTimeSlot}
           className="browser-default"
-          defaultValue={talk.timeslot.id}
+          defaultValue={timeslot.id}
         >
           {selectableTimeslots.map(ts => (
             <option key={ts.id} value={ts.id} onClick={this.SetVote}>
@@ -114,15 +96,12 @@ class TalkList extends React.Component {
             </option>
           ))}
         </select>
-        <div className="talkbreakdown">
-          {_votes.map(vote => (
-            <div {...vote} key={vote.key} />
-          ))}
-        </div>
-        <TalkCard {...talkProps} />
+        {timeslot.talk_list.map(talk => (
+          <TalkCard talk={talk} vote={this.vote} key={talk.id} />
+        ))}
       </Swipeable>
     )
   }
 }
 
-export default withTalks(TalkList)
+export default withAuth(withTalks(TalkList))

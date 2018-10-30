@@ -95,8 +95,8 @@ for _id, year in list(CONFERENCE_YEARS):
             talk_text = curl("presentation",external_id,"p{}".format(external_id))
 
             talk_soup = BeautifulSoup(talk_text,'html.parser')
-            for i,div in enumerate(talk_soup.findAll("div",{"class":"field"})):
-                if "Description:" in str(div) and i != DESCRIPTION_INDEX:
+            for ic,div in enumerate(talk_soup.findAll("div",{"class":"field"})):
+                if "Description:" in str(div) and ic != DESCRIPTION_INDEX:
                     raise NotImplemented
 
             talk_fields = talk_soup.findAll("div",{"class":"field"})

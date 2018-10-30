@@ -1,4 +1,3 @@
-
 html, body, #root, #wrapper {
   height: 100%;
   min-height: 100%;
@@ -24,7 +23,7 @@ body {
   }
   [role="group"] {
     flex-grow: 1;
-    overflow: scroll;
+    overflow: auto;
   }
 }
 
@@ -37,44 +36,63 @@ body {
 
 #vote {
   flex-grow: 1;
-  padding-bottom: 54px;
+  padding-bottom: 20px;
   position: relative;
-  .card {
-    position: static;
-    h5 { margin-top: 0; }
-    .description { font-size: 1.2em; }
-    .card-action {
-      bottom: 0;
-      left: 50%;
-      margin-left: - $root-width / 2;
-      position: fixed;
-      width: $root-width;
-      z-index: 1;
-      &.ready .progress { display: none; }
+  .card-wrapper {
+    margin: -5px 20px 0;
+    max-height: 20px;
+    position: relative;
+    z-index: 100;
+    .card {
+      margin: 5px 0;
+      .card-content {
+        max-height: 50px;
+        overflow: hidden;
+      }
+      .card-content, .card-action { opacity: 0; }
     }
-    .progress {
-      bottom: 0;
-      margin-bottom: 0;
-      position: absolute;
-      width: 100%;
+    &:nth-child(5) {
+      .card-content, .card-action { opacity: 1; }
+      margin: -5px 5px 0;
+      max-height: 500px;
+      padding-bottom: 3px;
+      z-index: 200;
+      .card-content { max-height: 500px; }
+      ~ .card-wrapper {
+        height: 20px;
+        .card {
+          bottom: 0;
+          max-width: 100%;
+          position: absolute;
+          top: unset;
+          width: 100%;
+        }
+        &:nth-child(2) { z-index: 199 }
+        &:nth-child(3) { z-index: 198 }
+        &:nth-child(4) { z-index: 197 }
+        &:nth-child(5) { z-index: 196 }
+        &:nth-child(6) { z-index: 195 }
+        &:nth-child(7) { z-index: 194 }
+        &:nth-child(8) { z-index: 193 }
+        &:nth-child(9) { z-index: 192 }
+        &:nth-child(10) { z-index: 191 }
+        &:nth-child(11) { z-index: 190 }
+        &:nth-child(12) { z-index: 189 }
+        &:nth-child(13) { z-index: 188 }
+        &:nth-child(14) { z-index: 187 }
+        &:nth-child(15) { z-index: 186 }
+        &:nth-child(16) { z-index: 185 }
+      }
     }
   }
-  .actual-card {
+  .card {
     left: 0;
-    margin: 40px 10px;
-    opacity: 1;
+    margin: 0;
     position: relative;
     top: 0;
-    &.fade {
-      background: red;
-      opacity: 0;
-      transition: 0.25s;
-    }
-    &.fade {
-      background: green;
-      opacity: 0;
-      transition: 0.25s;
-    }
+    transition: 0.25s linear;
+    h5 { margin-top: 0; }
+    .description { font-size: 1.2em; }
   }
 }
 

@@ -17,7 +17,7 @@ class Room(models.Model):
 class TimeSlot(models.Model):
     datetime = models.DateTimeField()
     def __str__(self):
-        return self.datetime
+        return str(self.datetime)
 
 
 class Author(models.Model):
