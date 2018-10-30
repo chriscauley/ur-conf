@@ -2,6 +2,12 @@ from django.conf import settings
 from django.db import models
 
 
+class Conference(models.Model):
+    name = models.CharField(max_length=64)
+    external_id = models.CharField(max_length=32)
+    date = models.DateField()
+
+
 class Room(models.Model):
     name = models.CharField(max_length=32)
     def __str__(self):
@@ -23,6 +29,7 @@ class Author(models.Model):
 
 
 class Talk(models.Model):
+    conference = models.ForeignKey(Conference,on_delete=models.PROTECT)
     title = models.CharField(max_length=256)
     authors = models.ManyToManyField(Author)
     description = models.TextField(blank=True)
