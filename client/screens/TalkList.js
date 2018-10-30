@@ -1,10 +1,12 @@
 import React from 'react'
+import Swipeable from 'react-swipeable'
+import { orderBy, shuffle } from 'lodash'
+
 import _ from '../lib/translate'
 import { post } from '../lib/ajax'
-import { vote_list, setVote, getTalkIcon } from '../lib/vote'
+import { setVote } from '../lib/vote'
 import { withTalks } from '../graphql'
-import { orderBy, shuffle } from 'lodash'
-import Swipeable from 'react-swipeable'
+import TalkCard from '../components/TalkCard'
 
 class TalkList extends React.Component {
   state = {
@@ -53,16 +55,15 @@ class TalkList extends React.Component {
       })
     }
   }
-  swiped = (_e, deltaX, deltaY, isFlick, _velocity) => {
+  swiped = (_e, _deltaX, _deltaY, isFlick, _velocity) => {
     if (!isFlick) {
       this.card.style.left = 0
       this.card.style.top = 0
     }
   }
-  swiping = (_e, deltaX, deltaY, _absX, _absY, _velocity) => {
+  swiping = (_e, deltaX, _deltaY, _absX, _absY, _velocity) => {
     this.card = this.card || document.querySelector('.actual-card')
     this.card.style.left = -deltaX + 'px'
-    this.card.style.top = -deltaY + 'px'
   }
   swipedLeft = talk => () => {
     this.vote(-1, talk)()
@@ -88,8 +89,12 @@ class TalkList extends React.Component {
       key: id,
     }))
     _votes = orderBy(_votes, ['value', 'asc'])
-    const actionClassName =
-      'card-action ' + (this.state.isLoading ? 'is-loading' : 'ready')
+    const _l = this.state.isLoading
+    const talkProps = {
+      actionClassName: 'card-action ' + (_l ? 'is-loading' : 'ready'),
+      vote: this.vote,
+      talk,
+    }
     return (
       <Swipeable
         onSwiping={this.swiping}
@@ -114,29 +119,7 @@ class TalkList extends React.Component {
             <div {...vote} key={vote.key} />
           ))}
         </div>
-        <div className="card actual-card">
-          <div className="card-content">
-            <div className="card-title"><h5>{talk.title}</h5></div>
-            <p>
-              {_`with`} {talk.authors[0].name}
-            </p>
-            <small>
-              {_`Room:`} {talk.room.name} {_`@`} {talk.timeslot.time_display}
-            </small>
-            <hr/>
-            <p className="description">{ talk.description}</p>
-          </div>
-          <div className={actionClassName}>
-            {vote_list.map(vote => (
-              <a key={vote.value} onClick={this.vote(vote.value, talk)}>
-                <span className={getTalkIcon(talk, vote)} /> {vote.verbose}
-              </a>
-            ))}
-            <div className="progress">
-              <div className="indeterminate" />
-            </div>
-          </div>
-        </div>
+        <TalkCard {...talkProps} />
       </Swipeable>
     )
   }
