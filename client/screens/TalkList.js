@@ -116,14 +116,15 @@ class TalkList extends React.Component {
         </div>
         <div className="card actual-card">
           <div className="card-content">
-            <div className="card-title">{talk.title}</div>
+            <div className="card-title"><h5>{talk.title}</h5></div>
             <p>
               {_`with`} {talk.authors[0].name}
             </p>
             <small>
               {_`Room:`} {talk.room.name} {_`@`} {talk.timeslot.time_display}
             </small>
-            {talk.vote}
+            <hr/>
+            <p className="description">{ talk.description}</p>
           </div>
         </div>
         <div className="card">

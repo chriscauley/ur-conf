@@ -6,11 +6,12 @@ const talkQuery = gql`
     talks {
       id
       title
+      roomId
+      timeslotId
+      description
       authors {
         id
       }
-      roomId
-      timeslotId
     }
     authors {
       id

@@ -38,6 +38,8 @@ body {
   position: relative;
   .card {
     position: static;
+    h5 { margin-top: 0; }
+    .description { font-size: 1.2em; }
     .card-action {
       bottom: 0;
       left: 0;
