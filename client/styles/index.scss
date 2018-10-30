@@ -4,8 +4,10 @@ html, body, #root, #wrapper {
   min-height: 100%;
 }
 
+$root-width: 400px;
+
 #root {
-  max-width: 400px;
+  max-width: $root-width;
   margin: 0 auto;
 }
 
@@ -35,6 +37,7 @@ body {
 
 #vote {
   flex-grow: 1;
+  padding-bottom: 54px;
   position: relative;
   .card {
     position: static;
@@ -42,9 +45,10 @@ body {
     .description { font-size: 1.2em; }
     .card-action {
       bottom: 0;
-      left: 0;
-      position: absolute;
-      width: 100%;
+      left: 50%;
+      margin-left: - $root-width / 2;
+      position: fixed;
+      width: $root-width;
       z-index: 1;
       &.ready .progress { display: none; }
     }

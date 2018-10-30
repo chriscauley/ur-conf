@@ -126,8 +126,6 @@ class TalkList extends React.Component {
             <hr/>
             <p className="description">{ talk.description}</p>
           </div>
-        </div>
-        <div className="card">
           <div className={actionClassName}>
             {vote_list.map(vote => (
               <a key={vote.value} onClick={this.vote(vote.value, talk)}>
