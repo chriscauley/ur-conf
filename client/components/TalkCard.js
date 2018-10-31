@@ -19,6 +19,12 @@ export default class TalkCard extends React.Component {
     }
     this.setState({ cardStyle: { left: 0 } })
   }
+  onClick = () => {
+    if (!this.active) {
+      // this function activates a card, don't do that if already active
+      this.props.onClick(this.props.index)
+    }
+  }
   swiping = (_e, deltaX, _deltaY, _absX, _absY, _velocity) => {
     if (!this.active) {
       return
@@ -26,7 +32,9 @@ export default class TalkCard extends React.Component {
     this.setState({ cardStyle: { left: -deltaX + 'px' } })
   }
   vote = value => {
-    this.props.parent.vote(value, this.props.talk)
+    if (this.active) {
+      this.props.parent.vote(value, this.props.talk)
+    }
   }
   _vote(value) {
     return () => this.vote(value)
@@ -47,7 +55,7 @@ export default class TalkCard extends React.Component {
         onSwiped={this.swiped}
         id={'talk-' + talk.id}
         className={className}
-        onClick={this.props.onClick}
+        onClick={this.onClick}
         style={{ zIndex: 100 - zIndex }}
       >
         <div className="card-wrapper">

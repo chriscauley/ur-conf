@@ -36,6 +36,9 @@ class TalkList extends React.Component {
     setVote(talk, vote)
     this.setState({ activeIndex: this.state.activeIndex + 1 })
   }
+  onClick = index => {
+    this.setState({ activeIndex: index })
+  }
   render() {
     const { auth } = this.props
     const { loading, timeslots } = this.props.talkQuery
@@ -71,6 +74,7 @@ class TalkList extends React.Component {
             parent={this}
             activeIndex={this.state.activeIndex}
             index={index}
+            onClick={this.onClick}
           />
         ))}
       </div>
