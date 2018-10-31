@@ -1,0 +1,12 @@
+.card {
+  .card-action {
+    display: flex;
+    justify-content: space-around;
+    a {
+      cursor: pointer;
+      margin-right: 0;
+    }
+  }
+  .collection:last-child { margin-bottom: 0 }
+  .collection-item.card-action { padding: 10px 20px; }
+}

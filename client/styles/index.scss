@@ -1,58 +1,13 @@
+/* general */
 @import "_root.scss";
 @import "_nav.scss";
+@import "_helpers.scss";
+@import "_form.scss";
+@import "_card.scss";
 
-#vote {
-  flex-grow: 1;
-  background: #eee;
-  position: relative;
-  .talk {
-    @import "_talk.scss";
-  }
-}
+/* screens */
+@import "_schedule.scss";
+@import "_vote.scss";
 
-
-.w300 {
-  max-width: 300px;
-  margin: auto;
-  @media (min-width: 300px) {
-    width: 300px;
-  }
-}
-
-.rjsf fieldset {
-  border: 0;
-  padding: 0;
-  margin: 0;
-}
-
-.hr {
-  border-bottom: 1px solid rgba(0,0,0,0.14)
-}
-
-.mr, li > .em, li .fa-em { margin-right: 0.8rem }
-.fa-em {
-  font-size: 1.8em;
-  height: 21px;
-  vertical-align: top;
-}
-p > .em, p > .fa-em {
-  margin: 0 0.4rem;
-}
-.mb { margin-bottom: 0.8rem }
-.mt { margin-top: 0.8rem }
-.ml { margin-left: 0.8rem }
-
-.mx { margin-left: 0.8rem; margin-right: 0.8rem; }
-.card {
-  .card-action {
-    display: flex;
-    justify-content: space-around;
-    a {
-      cursor: pointer;
-      margin-right: 0;
-    }
-  }
-  .collection:last-child { margin-bottom: 0 }
-  .collection-item.card-action { padding: 10px 20px; }
-}
+/* components */
 @import "_clock.scss";

@@ -13,7 +13,7 @@ const links = auth => (
       <Link to="/schedule/">{_`Schedule`}</Link>
     </li>
     <li>
-      <Link to="/vote/">{_`Talks`}</Link>
+      <Link to="/vote/">{_`Vote`}</Link>
     </li>
     <li className="auth">
       <Link to="/auth/">

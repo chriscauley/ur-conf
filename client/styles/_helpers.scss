@@ -1,0 +1,26 @@
+.w300 {
+  max-width: 300px;
+  margin: auto;
+  @media (min-width: 300px) {
+    width: 300px;
+  }
+}
+
+.hr {
+  border-bottom: 1px solid rgba(0,0,0,0.14)
+}
+
+.mr, li > .em, li .fa-em { margin-right: 0.8rem }
+.fa-em {
+  font-size: 1.8em;
+  height: 21px;
+  vertical-align: top;
+}
+p > .em, p > .fa-em {
+  margin: 0 0.4rem;
+}
+.mb { margin-bottom: 0.8rem }
+.mt { margin-top: 0.8rem }
+.ml { margin-left: 0.8rem }
+
+.mx { margin-left: 0.8rem; margin-right: 0.8rem; }

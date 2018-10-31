@@ -28,11 +28,3 @@ body {
     overflow: auto;
   }
 }
-
-.w300 {
-  max-width: 300px;
-  margin: auto;
-  @media (min-width: 300px) {
-    width: 300px;
-  }
-}

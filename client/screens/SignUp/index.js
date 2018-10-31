@@ -16,7 +16,7 @@ class SignUp extends React.Component {
   render() {
     const { auth } = this.props
     return (
-<div className="w300">
+<div className="container">
   <h2 className="red-text lighten-2">Sign Up</h2>
   <Form
      onSubmit={this.createAccount}

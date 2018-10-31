@@ -20,7 +20,7 @@ class Schedule extends React.Component {
       ).length
     })
     return (
-      <div className="w400 container">
+      <div className="container" id="schedule">
         {timeslots.map(timeslot => (
           <div className="card" key={timeslot.id}>
             <div className="card-content">
