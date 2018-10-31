@@ -1,0 +1,45 @@
+$transition: 0.25s linear;
+
+& {
+  height: 30px;
+  position: relative;
+}
+
+h5 {
+  font-size: 1.4;
+  margin-top: 0;
+}
+.card-action {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.card-wrapper{
+  margin: 0 auto;
+  position: relative;
+  width: 90%;
+}
+
+&.index-0 .card-wrapper { width: 95% }
+/*&.index-1 .card-wrapper { width: 94% }
+&.index-2 .card-wrapper { width: 93% }
+&.index-3 .card-wrapper { width: 92% }
+&.index-4 .card-wrapper { width: 91% }*/
+
+.card {
+  height: 250px;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  .card-content { padding: 20px 24px; }
+}
+
+&.active .card {
+  .card-content { padding: 24px 24px 12px; }
+}
+
+&.active ~ .talk {
+  top: -30px;
+}
+
