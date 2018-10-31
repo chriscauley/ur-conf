@@ -9,6 +9,7 @@ $root-width: 400px;
 #root {
   max-width: $root-width;
   margin: 0 auto;
+  width: 100%;
 }
 
 body {
@@ -33,6 +34,15 @@ body {
   justify-content: space-around;
   i { height: auto; }
   .fa { line-height: 2 }
+  .auth a {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  @media (max-width: 400px) {
+    a { padding: 0 5px; }
+    .auth a { max-width: 100px; }
+  }
 }
 
 #vote {
@@ -93,10 +103,4 @@ p > .em, p > .fa-em {
 .Clock {
     font-weight: bold;
     font-size: 2em;
-}
-
-.auth a {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
 }

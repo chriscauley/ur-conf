@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from '@reach/router'
 import { withAuth } from '../graphql'
 import _ from '../lib/translate'
-import Dropdown from '../components/Dropdown'
 import Clock from './Clock'
 
 const links = auth => (
@@ -16,13 +15,12 @@ const links = auth => (
     <li>
       <Link to="/vote/">{_`Talks`}</Link>
     </li>
-    <Dropdown
-      triggerContent={auth.user.username}
-      icon="mr fa fa-user"
-      className="auth"
-    >
-      <a onClick={auth.logout}>{_`Logout`}</a>
-    </Dropdown>
+    <li className="auth">
+      <Link to="/auth/">
+        <i className="fa fa-user" />
+        {auth.user.username}
+      </Link>
+    </li>
   </ul>
 )
 class Nav extends React.Component {
