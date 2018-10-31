@@ -28,6 +28,7 @@ h5 {
 
 .card {
   height: 250px;
+  min-height: 250px;
   margin: 0;
   overflow: hidden;
   position: relative;
@@ -35,6 +36,8 @@ h5 {
 }
 
 &.active .card {
-  .card-content { padding: 24px 24px 12px; }
+  height: auto;
+  padding-bottom: 50px;
+  .card-content { padding: 24px 24px 0; }
 }
 
