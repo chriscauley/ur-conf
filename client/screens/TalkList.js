@@ -11,13 +11,12 @@ class TalkList extends React.Component {
   state = {
     timeslotId: undefined,
     isLoading: false,
-    activeIndex: 4,
+    activeIndex: 0,
   }
   constructor(props) {
     super(props)
   }
   setTimeslot = event => {
-    this._visibleTalk = undefined
     this.setState({ timeslotId: event.target.value })
   }
   getVisibleTimeslot() {
@@ -29,22 +28,13 @@ class TalkList extends React.Component {
     }
     return timeslots.filter(ts => ts.talk_list.length)[0]
   }
-  preVote = () => this.setState({ isLoading: true })
-  postVote = () => this.setState({ isLoading: false })
   vote(vote, talk) {
-    return () => {
-      this.setState({ isLoading: true })
-      post('/api/vote/', {
-        talk_id: talk.id,
-        vote,
-      }).then(() => {
-        setVote(talk, vote)
-        this._visibleTalk = undefined
-        this.setState({ isLoading: false })
-        this.card.style.left = 0
-        this.card.style.top = 0
-      })
-    }
+    post('/api/vote/', {
+      talk_id: talk.id,
+      vote,
+    })
+    setVote(talk, vote)
+    this.setState({ activeIndex: this.state.activeIndex + 1 })
   }
   render() {
     const { auth } = this.props
@@ -78,9 +68,9 @@ class TalkList extends React.Component {
             talk={talk}
             vote={this.vote}
             key={talk.id}
-            active={this.state.activeIndex === index}
-            index={this.state.activeIndex - index}
-            onClick={() => this.setState({ activeIndex: index })}
+            parent={this}
+            activeIndex={this.state.activeIndex}
+            index={index}
           />
         ))}
       </div>

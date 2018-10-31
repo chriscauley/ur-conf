@@ -1,16 +1,16 @@
 export const vote_list = [
-  { verbose: 'no', value: -1, icon: 'em em-x', className: 'box red' },
+  { verbose: 'no', value: -1, icon: 'em em-x', className: 'red' },
   {
     verbose: 'maybe',
     value: 0,
     icon: 'em em-thinking_face',
-    className: 'box yellow',
+    className: 'yellow',
   },
   {
     verbose: 'yes',
     value: 1,
     icon: 'fa fa-check green-text fa-em',
-    className: 'box green',
+    className: 'green',
   },
 ]
 

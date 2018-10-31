@@ -14,7 +14,6 @@ def vote(request):
         defaults={'vote': data['vote']}
     )
     talkvote.vote = data['vote']
-    print(talkvote.vote)
     talkvote.save()
     return JsonResponse({'status': 'ok'})
 

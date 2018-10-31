@@ -1,4 +1,5 @@
 html, body, #root, #wrapper {
+  overscroll-behavior-x:none;
   height: 100%;
   min-height: 100%;
 }
@@ -87,16 +88,6 @@ p > .em, p > .fa-em {
   }
   .collection:last-child { margin-bottom: 0 }
   .collection-item.card-action { padding: 10px 20px; }
-}
-
-.talkbreakdown {
-  display: flex;
-  width: 100%;
-  > .box {
-    display: block;
-    flex-grow: 1;
-    height: 30px;
-  }
 }
 
 .Clock {

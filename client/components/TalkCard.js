@@ -7,53 +7,51 @@ export default class TalkCard extends React.Component {
   state = {
     cardStyle: { left: 0 },
   }
-  swiped = (_e, _deltaX, _deltaY, _isFlick, _velocity) => {
-    if (!this.props.active) {
+  swiped = (_e, deltaX, _deltaY, _isFlick, _velocity) => {
+    if (!this.active) {
       return
+    }
+    if (deltaX > 200) {
+      this.vote(-1)
+    }
+    if (deltaX < -200) {
+      this.vote(1)
     }
     this.setState({ cardStyle: { left: 0 } })
   }
   swiping = (_e, deltaX, _deltaY, _absX, _absY, _velocity) => {
-    if (!this.props.active) {
+    if (!this.active) {
       return
     }
     this.setState({ cardStyle: { left: -deltaX + 'px' } })
   }
-  swipedLeft = () => {
-    if (!this.props.active) {
-      return
-    }
-    this.vote(-1)
-  }
-  swipedRight = () => {
-    if (!this.props.active) {
-      return
-    }
-    this.vote(1)
-  }
   vote = value => {
-    throw 'NotImplemented' + value
+    this.props.parent.vote(value, this.props.talk)
   }
-  _vote = value =>
-    function vote() {
-      this.vote(value)
-    }
+  _vote(value) {
+    return () => this.vote(value)
+  }
   render() {
-    const { talk, active, index } = this.props
-    const className = `talk ${active ? 'active' : ''} index-${Math.abs(index)}`
+    const { talk, activeIndex, index } = this.props
+    const active = (this.active = activeIndex === index && 'active')
+    const zIndex = Math.abs(index - activeIndex)
+    const { vote } = talk
+    let color = (vote && vote.className) || 'grey'
+    color += ' lighten-4'
+    const className = `talk ${active} index-${zIndex}`
+    const cardClass = `card ${color}`
+    const actionClass = `${color} card-action`
     return (
       <Swipeable
         onSwiping={this.swiping}
-        onSwipedLeft={this.swipedLeft}
-        onSwipedRight={this.swipedRight}
         onSwiped={this.swiped}
         id={'talk-' + talk.id}
         className={className}
         onClick={this.props.onClick}
-        style={{ zIndex: 100 - Math.abs(index) }}
+        style={{ zIndex: 100 - zIndex }}
       >
         <div className="card-wrapper">
-          <div className="card" style={this.state.cardStyle}>
+          <div className={cardClass} style={this.state.cardStyle}>
             <div className="card-content">
               <div className="card-title">
                 <h5>{talk.title}</h5>
@@ -70,7 +68,7 @@ export default class TalkCard extends React.Component {
                 <p className="description">{talk.description}</p>
               </div>
             </div>
-            <div className="card-action">
+            <div className={actionClass}>
               {vote_list.map(vote => (
                 <a key={vote.value} onClick={this._vote(vote.value)}>
                   <span className={getTalkIcon(talk, vote)} /> {vote.verbose}
