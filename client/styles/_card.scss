@@ -2,9 +2,13 @@
   .card-action {
     display: flex;
     justify-content: space-around;
+    padding: 16px;
     a {
       cursor: pointer;
-      margin-right: 0;
+      margin-right: 0 !important;
+    }
+    @media (max-width: 400px) {
+      padding: 10px 16px;
     }
   }
   .collection:last-child { margin-bottom: 0 }
