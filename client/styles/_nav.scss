@@ -1,0 +1,15 @@
+#nav-mobile {
+  display: flex;
+  justify-content: space-around;
+  i { height: auto; }
+  .fa { line-height: 2 }
+  .auth a {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  @media (max-width: 400px) {
+    a { padding: 0 5px; }
+    .auth a { max-width: 100px; }
+  }
+}
