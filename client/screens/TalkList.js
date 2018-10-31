@@ -1,6 +1,5 @@
 import React from 'react'
 import { navigate } from '@reach/router'
-import Swipeable from 'react-swipeable'
 
 import _ from '../lib/translate'
 import { post } from '../lib/ajax'
@@ -12,8 +11,12 @@ class TalkList extends React.Component {
   state = {
     timeslotId: undefined,
     isLoading: false,
+    activeIndex: 4,
   }
-  setTimeSlot = event => {
+  constructor(props) {
+    super(props)
+  }
+  setTimeslot = event => {
     this._visibleTalk = undefined
     this.setState({ timeslotId: event.target.value })
   }
@@ -43,22 +46,6 @@ class TalkList extends React.Component {
       })
     }
   }
-  swiped = (_e, _deltaX, _deltaY, isFlick, _velocity) => {
-    if (!isFlick) {
-      this.card.style.left = 0
-      this.card.style.top = 0
-    }
-  }
-  swiping = (_e, deltaX, _deltaY, _absX, _absY, _velocity) => {
-    this.card = this.card || document.querySelector('.actual-card')
-    this.card.style.left = -deltaX + 'px'
-  }
-  swipedLeft = talk => () => {
-    this.vote(-1, talk)()
-  }
-  swipedRight = talk => () => {
-    this.vote(1, talk)()
-  }
   render() {
     const { auth } = this.props
     const { loading, timeslots } = this.props.talkQuery
@@ -69,24 +56,14 @@ class TalkList extends React.Component {
       navigate('/')
       return null
     }
-    window.TL = this
     const timeslot = this.getVisibleTimeslot()
-    /*if (!talk) {
-      return <div>{_`Timeslot cleared!`}</div>
-    }*/
     const selectableTimeslots = timeslots.filter(
       ts => ts && ts.talk_list.length,
     )
     return (
-      <Swipeable
-        onSwiping={this.swiping}
-        onSwipedLeft={this.swipedLeft}
-        onSwipedRight={this.swipedRight}
-        onSwiped={this.swiped}
-        id="vote"
-      >
+      <div id="vote">
         <select
-          onChange={this.setTimeSlot}
+          onChange={this.setTimeslot}
           className="browser-default"
           defaultValue={timeslot.id}
         >
@@ -96,10 +73,17 @@ class TalkList extends React.Component {
             </option>
           ))}
         </select>
-        {timeslot.talk_list.map(talk => (
-          <TalkCard talk={talk} vote={this.vote} key={talk.id} />
+        {timeslot.talk_list.map((talk, index) => (
+          <TalkCard
+            talk={talk}
+            vote={this.vote}
+            key={talk.id}
+            active={this.state.activeIndex === index}
+            index={this.state.activeIndex - index}
+            onClick={() => this.setState({ activeIndex: index })}
+          />
         ))}
-      </Swipeable>
+      </div>
     )
   }
 }
