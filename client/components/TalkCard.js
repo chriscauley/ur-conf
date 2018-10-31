@@ -58,12 +58,16 @@ export default class TalkCard extends React.Component {
               </div>
               <div className="card-details">
                 <p>
-                  {_`with`} {talk.authors[0].name}
+                  {_`with`}
+                  {talk.authors.map((author, i) => (
+                    <span key={author.id}>
+                      {' '}
+                      <b>{author.name}</b>
+                      {i === talk.authors.length && ','}
+                    </span>
+                  ))}
+                  {_` in room`} <b>{talk.room.name}</b>
                 </p>
-                <small>
-                  {_`Room:`} {talk.room.name} {_`@`}{' '}
-                  {talk.timeslot.time_display}
-                </small>
                 <hr />
                 <p className="description">{talk.description}</p>
               </div>
