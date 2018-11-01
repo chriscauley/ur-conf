@@ -3,44 +3,7 @@ from graphene_django import DjangoObjectType
 
 from django.contrib.auth.models import User
 from main.models import Room, TimeSlot, Author, Talk, TalkVote, TalkAttendance
-
-
-class UserType(DjangoObjectType):
-    class Meta:
-        model = User
-
-class RoomType(DjangoObjectType):
-    class Meta:
-        model = Room
-
-
-class TimeSlotType(DjangoObjectType):
-    class Meta:
-        model = TimeSlot
-
-
-class AuthorType(DjangoObjectType):
-    class Meta:
-        model = Author
-
-
-class TalkType(DjangoObjectType):
-    room_id = graphene.Int(source='room_id')
-    timeslot_id = graphene.Int(source='timeslot_id')
-    class Meta:
-        model = Talk
-
-
-class TalkVoteType(DjangoObjectType):
-    talk_id = graphene.Int(source='talk_id')
-    vote = graphene.Int(source="vote")
-    class Meta:
-        model = TalkVote
-
-
-class TalkAttendanceType(DjangoObjectType):
-    class Meta:
-        model = TalkAttendance
+from main.types import UserType, RoomType, TimeSlotType, AuthorType, TalkType, TalkVoteType, TalkAttendanceType
 
 
 class Query(graphene.ObjectType):
@@ -67,7 +30,7 @@ class Query(graphene.ObjectType):
         return TimeSlot.objects.all()
 
     def resolve_talkvotes(self,info):
-        return TalkVote.objects.filter(user=info.context.user)
+        return TalkVote.objects.all()
 
     def resolve_authors(self,info):
         return Author.objects.all()
