@@ -1,30 +1,31 @@
 import React from 'react'
 import { Link } from '@reach/router'
 import { sortBy } from 'lodash'
-import { withTalks } from '../graphql'
+import { withTalks, withVotes } from '../graphql'
+
+import { prepTalkVotes } from '../lib/vote'
 import _ from '../lib/translate'
 
 class Schedule extends React.Component {
   render() {
-    const { loading, timeslots } = this.props.talkQuery
+    const { loading, timeslots } = this.props.talkGQL
     if (loading) {
       return <div>{_`Loading`}</div>
     }
+    prepTalkVotes(this)
     timeslots.forEach(ts => {
-      ts.visibleTalks = ts.talk_list.filter(t => t.vote && t.vote.value >= 0)
+      ts.visibleTalks = ts.talkSet.filter(t => t.vote && t.vote.value >= 0)
       ts.visibleTalks = sortBy(ts.visibleTalks, t => t.vote && -t.vote.value)
 
-      ts.nullVotes = ts.talk_list.filter(t => !t.vote).length
-      ts.noVotes = ts.talk_list.filter(
-        t => t.vote && t.vote.value === -1,
-      ).length
+      ts.nullVotes = ts.talkSet.filter(t => !t.vote).length
+      ts.noVotes = ts.talkSet.filter(t => t.vote && t.vote.value === -1).length
     })
     return (
       <div className="container" id="schedule">
         {timeslots.map(timeslot => (
           <div className="card" key={timeslot.id}>
             <div className="card-content">
-              <div className="card-title">{timeslot.time_display}</div>
+              <div className="card-title">{timeslot.time}</div>
               <ul className="collection">
                 {timeslot.visibleTalks.map(talk => (
                   <li className="collection-item" key={talk.id}>
@@ -51,4 +52,4 @@ class Schedule extends React.Component {
   }
 }
 
-export default withTalks(Schedule)
+export default withTalks(withVotes(Schedule))

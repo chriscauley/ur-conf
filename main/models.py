@@ -16,6 +16,8 @@ class Room(models.Model):
 
 class TimeSlot(models.Model):
     datetime = models.DateTimeField()
+    def time(self):
+        return self.datetime.strftime("%-I:%M %p")
     def __str__(self):
         return str(self.datetime)
 
