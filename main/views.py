@@ -10,7 +10,7 @@ def vote(request):
         raise NotImplementedError()
     talkvote, _new = TalkVote.objects.get_or_create(
         user=request.user,
-        talk=Talk.objects.get(id=data['talk_id']),
+        talk_id=data['talk_id'],
         defaults={'vote': data['vote']}
     )
     talkvote.vote = data['vote']
