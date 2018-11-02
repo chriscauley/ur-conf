@@ -18,8 +18,6 @@ class TimeSlot(models.Model):
     class Meta:
         ordering = ('datetime',)
     datetime = models.DateTimeField()
-    def time(self):
-        return self.datetime.strftime("%-I:%M %p")
     def __str__(self):
         return str(self.datetime)
 

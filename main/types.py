@@ -15,7 +15,6 @@ class RoomType(DjangoObjectType):
 
 
 class TimeSlotType(DjangoObjectType):
-    time = graphene.String(source="time")
     class Meta:
         model = TimeSlot
 

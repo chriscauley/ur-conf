@@ -6,7 +6,6 @@ const talkQuery = gql`
     timeslots {
       id
       datetime
-      time
       talkSet {
         id
         title
