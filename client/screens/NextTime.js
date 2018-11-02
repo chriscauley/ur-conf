@@ -1,6 +1,6 @@
 import React from 'react'
-import { navigate } from '@reach/router'
 
+import navigate from '../lib/navigate'
 import { withTalks } from '../graphql'
 
 class NextTime extends React.Component {

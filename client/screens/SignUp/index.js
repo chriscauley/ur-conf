@@ -1,11 +1,11 @@
 import React from 'react'
-import { navigate } from '@reach/router'
 import Form from 'react-jsonschema-form'
 
 import formSchema from './schema'
 import _ from '../../lib/translate'
 import { post } from '../../lib/ajax'
 import { withAuth } from '../../graphql'
+import navigate from '../../lib/navigate'
 
 class SignUp extends React.Component {
   createAccount = ({formData={}}) => {

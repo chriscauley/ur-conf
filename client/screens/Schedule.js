@@ -14,6 +14,10 @@ const hasVotes = timeslot => {
 }
 
 class Schedule extends React.Component {
+  componentDidMount() {
+    const el = document.querySelector('[role="group"]')
+    el && el.scrollTo(0, 0)
+  }
   render() {
     const { loading } = this.props.talkGQL
     if (loading) {

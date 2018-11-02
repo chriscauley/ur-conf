@@ -1,8 +1,8 @@
 import React from 'react'
-import { navigate } from '@reach/router'
 import { format } from 'date-fns'
 
 import _ from '../lib/translate'
+import navigate from '../lib/navigate'
 import { post } from '../lib/ajax'
 import { setVote, prepTalkVotes } from '../lib/vote'
 import { withTalks, withVotes, withAuth } from '../graphql'
