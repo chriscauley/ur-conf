@@ -3,7 +3,7 @@ export default {
     type: 'object',
     required: ['email'],
     properties: {
-      username: {
+      email: {
         type: 'string',
         title: 'Email Address',
       },
