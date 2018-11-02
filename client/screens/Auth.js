@@ -6,12 +6,15 @@ import _ from '../lib/translate'
 
 class Auth extends React.Component {
   render() {
-    if (!this.props.auth.user) {
+    const { auth } = this.props
+    if (!auth.user) {
       navigate('/')
       return null
     }
     function logout() {
-      fetch('/api/logout/').then(() => window.location.reload())
+      fetch('/api/logout/')
+        .then(auth.refetch)
+        .then(() => navigate('/'))
     }
     return (
       <div>

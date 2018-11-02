@@ -9,9 +9,9 @@ import navigate from '../../lib/navigate'
 
 class SignUp extends React.Component {
   createAccount = ({formData={}}) => {
-    post("/api/nopass/create/",formData).then(
-      ()=> navigate("/help/")
-    )
+    post("/api/nopass/create/",formData).then(() => {
+      this.props.auth.refetch().then(() => navigate("/help/"))
+    })
   }
   render() {
     const { auth } = this.props
