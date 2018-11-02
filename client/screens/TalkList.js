@@ -69,6 +69,10 @@ class TalkList extends React.Component {
       return null
     }
     prepTalkVotes(this, true)
+    if (!this.timeslots) {
+      talkGQL.refetch()
+      return <div>{`Loading`}</div>
+    }
     const timeslots = this.timeslots
     const timeslot = this.getVisibleTimeslot()
     const selectableTimeslots = timeslots.filter(ts => ts && ts.talkSet.length)
