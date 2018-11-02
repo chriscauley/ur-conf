@@ -10,24 +10,17 @@ import TalkCard from '../components/TalkCard'
 
 class TalkList extends React.Component {
   state = {
-    timeslotId: undefined,
     isLoading: false,
     activeIndex: 0,
-  }
-  setTimeslot = event => {
-    this.setState({ timeslotId: event.target.value })
   }
   componentWillUnmount() {
     this.prepped = undefined
   }
   getVisibleTimeslot() {
     // find the current talk being voted on and it's timeslot
-    const { timeslotId } = this.state
-    let { timeslots } = this.props.talkGQL
-    if (timeslotId) {
-      timeslots = timeslots.filter(ts => ts.id === timeslotId)
-    }
-    return timeslots.filter(ts => ts.talkSet.length)[0]
+    const { timeslotId } = this.props
+    const { timeslots } = this.props.talkGQL
+    return timeslots.find(ts => ts.id === timeslotId)
   }
   vote(vote, talk) {
     post('/api/vote/', {
