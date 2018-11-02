@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from '@reach/router'
 import { sortBy } from 'lodash'
-import { withTalks, withVotes } from '../graphql'
+import { format } from 'date-fns'
 
+import { withTalks, withVotes } from '../graphql'
 import { prepTalkVotes } from '../lib/vote'
 import _ from '../lib/translate'
 
@@ -25,7 +26,9 @@ class Schedule extends React.Component {
         {timeslots.map(timeslot => (
           <div className="card" key={timeslot.id}>
             <div className="card-content">
-              <div className="card-title">{timeslot.time}</div>
+              <div className="card-title">
+                {format(timeslot.datetime, 'h:mm A')}
+              </div>
               <ul className="collection">
                 {timeslot.visibleTalks.map(talk => (
                   <li className="collection-item" key={talk.id}>

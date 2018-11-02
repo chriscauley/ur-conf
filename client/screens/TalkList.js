@@ -1,5 +1,6 @@
 import React from 'react'
 import { navigate } from '@reach/router'
+import { format } from 'date-fns'
 
 import _ from '../lib/translate'
 import { post } from '../lib/ajax'
@@ -62,7 +63,7 @@ class TalkList extends React.Component {
         >
           {selectableTimeslots.map(ts => (
             <option key={ts.id} value={ts.id} onClick={this.SetVote}>
-              {ts.time}
+              {format(ts.datetime, 'h:mm A')}
             </option>
           ))}
         </select>
