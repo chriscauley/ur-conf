@@ -34,6 +34,9 @@ class TalkList extends React.Component {
   onClick = index => {
     this.setState({ activeIndex: index })
   }
+  setTimeslot = (event) => {
+    navigate(`/vote/${event.target.value}/`)
+  }
   render() {
     const { auth } = this.props
     const { loading, timeslots } = this.props.talkGQL
