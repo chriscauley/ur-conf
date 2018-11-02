@@ -60,17 +60,16 @@ class TalkList extends React.Component {
     }, 0)
   }
   render() {
-    const { auth } = this.props
-    const { loading } = this.props.talkGQL
-    if (loading || auth.loading) {
+    const { auth, talkGQL } = this.props
+    if (talkGQL.loading || auth.loading) {
       return <div>{`Loading`}</div>
     }
-    prepTalkVotes(this, true)
-    const timeslots = this.timeslots
     if (!auth.user) {
       navigate('/')
       return null
     }
+    prepTalkVotes(this, true)
+    const timeslots = this.timeslots
     const timeslot = this.getVisibleTimeslot()
     const selectableTimeslots = timeslots.filter(ts => ts && ts.talkSet.length)
     const activeIndex = this.getActiveIndex()

@@ -1,9 +1,27 @@
 import React from 'react'
 
+import navigate from '../lib/navigate'
+import { withAuth } from '../graphql'
 import _ from '../lib/translate'
 
-export default class Auth extends React.Component {
+class Auth extends React.Component {
   render() {
-    return <div>{_('Not implemented ... yet o.O')}</div>
+    if (!this.props.auth.user) {
+      navigate('/')
+      return null
+    }
+    function logout() {
+      fetch('/api/logout/').then(() => window.location.reload())
+    }
+    return (
+      <div>
+        <div>{_('Not implemented ... yet o.O')}</div>
+        <button className="btn btn-blue" onClick={logout}>
+          logout
+        </button>
+      </div>
+    )
   }
 }
+
+export default withAuth(Auth)
