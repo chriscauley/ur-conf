@@ -16,6 +16,7 @@ export default class Root extends React.PureComponent {
       <SignUp path="/" />
       <Help path="/help/" />
       <TalkList path="/vote/:timeslotId/" />
+      <TalkList path="/vote/:timeslotId/:voteSort/" />
       <NextTime path="/vote/" />
       <Schedule path="/schedule/" />
     </Router>

@@ -7,8 +7,8 @@ import { withTalks, withVotes } from '../graphql'
 import { prepTalkVotes } from '../lib/vote'
 import _ from '../lib/translate'
 
-const hasTalks = (timeslot) => {
-  if (timeslot.talkSet.length) { return true }
+const hasVotes = (timeslot) => {
+  if (timeslot.voteList.length) { return true }
   return null
 }
 
@@ -22,9 +22,31 @@ class Schedule extends React.Component {
     timeslots.forEach(ts => {
       ts.visibleTalks = ts.talkSet.filter(t => t.vote && t.vote.value === 1)
 
-      ts.maybeVotes = ts.talkSet.filter(t => t.vote && t.vote.value === 0).length
-      ts.nullVotes = ts.talkSet.filter(t => !t.vote).length
-      ts.noVotes = ts.talkSet.filter(t => t.vote && t.vote.value === -1).length
+      const maybeVotes = ts.talkSet.filter(t => t.vote && t.vote.value === 0).length
+      const nullVotes = ts.talkSet.filter(t => !t.vote).length
+      const noVotes = ts.talkSet.filter(t => t.vote && t.vote.value === -1).length
+      ts.voteList = []
+      if (noVotes) {
+        ts.voteList.push({
+          icon: "em em--1",
+          count: noVotes,
+          link: `/vote/${ts.id}/-1/`,
+        })
+      }
+      if (maybeVotes) {
+        ts.voteList.push({
+          icon: "em em-thinking_face",
+          count: maybeVotes,
+          link: `/vote/${ts.id}/0/`,
+        })
+      }
+      if (nullVotes) {
+        ts.voteList.push({
+          icon: "em em-question",
+          count: nullVotes,
+          link: `/vote/${ts.id}/`,
+        })
+      }
     })
     return (
       <div className="container" id="schedule">
@@ -41,17 +63,13 @@ class Schedule extends React.Component {
                     {talk.title}
                   </li>
                 ))}
-                {hasTalks(timeslot) &&
+                {hasVotes(timeslot) &&
                 <li className="collection-item card-action">
-                  <Link to={`/vote/${timeslot.id}/`}>
-                    <i className="em em-thinking_face" /> x {timeslot.maybeVotes}
+                 {timeslot.voteList.map( vote => (
+                  <Link to={vote.link} key={vote.icon}>
+                    <i className={vote.icon} /> x {vote.count}
                   </Link>
-                  <Link to={`/vote/${timeslot.id}/`}>
-                    <i className="em em--1" /> x {timeslot.noVotes}
-                  </Link>
-                  <Link to={`/vote/${timeslot.id}/`}>
-                    <i className="em em-question" /> x {timeslot.nullVotes}
-                  </Link>
+                 ) )}
                 </li>
                 }
               </ul>
