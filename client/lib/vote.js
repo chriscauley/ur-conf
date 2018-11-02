@@ -48,7 +48,13 @@ export const prepTalkVotes = (component, resort) => {
   }
   voteGQL.talkvotes.map(({ talkId, vote }) => (voteMap[talkId] = vote))
   const timeslots = cloneDeep(talkGQL.timeslots)
-  timeslots.map(timeslot => {
+  let lastslot
+  timeslots.forEach(timeslot => {
+    timeslot.DATE = new Date(timeslot.datetime).valueOf()
+    if (lastslot) {
+      lastslot.END_DATE = timeslot.DATE - 15 * 60 * 1000
+    }
+    lastslot = timeslot
     timeslot.talkSet.map(talk => {
       setVote(talk, voteMap[talk.id])
     })
@@ -56,5 +62,6 @@ export const prepTalkVotes = (component, resort) => {
       timeslot.talkSet = sortBy(shuffle(timeslot.talkSet), sorter)
     }
   })
+  lastslot.END_DATE = lastslot.DATE + 45 * 60 * 1000
   component.timeslots = timeslots
 }

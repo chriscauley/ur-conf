@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 
 import { withTalks, withVotes } from '../graphql'
 import { prepTalkVotes } from '../lib/vote'
+import date from '../lib/date'
 import _ from '../lib/translate'
 
 const hasVotes = timeslot => {
@@ -13,10 +14,21 @@ const hasVotes = timeslot => {
   return null
 }
 
+const TalkRow = ({ talk, timeslot }) => {
+  const _isNow = date.isNow(timeslot)
+  return (
+    <li className="collection-item">
+      <span className={talk.vote.icon} />
+      {talk.title}
+    </li>
+  )
+}
+
 class Schedule extends React.Component {
   componentDidMount() {
     const el = document.querySelector('[role="group"]')
     el && el.scrollTo(0, 0)
+    date.visible = this
   }
   render() {
     const { loading } = this.props.talkGQL
@@ -64,13 +76,11 @@ class Schedule extends React.Component {
             <div className="card-content">
               <div className="card-title">
                 {format(timeslot.datetime, 'h:mm A')}
+                {date.isNow(timeslot) && <span className="right">Now!</span>}
               </div>
               <ul className="collection">
                 {timeslot.visibleTalks.map(talk => (
-                  <li className="collection-item" key={talk.id}>
-                    {talk.vote && <span className={talk.vote.icon} />}
-                    {talk.title}
-                  </li>
+                  <TalkRow talk={talk} timeslot={timeslot} key={talk.id} />
                 ))}
                 {hasVotes(timeslot) && (
                   <li className="collection-item card-action">

@@ -17,18 +17,18 @@ class Auth extends React.Component {
         .then(() => navigate('/'))
     }
     return (
-<div className="container">
-  <div className="card">
-    <div className="card-content">
-      <div className="card-title">
-        <h2 className="red-text lighten-2">Account Info</h2>
+      <div className="container">
+        <div className="card">
+          <div className="card-content">
+            <div className="card-title">
+              <h2 className="red-text lighten-2">Account Info</h2>
+            </div>
+            <button className="btn btn-blue" onClick={logout}>
+              logout
+            </button>
+          </div>
+        </div>
       </div>
-      <button className="btn btn-blue" onClick={logout}>
-        logout
-      </button>
-    </div>
-  </div>
-</div>
     )
   }
 }
