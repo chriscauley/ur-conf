@@ -1,14 +1,15 @@
 import React from 'react'
 import { Link } from '@reach/router'
-import { sortBy } from 'lodash'
 import { format } from 'date-fns'
 
 import { withTalks, withVotes } from '../graphql'
 import { prepTalkVotes } from '../lib/vote'
 import _ from '../lib/translate'
 
-const hasVotes = (timeslot) => {
-  if (timeslot.voteList.length) { return true }
+const hasVotes = timeslot => {
+  if (timeslot.voteList.length) {
+    return true
+  }
   return null
 }
 
@@ -22,27 +23,29 @@ class Schedule extends React.Component {
     timeslots.forEach(ts => {
       ts.visibleTalks = ts.talkSet.filter(t => t.vote && t.vote.value === 1)
 
-      const maybeVotes = ts.talkSet.filter(t => t.vote && t.vote.value === 0).length
+      const maybeVotes = ts.talkSet.filter(t => t.vote && t.vote.value === 0)
+        .length
       const nullVotes = ts.talkSet.filter(t => !t.vote).length
-      const noVotes = ts.talkSet.filter(t => t.vote && t.vote.value === -1).length
+      const noVotes = ts.talkSet.filter(t => t.vote && t.vote.value === -1)
+        .length
       ts.voteList = []
       if (noVotes) {
         ts.voteList.push({
-          icon: "em em--1",
+          icon: 'em em--1',
           count: noVotes,
           link: `/vote/${ts.id}/-1/`,
         })
       }
       if (maybeVotes) {
         ts.voteList.push({
-          icon: "em em-thinking_face",
+          icon: 'em em-thinking_face',
           count: maybeVotes,
           link: `/vote/${ts.id}/0/`,
         })
       }
       if (nullVotes) {
         ts.voteList.push({
-          icon: "em em-question",
+          icon: 'em em-question',
           count: nullVotes,
           link: `/vote/${ts.id}/`,
         })
@@ -63,15 +66,15 @@ class Schedule extends React.Component {
                     {talk.title}
                   </li>
                 ))}
-                {hasVotes(timeslot) &&
-                <li className="collection-item card-action">
-                 {timeslot.voteList.map( vote => (
-                  <Link to={vote.link} key={vote.icon}>
-                    <i className={vote.icon} /> x {vote.count}
-                  </Link>
-                 ) )}
-                </li>
-                }
+                {hasVotes(timeslot) && (
+                  <li className="collection-item card-action">
+                    {timeslot.voteList.map(vote => (
+                      <Link to={vote.link} key={vote.icon}>
+                        <i className={vote.icon} /> x {vote.count}
+                      </Link>
+                    ))}
+                  </li>
+                )}
               </ul>
             </div>
           </div>

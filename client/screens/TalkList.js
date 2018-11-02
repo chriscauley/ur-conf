@@ -11,16 +11,15 @@ import TalkCard from '../components/TalkCard'
 class TalkList extends React.Component {
   state = {
     isLoading: false,
-    activeIndex: 0,
+    activeIndex: undefined,
   }
   componentWillUnmount() {
-    this.prepped = undefined
+    this.timeslots = undefined
   }
   getVisibleTimeslot() {
     // find the current talk being voted on and it's timeslot
     const { timeslotId } = this.props
-    const { timeslots } = this.props.talkGQL
-    return timeslots.find(ts => ts.id === timeslotId)
+    return this.timeslots.find(ts => ts.id === timeslotId)
   }
   vote(vote, talk) {
     post('/api/vote/', {
@@ -28,28 +27,53 @@ class TalkList extends React.Component {
       vote,
     })
     setVote(talk, vote)
-    this.setState({ activeIndex: this.state.activeIndex + 1 })
+    this.setState({ activeIndex: this.getActiveIndex() + 1 })
     this.props.voteGQL.refetch()
   }
   onClick = index => {
     this.setState({ activeIndex: index })
   }
-  setTimeslot = (event) => {
+  setTimeslot = event => {
     navigate(`/vote/${event.target.value}/`)
+  }
+  getActiveIndex() {
+    if (this.state.activeIndex !== undefined) {
+      return this.state.activeIndex
+    }
+    if (this.props.voteSort !== undefined) {
+      const timeslot = this.getVisibleTimeslot()
+      const voteSort = parseInt(this.props.voteSort)
+      const index = timeslot.talkSet.findIndex(
+        ({ vote }) => vote && vote.value === voteSort,
+      )
+      if (index !== -1) {
+        this.scrollTo(index)
+        return index
+      }
+    }
+    return 0
+  }
+  scrollTo(index) {
+    setTimeout(() => {
+      const el = document.getElementById('vote').parentElement
+      el.scrollTo(0, index * 30)
+    }, 0)
   }
   render() {
     const { auth } = this.props
-    const { loading, timeslots } = this.props.talkGQL
+    const { loading } = this.props.talkGQL
     if (loading || auth.loading) {
       return <div>{`Loading`}</div>
     }
-    prepTalkVotes(this,true)
+    prepTalkVotes(this, true)
+    const timeslots = this.timeslots
     if (!auth.user) {
       navigate('/')
       return null
     }
     const timeslot = this.getVisibleTimeslot()
     const selectableTimeslots = timeslots.filter(ts => ts && ts.talkSet.length)
+    const activeIndex = this.getActiveIndex()
     return (
       <div id="vote">
         <select
@@ -69,7 +93,7 @@ class TalkList extends React.Component {
             vote={this.vote}
             key={talk.id}
             parent={this}
-            activeIndex={this.state.activeIndex}
+            activeIndex={activeIndex}
             index={index}
             onClick={this.onClick}
           />
