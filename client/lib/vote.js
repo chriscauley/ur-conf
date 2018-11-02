@@ -19,7 +19,7 @@ export const vote_map = {}
 vote_list.forEach(vote => (vote_map[vote.value] = vote))
 
 export const setVote = (talk, vote) => {
-  talk.vote = { ...vote_map[vote] }
+  talk.vote = vote_map[vote]?{ ...vote_map[vote] }:undefined;
 }
 
 export const getTalkIcon = (talk, vote) => {
