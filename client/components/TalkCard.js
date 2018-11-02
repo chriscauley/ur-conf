@@ -11,10 +11,10 @@ export default class TalkCard extends React.Component {
     if (!this.active) {
       return
     }
-    if (deltaX > 200) {
+    if (deltaX > 150) {
       this.vote(-1)
     }
-    if (deltaX < -200) {
+    if (deltaX < -150) {
       this.vote(1)
     }
     this.setState({ cardStyle: { left: 0 } })

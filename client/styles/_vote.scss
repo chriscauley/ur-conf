@@ -1,6 +1,7 @@
 #vote {
   flex-grow: 1;
   position: relative;
+  overflow-x: hidden;
   .talk {
     @import "_talk.scss";
   }
