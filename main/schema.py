@@ -30,7 +30,9 @@ class Query(graphene.ObjectType):
         return TimeSlot.objects.all()
 
     def resolve_talkvotes(self,info):
-        return TalkVote.objects.all()
+        if not info.context.user.is_authenticated:
+            return []
+        return TalkVote.objects.filter(user=info.context.user)
 
     def resolve_authors(self,info):
         return Author.objects.all()
