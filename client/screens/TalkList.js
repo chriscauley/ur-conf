@@ -43,7 +43,7 @@ class TalkList extends React.Component {
     if (loading || auth.loading) {
       return <div>{`Loading`}</div>
     }
-    prepTalkVotes(this)
+    prepTalkVotes(this,true)
     if (!auth.user) {
       navigate('/')
       return null
