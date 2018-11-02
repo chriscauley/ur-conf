@@ -7,6 +7,11 @@ import { withTalks, withVotes } from '../graphql'
 import { prepTalkVotes } from '../lib/vote'
 import _ from '../lib/translate'
 
+const hasTalks = (timeslot) => {
+  if (timeslot.talkSet.length) { return true }
+  return null
+}
+
 class Schedule extends React.Component {
   render() {
     const { loading, timeslots } = this.props.talkGQL
@@ -15,9 +20,9 @@ class Schedule extends React.Component {
     }
     prepTalkVotes(this)
     timeslots.forEach(ts => {
-      ts.visibleTalks = ts.talkSet.filter(t => t.vote && t.vote.value >= 0)
-      ts.visibleTalks = sortBy(ts.visibleTalks, t => t.vote && -t.vote.value)
+      ts.visibleTalks = ts.talkSet.filter(t => t.vote && t.vote.value === 1)
 
+      ts.maybeVotes = ts.talkSet.filter(t => t.vote && t.vote.value === 0).length
       ts.nullVotes = ts.talkSet.filter(t => !t.vote).length
       ts.noVotes = ts.talkSet.filter(t => t.vote && t.vote.value === -1).length
     })
@@ -36,16 +41,19 @@ class Schedule extends React.Component {
                     {talk.title}
                   </li>
                 ))}
-                {(timeslot.noVotes || timeslot.nullVotes || '') && (
-                  <li className="collection-item card-action">
-                    <Link to="/vote/">
-                      <i className="em em--1" /> x {timeslot.noVotes}
-                    </Link>
-                    <Link to="/vote/">
-                      <i className="em em-question" /> x {timeslot.nullVotes}
-                    </Link>
-                  </li>
-                )}
+                {hasTalks(timeslot) &&
+                <li className="collection-item card-action">
+                  <Link to={`/vote/${timeslot.id}/`}>
+                    <i className="em em-thinking_face" /> x {timeslot.maybeVotes}
+                  </Link>
+                  <Link to={`/vote/${timeslot.id}/`}>
+                    <i className="em em--1" /> x {timeslot.noVotes}
+                  </Link>
+                  <Link to={`/vote/${timeslot.id}/`}>
+                    <i className="em em-question" /> x {timeslot.nullVotes}
+                  </Link>
+                </li>
+                }
               </ul>
             </div>
           </div>
