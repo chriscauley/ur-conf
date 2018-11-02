@@ -15,6 +15,10 @@ class SignUp extends React.Component {
   }
   render() {
     const { auth } = this.props
+    if (auth.user) {
+      navigate("/vote/")
+    }
+    if (auth.loading || auth.user ) { return null }
     return (
 <div className="container">
   <h2 className="red-text lighten-2">Sign Up</h2>
@@ -22,10 +26,7 @@ class SignUp extends React.Component {
      onSubmit={this.createAccount}
      {...formSchema}>
     <p className="center"><button className="btn btn-blue">
-        { auth.user?
-        _`Set Email`:
-        _`Create Account`
-        }
+        {_('Create Account')}
     </button></p>
   </Form>
   <p className="center">
