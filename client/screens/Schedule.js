@@ -15,19 +15,21 @@ const hasVotes = timeslot => {
 
 class Schedule extends React.Component {
   render() {
-    const { loading, timeslots } = this.props.talkGQL
+    const { loading } = this.props.talkGQL
     if (loading) {
       return <div>{_`Loading`}</div>
     }
     prepTalkVotes(this)
+    const { timeslots } = this
     timeslots.forEach(ts => {
-      ts.visibleTalks = ts.talkSet.filter(t => t.vote && t.vote.value === 1)
+      const talkSet = ts.talkSet
+      const voteTalks = talkSet.filter(t => t.vote)
+      ts.visibleTalks = voteTalks.filter(t => t.vote.value === 1)
 
-      const maybeVotes = ts.talkSet.filter(t => t.vote && t.vote.value === 0)
-        .length
-      const nullVotes = ts.talkSet.filter(t => !t.vote).length
-      const noVotes = ts.talkSet.filter(t => t.vote && t.vote.value === -1)
-        .length
+      const maybeVotes = voteTalks.filter(t => t.vote.value === 0).length
+      const noVotes = voteTalks.filter(t => t.vote.value === -1).length
+      const nullVotes = talkSet.filter(t => !t.vote).length
+
       ts.voteList = []
       if (noVotes) {
         ts.voteList.push({
