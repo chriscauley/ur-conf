@@ -22,3 +22,9 @@ p > .em, p > .fa-em {
 .ml { margin-left: 0.8rem }
 
 .mx { margin-left: 0.8rem; margin-right: 0.8rem; }
+
+@media only screen and (min-width: 720px) {
+  .flow-text {
+    font-size: 1.488rem !important;
+  }
+}

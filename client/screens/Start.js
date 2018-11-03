@@ -28,11 +28,10 @@ class SignUp extends React.Component {
         </p>
         <p className="flow-text">
           If you are reading this now, it is because I invited you to preview
-          the app using the Bar Camp 2017 talks.
+          the app in "Bar Camp 2017" talks.
         </p>
         <p className="flow-text">
-          The help screen tells you how to warp through time. Using cheat codes,
-          it should take about 5 minutes to complete this app.
+          Using cheat codes, it should take about 5 minutes to complete this app.
         </p>
         <div className="flow-text center">- Chris Cauley</div>
         <p className="center">

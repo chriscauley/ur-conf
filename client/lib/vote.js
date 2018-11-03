@@ -75,6 +75,7 @@ export const prepTalkVotes = (component, resort) => {
     lastslot = timeslot
     timeslot.talkSet.map(talk => {
       setVote(talk, voteMap[talk.id])
+      talk.timeslot = timeslot
       talk.attendance = attendances[talk.id]
     })
     if (resort) {

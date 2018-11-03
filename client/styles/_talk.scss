@@ -13,6 +13,11 @@ h5 {
   position: absolute;
   width: 100%;
   a { color: inherit; }
+  &.grayscale a {
+    cursor: default;
+    filter: grayscale(1);
+    opacity: 0.5;
+  }
 }
 
 .card-wrapper{
