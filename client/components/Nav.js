@@ -23,6 +23,8 @@ const links = auth => (
     </li>
   </ul>
 )
+const helpClass = "fa fa-question-circle-o fa-3x"
+const HelpLink = <Link to="/help/" id="help-link" className={helpClass} />
 class Nav extends React.Component {
   render() {
     const auth = this.props.auth
@@ -39,6 +41,7 @@ class Nav extends React.Component {
             </ul>
           )}
         </div>
+        {auth.user && HelpLink}
       </nav>
     )
   }
