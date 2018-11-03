@@ -14,12 +14,29 @@ const hasVotes = timeslot => {
   return null
 }
 
+window.ATTENDS = JSON.parse(window.localStorage.getItem('attends') || '{}')
+
 const TalkRow = ({ talk, timeslot }) => {
-  const _isNow = date.isNow(timeslot)
+  const isNow = date.isNow(timeslot)
+  let icon = talk.vote.icon
+  let click = () => {}
+  if (window.ATTENDS[timeslot.id] === talk.id) {
+    icon = 'em em-star2'
+  } else if (isNow) {
+    icon = 'fa fa-square-o grey-text lighten-2 fa-em'
+  }
+  icon += ' trigger'
+  if (isNow) {
+    click = () => {
+      window.ATTENDS[timeslot.id] = talk.id
+      window.localStorage.setItem('attends', JSON.stringify(window.ATTENDS))
+      setTimeout(date.tick, 0)
+    }
+  }
   return (
-    <li className="collection-item">
-      <span className={talk.vote.icon} />
-      {talk.title}
+    <li className="collection-item" onClick={click}>
+      <i className={icon} />
+      <span>{talk.title}</span>
     </li>
   )
 }
@@ -49,7 +66,7 @@ class Schedule extends React.Component {
       ts.voteList = []
       if (noVotes) {
         ts.voteList.push({
-          icon: 'em em--1',
+          icon: 'em em-x',
           count: noVotes,
           link: `/vote/${ts.id}/-1/`,
         })
