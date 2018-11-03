@@ -1,8 +1,8 @@
 import TalkList from './TalkList'
-import SignUp from './SignUp'
+import Start from './Start'
 import Schedule from './Schedule'
 import Help from './Help'
 import Auth from './Auth'
 import NextTime from './NextTime'
 
-export { TalkList, SignUp, Schedule, Help, NextTime, Auth }
+export { TalkList, Start, Schedule, Help, NextTime, Auth }
