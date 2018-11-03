@@ -5,8 +5,9 @@
     padding: 10px 15px;
     i.trigger {
       display: block;
-      min-width: 21px;
-      width: 21px;
+      height: 30px;
+      min-width: 30px;
+      width: 30px;
     }
   }
   @media (max-width: 400px) {
@@ -23,5 +24,20 @@
     display: block;
     margin-top: 3px;
     padding: 12px;
+  }
+}
+
+#schedule .em-star2 {
+  background-position: center;
+  background-size: 100%;
+  cursor: pointer;
+  filter: none;
+  opacity: 1;
+  transition: 0.3s;
+  &.grayscale {
+    background-size: 80%;
+    filter: grayscale(1);
+    opacity: 0.8;
+    transition: 0s;
   }
 }

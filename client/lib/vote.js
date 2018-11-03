@@ -32,6 +32,11 @@ export const setVote = (talk, vote) => {
   talk.vote = vote_map[vote] ? { ...vote_map[vote] } : undefined
 }
 
+export const setAttendance = (talk, timeslot) => {
+  timeslot.talkSet.forEach(t => (t.attendance = false))
+  talk.attendance = true
+}
+
 export const getTalkIcon = (talk, vote) => {
   if (talk.vote && vote.value === talk.vote.value) {
     return vote.icon + ' selected'
@@ -47,6 +52,7 @@ export const prepTalkVotes = (component, resort) => {
   if (component.timeslots || talkGQL.loading || voteGQL.loading) {
     return
   }
+
   const voteMap = {}
   const sorter = talk => {
     if (!talk.vote) {
@@ -55,6 +61,10 @@ export const prepTalkVotes = (component, resort) => {
     return -talk.vote.value
   }
   voteGQL.talkvotes.map(({ talkId, vote }) => (voteMap[talkId] = vote))
+
+  const attendances = {}
+  voteGQL.talkattendances.forEach(({ talkId }) => (attendances[talkId] = true))
+
   const timeslots = cloneDeep(talkGQL.timeslots)
   let lastslot
   timeslots.forEach(timeslot => {
@@ -65,6 +75,7 @@ export const prepTalkVotes = (component, resort) => {
     lastslot = timeslot
     timeslot.talkSet.map(talk => {
       setVote(talk, voteMap[talk.id])
+      talk.attendance = attendances[talk.id]
     })
     if (resort) {
       timeslot.talkSet = sortBy(shuffle(timeslot.talkSet), sorter)

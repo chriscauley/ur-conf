@@ -3,8 +3,9 @@ import { Link } from '@reach/router'
 import { format } from 'date-fns'
 
 import { withTalks, withVotes } from '../graphql'
-import { prepTalkVotes } from '../lib/vote'
+import { prepTalkVotes, setAttendance } from '../lib/vote'
 import date from '../lib/date'
+import { post } from '../lib/ajax'
 import _ from '../lib/translate'
 
 const hasVotes = timeslot => {
@@ -14,58 +15,54 @@ const hasVotes = timeslot => {
   return null
 }
 
-window.ATTENDS = JSON.parse(window.localStorage.getItem('attends') || '{}')
-
-const TalkRow = ({ talk, timeslot }) => {
+const TalkRow = ({ talk, timeslot, attend }) => {
   const isNow = date.isNow(timeslot)
   let icon = talk.vote.icon
-  let click = () => {}
-  if (window.ATTENDS[timeslot.id] === talk.id) {
+  talk.attend = isNow ? () => attend(talk, timeslot) : undefined
+  if (talk.attendance) {
     icon = 'em em-star2'
   } else if (isNow) {
-    icon = 'fa fa-square-o grey-text lighten-2 fa-em'
+    icon = 'em em-star2 grayscale'
   }
   icon += ' trigger'
-  if (isNow) {
-    click = () => {
-      window.ATTENDS[timeslot.id] = talk.id
-      window.localStorage.setItem('attends', JSON.stringify(window.ATTENDS))
-      setTimeout(date.tick, 0)
-    }
-  }
   return (
-<li className="collection-item" onClick={click}>
-  <i className={icon} />
-  <span>{talk.title}</span>
-</li>
+    <li className="collection-item" onClick={talk.attend}>
+      <i className={icon} />
+      <span>{talk.title}</span>
+    </li>
   )
 }
 
-const TimeslotRow = ({timeslot}) => {
+const TimeslotRow = ({ timeslot, attend }) => {
   return (
-<div className="card">
-  <div className="card-content">
-    <div className="card-title">
-      {format(timeslot.datetime, 'h:mm A')}
-      {date.isNow(timeslot) && <span className="right">Now!</span>}
+    <div className="card">
+      <div className="card-content">
+        <div className="card-title">
+          {format(timeslot.datetime, 'h:mm A')}
+          {date.isNow(timeslot) && <span className="right">Now!</span>}
+        </div>
+        <ul className="collection">
+          {timeslot.visibleTalks.map(talk => (
+            <TalkRow
+              talk={talk}
+              timeslot={timeslot}
+              attend={attend}
+              key={talk.id}
+            />
+          ))}
+          {hasVotes(timeslot) && (
+            <li className="collection-item card-action">
+              {timeslot.voteList.map(vote => (
+                <Link to={vote.link} key={vote.icon}>
+                  <i className={vote.icon} /> x {vote.count}
+                </Link>
+              ))}
+            </li>
+          )}
+        </ul>
+      </div>
     </div>
-    <ul className="collection">
-      {timeslot.visibleTalks.map(talk => (
-      <TalkRow talk={talk} timeslot={timeslot} key={talk.id} />
-      ))}
-      {hasVotes(timeslot) && (
-      <li className="collection-item card-action">
-        {timeslot.voteList.map(vote => (
-        <Link to={vote.link} key={vote.icon}>
-          <i className={vote.icon} /> x {vote.count}
-        </Link>
-        ))}
-      </li>
-      )}
-    </ul>
-  </div>
-</div>
-)
+  )
 }
 
 class Schedule extends React.Component {
@@ -74,27 +71,40 @@ class Schedule extends React.Component {
     el && el.scrollTo(0, 0)
     date.visible = this
   }
+  attend = (talk, timeslot) => {
+    post('/api/attendance/', {
+      talk_id: talk.id,
+      timeslot_id: timeslot.id,
+    })
+    setAttendance(talk, timeslot)
+    this.props.voteGQL.refetch()
+    this.forceUpdate()
+  }
   render() {
-    const { loading } = this.props.talkGQL
-    if (loading) {
+    prepTalkVotes(this)
+    if (!this.timeslots) {
+      // set by prepTalkVotes
       return <div>{_`Loading`}</div>
     }
 
-    prepTalkVotes(this)
-
     let tsFilter = ts => !date.isPast(ts)
-    let _CN = "past-link"
-    let _to = "/schedule/past/"
-    let _text = "Show past talks"
+    let _CN = 'past-link'
+    let _to = '/schedule/past/'
+    let _text = 'Show past talks'
     if (this.props.showPast) {
-      _text = "Show upcoming talks"
+      _text = 'Show upcoming talks'
       tsFilter = ts => date.isPast(ts)
-      _to = "/schedule/"
-      _CN = "now-link"
+      _to = '/schedule/'
+      _CN = 'now-link'
     }
 
     const timeslots = this.timeslots.filter(tsFilter)
-    const TimeLink = (timeslots.length !== this.timeslots.length)?<Link to={_to} className={_CN}>{_text}</Link>:null
+    const TimeLink =
+      timeslots.length !== this.timeslots.length ? (
+        <Link to={_to} className={_CN}>
+          {_text}
+        </Link>
+      ) : null
 
     timeslots.forEach(ts => {
       const talkSet = ts.talkSet
@@ -129,12 +139,16 @@ class Schedule extends React.Component {
       }
     })
     return (
-<div className="container" id="schedule">
-  {TimeLink}
-  {timeslots.map(timeslot => (
-  <TimeslotRow timeslot={timeslot} key={timeslot.id} />
-  ))}
-</div>
+      <div className="container" id="schedule">
+        {TimeLink}
+        {timeslots.map(timeslot => (
+          <TimeslotRow
+            attend={this.attend}
+            timeslot={timeslot}
+            key={timeslot.id}
+          />
+        ))}
+      </div>
     )
   }
 }

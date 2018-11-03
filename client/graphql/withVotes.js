@@ -7,7 +7,7 @@ const voteQuery = gql`
       vote
       talkId
     }
-    talkattendance {
+    talkattendances {
       talkId
     }
   }
