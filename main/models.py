@@ -58,3 +58,4 @@ class TalkAttendance(models.Model):
     talk = models.ForeignKey(Talk,on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     timeslot = models.ForeignKey(TimeSlot,on_delete=models.CASCADE)
+    modofied = models.DateTimeField(auto_now=True)
