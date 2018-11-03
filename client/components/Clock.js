@@ -2,7 +2,6 @@ import React from 'react'
 
 import date from '../lib/date'
 
-
 export default class Clock extends React.Component {
   componentWillUnmount() {
     clearInterval(window.CLOCK_INTERVAL)
@@ -31,7 +30,7 @@ export default class Clock extends React.Component {
     this.forceUpdate()
   }
   render() {
-    const s = date.SPEED?`+${date.SPEED}/s`:null
+    const s = date.SPEED ? `+${date.SPEED}/s` : null
     return (
       <a onClick={this.click} className="Clock">
         {date.print()}

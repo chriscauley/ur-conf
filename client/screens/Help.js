@@ -22,21 +22,22 @@ class Help extends React.Component {
     const randText = randTexts[Math.floor(Math.random() * randTexts.length)]
     return (
       <div className="mx" id="help">
-        <h3 className="red-text lighten-2 center">
-          Halp! How to app?
-        </h3>
+        <h3 className="red-text lighten-2 center">Halp! How to app?</h3>
         <h4 className="red-text lighten-2">Step 1: Choose Talks</h4>
         <p className="flow-text">
           Swipe or tap talks to sort them into the following lists.
         </p>
         <ul className="browser-default">
-          {vote_list.slice().reverse().map(vote => (
-            <li className="mb" key={vote.value}>
-              <span className={vote.icon} />
-              {vote.verbose}
-            </li>
-          ))}
-        {/*<li className="mb">
+          {vote_list
+            .slice()
+            .reverse()
+            .map(vote => (
+              <li className="mb" key={vote.value}>
+                <span className={vote.icon} />
+                {vote.verbose}
+              </li>
+            ))}
+          {/*<li className="mb">
             <span className="em em-question" />
             No vote cast
           </li>*/}
@@ -51,22 +52,25 @@ class Help extends React.Component {
         <div className="hr" />
         <h4 className="red-text lighten-2">Step 3: Attend Talks</h4>
         <p className="flow-text">
-          When you attend a talk, mark your attendance in the schedule to get a star.
+          When you attend a talk, mark your attendance in the schedule to get a
+          <span class="em em-star"></span>
         </p>
 
         <div className="hr" />
         <h4 className="red-text lighten-2">Step &infin;: Control TIME!!!</h4>
         <p className="flow-text">
           Click the clock to speed up time to 0, 5, or 15 minutes per second.
-          Double click to reset. Use this power wisely, or you'll break time.
+          Double click to reset. Use this power wisely, or you will break time.
         </p>
-        {/*<p
-          className="flow-text"
-          style={{ whiteSpace: 'pre-line' }}
-          onClick={this.updoot}
-        >
-          {randText}
-        </p>*/}
+        {null && (
+          <p
+            className="flow-text"
+            style={{ whiteSpace: 'pre-line' }}
+            onClick={this.updoot}
+          >
+            {randText}
+          </p>
+        )}
         <div className="hr" />
         <p className="center flow-text">What are you waiting for?</p>
         <div className="center mb">

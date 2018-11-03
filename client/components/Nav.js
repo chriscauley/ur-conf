@@ -23,7 +23,7 @@ const links = auth => (
     </li>
   </ul>
 )
-const helpClass = "fa fa-question-circle-o fa-3x"
+const helpClass = 'fa fa-question-circle-o fa-3x'
 const HelpLink = <Link to="/help/" id="help-link" className={helpClass} />
 class Nav extends React.Component {
   render() {
