@@ -5,10 +5,9 @@ import { vote_list } from '../lib/vote'
 import _ from '../lib/translate'
 
 const randTexts = [
-  "If not, that's cool.",
-  'On one hand, the points are worthless. On the other hand... points!',
-  'At the end of the conference whovever has the most points wins a prize... the prize is more points.',
-  "The rules are made up, and the points don't matter.",
+  'On one hand, the stars are worthless. On the other hand... shiny!',
+  'Each star is worth one point. Points are great, right?',
+  'Whovever has the most stars wins a prize. \nThe prize is an even bigger star.',
   "That's all. That's all this app does. What did you expect?",
   'Step 4: ...\nStep 5: ...\n...\n Profit?',
 ].map(_)
@@ -22,41 +21,37 @@ class Help extends React.Component {
     }
     const randText = randTexts[Math.floor(Math.random() * randTexts.length)]
     return (
-      <div className="w400 mx">
-        <h2 className="red-text lighten-2">Help!</h2>
-        <hr />
-        <h4 className="red-text lighten-2">Step 1: Vote on Talks</h4>
+      <div className="mx" id="help">
+        <h2 className="red-text lighten-2">Halp!</h2>
+        <div className="hr" />
+        <h4 className="red-text lighten-2">Step 1: Choose Talks</h4>
         <p className="flow-text">
-          First vote on each talk in each time slot. Votes can take one of four
-          values:
+          Swipe or tap talks to sort them into the following lists.
         </p>
         <ul className="browser-default">
-          {vote_list.map(vote => (
+          {vote_list.slice().reverse().map(vote => (
             <li className="mb" key={vote.value}>
               <span className={vote.icon} />
               {vote.verbose}
             </li>
           ))}
-          <li className="mb">
+        {/*<li className="mb">
             <span className="em em-question" />
             No vote cast
-          </li>
+          </li>*/}
         </ul>
-        <hr />
+        <div className="hr" />
         <h4 className="red-text lighten-2">Step 2: View Schedule</h4>
         <p className="flow-text">
-          After voting, your schedule will only show
-          <span className="em em---1" /> and
-          <span className="em em-thinking_face" />
+          Your schedule will only show
+          <span className={vote_list[2].icon} />
           votes for each time slot.
         </p>
-        <hr />
+        <div className="hr" />
         <h4 className="red-text lighten-2">Step 3: Attend Talks</h4>
         <p className="flow-text">
-          While at a talk, click the talk you attend and mark yourself as
-          present. You can get a point for attending one talk in each slot.
+          When you attend a talk, mark your attendance in the schedule to get a star.
         </p>
-        <hr />
         <p
           className="flow-text"
           style={{ whiteSpace: 'pre-line' }}
@@ -64,7 +59,8 @@ class Help extends React.Component {
         >
           {randText}
         </p>
-        <p className="flow-text">What are you waiting for?</p>
+        <div className="hr" />
+        <p className="center flow-text">What are you waiting for?</p>
         <div className="center mb">
           <Link to="/vote/">
             <button className="btn btn-blue">Start Voting</button>
