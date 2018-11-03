@@ -22,8 +22,9 @@ class Help extends React.Component {
     const randText = randTexts[Math.floor(Math.random() * randTexts.length)]
     return (
       <div className="mx" id="help">
-        <h2 className="red-text lighten-2">Halp!</h2>
-        <div className="hr" />
+        <h3 className="red-text lighten-2 center">
+          Halp! How to app?
+        </h3>
         <h4 className="red-text lighten-2">Step 1: Choose Talks</h4>
         <p className="flow-text">
           Swipe or tap talks to sort them into the following lists.
@@ -52,13 +53,20 @@ class Help extends React.Component {
         <p className="flow-text">
           When you attend a talk, mark your attendance in the schedule to get a star.
         </p>
-        <p
+
+        <div className="hr" />
+        <h4 className="red-text lighten-2">Step &infin;: Control TIME!!!</h4>
+        <p className="flow-text">
+          Click the clock to speed up time to 0, 5, or 15 minutes per second.
+          Double click to reset. Use this power wisely, or you'll break time.
+        </p>
+        {/*<p
           className="flow-text"
           style={{ whiteSpace: 'pre-line' }}
           onClick={this.updoot}
         >
           {randText}
-        </p>
+        </p>*/}
         <div className="hr" />
         <p className="center flow-text">What are you waiting for?</p>
         <div className="center mb">
