@@ -13,7 +13,7 @@ class Query(graphene.ObjectType):
     authors = graphene.List(AuthorType)
     talks = graphene.List(TalkType)
     talkvotes = graphene.List(TalkVoteType)
-    talkattendance = graphene.Field(TalkAttendanceType)
+    talkattendances = graphene.List(TalkAttendanceType)
 
     def resolve_user(self,info):
         if not info.context.user.is_authenticated:
@@ -33,6 +33,11 @@ class Query(graphene.ObjectType):
         if not info.context.user.is_authenticated:
             return []
         return TalkVote.objects.filter(user=info.context.user)
+
+    def resolve_talkattendances(self,info):
+        if not info.context.user.is_authenticated:
+            return []
+        return TalkAttendance.objects.filter(user=info.context.user)
 
     def resolve_authors(self,info):
         return Author.objects.all()
