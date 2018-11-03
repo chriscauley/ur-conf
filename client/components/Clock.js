@@ -2,37 +2,40 @@ import React from 'react'
 
 import date from '../lib/date'
 
+
 export default class Clock extends React.Component {
+  componentWillUnmount() {
+    clearInterval(window.CLOCK_INTERVAL)
+  }
   click = () => {
+    clearInterval(window.CLOCK_INTERVAL)
+    window.CLOCK_INTERVAL = setInterval(() => {
+      date.tick()
+      this.forceUpdate()
+    }, 1000)
     const now = new Date()
     if (now - this.lastClick < 500) {
-      clearInterval(this.interval)
       date.reset()
+      date.SPEED = 0
       this.forceUpdate()
       return
     }
-
     this.lastClick = now
-
-    if (this.interval) {
-      if (date.SPEED === 60) {
-        date.SPEED = 15 * 60
-      } else {
-        date.SPEED = 60
-        clearInterval(this.interval)
-        this.interval = undefined
-      }
+    if (!date.SPEED) {
+      date.SPEED = 5
+    } else if (date.SPEED === 5) {
+      date.SPEED = 15
     } else {
-      this.interval = setInterval(() => {
-        date.tick()
-        this.forceUpdate()
-      }, 1000)
+      date.SPEED = 0
     }
+    this.forceUpdate()
   }
   render() {
+    const s = date.SPEED?`+${date.SPEED}/s`:null
     return (
       <a onClick={this.click} className="Clock">
         {date.print()}
+        <b className="small">{s}</b>
       </a>
     )
   }
