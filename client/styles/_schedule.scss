@@ -14,3 +14,14 @@
     .card-content { padding: 10px; }
   }
 }
+
+#schedule {
+  .now-link, .past-link {
+    background: #e0e0e0;
+    color: inherit;
+    text-align: center;
+    display: block;
+    margin-top: 3px;
+    padding: 12px;
+  }
+}

@@ -34,11 +34,38 @@ const TalkRow = ({ talk, timeslot }) => {
     }
   }
   return (
-    <li className="collection-item" onClick={click}>
-      <i className={icon} />
-      <span>{talk.title}</span>
-    </li>
+<li className="collection-item" onClick={click}>
+  <i className={icon} />
+  <span>{talk.title}</span>
+</li>
   )
+}
+
+const TimeslotRow = ({timeslot}) => {
+  return (
+<div className="card">
+  <div className="card-content">
+    <div className="card-title">
+      {format(timeslot.datetime, 'h:mm A')}
+      {date.isNow(timeslot) && <span className="right">Now!</span>}
+    </div>
+    <ul className="collection">
+      {timeslot.visibleTalks.map(talk => (
+      <TalkRow talk={talk} timeslot={timeslot} key={talk.id} />
+      ))}
+      {hasVotes(timeslot) && (
+      <li className="collection-item card-action">
+        {timeslot.voteList.map(vote => (
+        <Link to={vote.link} key={vote.icon}>
+          <i className={vote.icon} /> x {vote.count}
+        </Link>
+        ))}
+      </li>
+      )}
+    </ul>
+  </div>
+</div>
+)
 }
 
 class Schedule extends React.Component {
@@ -52,8 +79,23 @@ class Schedule extends React.Component {
     if (loading) {
       return <div>{_`Loading`}</div>
     }
+
     prepTalkVotes(this)
-    const { timeslots } = this
+
+    let tsFilter = ts => !date.isPast(ts)
+    let _CN = "past-link"
+    let _to = "/schedule/past/"
+    let _text = "Show past talks"
+    if (this.props.showPast) {
+      _text = "Show upcoming talks"
+      tsFilter = ts => date.isPast(ts)
+      _to = "/schedule/"
+      _CN = "now-link"
+    }
+
+    const timeslots = this.timeslots.filter(tsFilter)
+    const TimeLink = (timeslots.length !== this.timeslots.length)?<Link to={_to} className={_CN}>{_text}</Link>:null
+
     timeslots.forEach(ts => {
       const talkSet = ts.talkSet
       const voteTalks = talkSet.filter(t => t.vote)
@@ -87,32 +129,12 @@ class Schedule extends React.Component {
       }
     })
     return (
-      <div className="container" id="schedule">
-        {timeslots.map(timeslot => (
-          <div className="card" key={timeslot.id}>
-            <div className="card-content">
-              <div className="card-title">
-                {format(timeslot.datetime, 'h:mm A')}
-                {date.isNow(timeslot) && <span className="right">Now!</span>}
-              </div>
-              <ul className="collection">
-                {timeslot.visibleTalks.map(talk => (
-                  <TalkRow talk={talk} timeslot={timeslot} key={talk.id} />
-                ))}
-                {hasVotes(timeslot) && (
-                  <li className="collection-item card-action">
-                    {timeslot.voteList.map(vote => (
-                      <Link to={vote.link} key={vote.icon}>
-                        <i className={vote.icon} /> x {vote.count}
-                      </Link>
-                    ))}
-                  </li>
-                )}
-              </ul>
-            </div>
-          </div>
-        ))}
-      </div>
+<div className="container" id="schedule">
+  {TimeLink}
+  {timeslots.map(timeslot => (
+  <TimeslotRow timeslot={timeslot} key={timeslot.id} />
+  ))}
+</div>
     )
   }
 }
