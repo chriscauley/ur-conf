@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 import json
 
-from main.models import Talk, TalkVote
+from main.models import Talk, TalkVote, TalkAttendance
 
 def vote(request):
     data = json.loads(request.body.decode("utf-8"))
@@ -11,10 +11,24 @@ def vote(request):
     talkvote, _new = TalkVote.objects.get_or_create(
         user=request.user,
         talk_id=data['talk_id'],
-        defaults={'vote': data['vote']}
+        defaults={'vote': data['vote']},
     )
     talkvote.vote = data['vote']
     talkvote.save()
+    return JsonResponse({'status': 'ok'})
+
+
+def attendance(request):
+    data = json.loads(request.body.decode("utf-8"))
+    if not request.user.is_authenticated:
+        raise NotImplementedError()
+    talkattendance, _new = TalkAttendance.objects.get_or_create(
+        user=request.user,
+        timeslot_id=data['timeslot_id'],
+        defaults={'talk_id': data['talk_id']},
+    )
+    talkattendance.attendance = data['talk_id']
+    talkattendance.save()
     return JsonResponse({'status': 'ok'})
 
 

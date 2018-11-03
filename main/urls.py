@@ -7,6 +7,7 @@ import main.views
 
 urlpatterns = [
     path("api/vote/",main.views.vote),
+    path("api/attendance/",main.views.attendance),
     path('admin/', admin.site.urls),
     path('graphql', GraphQLView.as_view(graphiql=True)),
     path('api/login/', main.views.ajax_login),
