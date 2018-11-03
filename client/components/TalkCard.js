@@ -83,7 +83,7 @@ export default class TalkCard extends React.Component {
             <div className={actionClass}>
               {vote_list.map(vote => (
                 <a key={vote.value} onClick={this._vote(vote.value)}>
-                  <span className={getTalkIcon(talk, vote)} /> {vote.verbose}
+                  <span className={getTalkIcon(talk, vote)} /> {vote.text}
                 </a>
               ))}
             </div>

@@ -1,17 +1,25 @@
 import { cloneDeep, shuffle, sortBy } from 'lodash'
 
 export const vote_list = [
-  { verbose: 'no', value: -1, icon: 'em em-x', className: 'red' },
   {
-    verbose: 'maybe',
+    text: 'no',
+    verbose: 'No Thanks',
+    value: -1,
+    icon: 'em em-x',
+    className: 'red',
+  },
+  {
+    verbose: 'Maybe',
+    text: 'maybe',
     value: 0,
     icon: 'em em-thinking_face',
     className: 'yellow',
   },
   {
-    verbose: 'yes',
+    verbose: "Yes, I'm interested",
+    text: 'yes',
     value: 1,
-    icon: 'fa fa-check green-text fa-em',
+    icon: 'fa fa-check-square-o green-text fa-em',
     className: 'green',
   },
 ]
