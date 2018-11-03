@@ -5,7 +5,7 @@
 }
 
 .hr {
-  border-bottom: 1px solid rgba(0,0,0,0.14)
+  border-bottom: 1px solid rgba(0,0,0,0.14);
 }
 
 .mr, li > .em, li .fa-em { margin-right: 0.8rem }
@@ -22,3 +22,23 @@ p > .em, p > .fa-em {
 .ml { margin-left: 0.8rem }
 
 .mx { margin-left: 0.8rem; margin-right: 0.8rem; }
+
+.or {
+  height: 30px;
+  line-height: 30px;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+  width: 300px;
+  &:before,
+  &:after {
+    background-color: #aaa;
+    content: '';
+    height: 1px;
+    position: absolute;
+    top: 14px;
+    width: 40%;
+  }
+  &:before { left: 0; }
+  &:after { right: 0; }
+}

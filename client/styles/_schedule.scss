@@ -1,2 +1,16 @@
 #schedule {
+  .collection-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    i.trigger {
+      display: block;
+      min-width: 21px;
+      width: 21px;
+    }
+  }
+  @media (max-width: 400px) {
+    width: 100%;
+    .card-content { padding: 10px; }
+  }
 }
