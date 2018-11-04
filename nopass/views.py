@@ -26,6 +26,17 @@ def create_account(request):
     return JsonResponse({"status": "ok"})
 
 
+def change_email(request):
+    data = json.loads(request.body.decode("utf-8"))
+    email = data.get("email",None)
+    User = get_user_model()
+    user = request.user
+    if User.objects.exclude(id=user.id).filter(email=email):
+        return JsonResponse({'error': 'Another account already has that email.'},status=400)
+    user = request.user
+    user.email = user.username = email
+    return JsonResponse({"success": "Email address updated"})
+
 def send_login(request):
     data = json.loads(request.body.decode("utf-8"))
     form = PasswordResetForm(data)

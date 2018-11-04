@@ -5,7 +5,7 @@ import { post } from '../lib/ajax'
 import { withAuth } from '../graphql'
 import navigate from '../lib/navigate'
 
-class SignUp extends React.Component {
+class Start extends React.Component {
   createAccount = ({ formData = {} }) => {
     post('/api/nopass/create/', formData).then(() => {
       this.props.auth.refetch().then(() => navigate('/help/'))
@@ -43,4 +43,4 @@ class SignUp extends React.Component {
   }
 }
 
-export default withAuth(SignUp)
+export default withAuth(Start)
