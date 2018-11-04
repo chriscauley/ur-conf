@@ -1,16 +1,24 @@
 import os,django;os.environ['DJANGO_SETTINGS_MODULE'] = 'main.settings'; django.setup()
 
+from dateutil import tz
 from django.conf import settings
 from bs4 import BeautifulSoup
 import arrow
 import re
 import requests
-from dateutil import tz
+import sys
 
 from main.models import Author, Talk, Room, TimeSlot, Conference
 
-with open(".bc/2017.html","r") as f:
-    text = f.read()
+# arguments are years you wish to import
+YEARS = map(int,sys.argv[1:]) or [2017]
+
+CONFERENCE_YEARS = list(zip(
+    range(17,23),
+    [2011,2013,2014,2015,2016,2017] # 2012 gives 404
+))
+
+DESCRIPTION_INDEX = 2
 
 URLS = {
     'presentation': "http://s.barcampphilly.org/presentations/",
@@ -41,14 +49,6 @@ def curl(key,_id,name):
         return text
     with open(fname,'r') as _file:
         return _file.read()
-
-CONFERENCE_YEARS = list(zip(
-    range(17,23),
-    [2011,2013,2014,2015,2016,2017]
-))
-
-YEARS = [2017]
-DESCRIPTION_INDEX = 2
 
 for _id, year in list(CONFERENCE_YEARS):
     if not year in YEARS:
