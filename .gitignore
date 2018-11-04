@@ -1,11 +1,19 @@
+# python files
 __pycache__
 .envrc
 .venv
-main/db.sqlite3
-.cache
-.static
 
+# node stuff
 client/static
 node_modules
 yarn-error.log
+.cache
+
+# cache files
 .bc/*.html
+main/db.sqlite3
+.static
+._staticfiles
+
+# local settings
+main/settings/local.py
