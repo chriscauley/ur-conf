@@ -12,6 +12,7 @@ urlpatterns = [
     path('graphql', GraphQLView.as_view(graphiql=True)),
     path('api/login/', main.views.ajax_login),
     path('api/logout/', main.views.ajax_logout),
+    path('500.html', main.views.fivehundred),
     path('',include('nopass.urls')),
     re_path("^$", client.views.index),
     re_path("^(auth|help|schedule|vote)/", client.views.index),

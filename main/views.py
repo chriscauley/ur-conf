@@ -58,3 +58,6 @@ def ajax_login(request):
 def ajax_logout(request):
     logout(request)
     return JsonResponse({})
+
+def fivehundred(request):
+    raise NotImplementedError()
