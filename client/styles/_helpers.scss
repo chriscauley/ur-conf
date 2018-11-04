@@ -15,16 +15,16 @@
   vertical-align: top;
 }
 p > .em, p > .fa-em {
-  margin: 0 0.4rem;
+  margin: 0 0.4rem !important;
 }
-.mb { margin-bottom: 0.8rem }
-.mt { margin-top: 0.8rem }
-.ml { margin-left: 0.8rem }
+.mb { margin-bottom: 0.8rem !important }
+.mt { margin-top: 0.8rem !important }
+.ml { margin-left: 0.8rem !important }
 
-.mx { margin-left: 0.8rem; margin-right: 0.8rem; }
+.mx { margin-left: 0.8rem !important; margin-right: 0.8rem !important; }
 
 @media only screen and (min-width: 720px) {
   .flow-text {
-    font-size: 1.488rem !important;
+    font-size: 1.272rem !important;
   }
 }

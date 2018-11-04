@@ -12,7 +12,7 @@ class Auth extends React.Component {
   state = {
     error: null,
     success: null,
-    formData: {},
+    formData: undefined
   }
   changeEmail = ({formData={}}) => {
     post("/api/nopass/change_email/",formData)
@@ -23,6 +23,7 @@ class Auth extends React.Component {
           success: null,
           ...data
         })
+        this.props.auth.refetch()
       })
   }
   logout = () => {
@@ -43,8 +44,12 @@ class Auth extends React.Component {
         <h3 className="red-text lighten-2 mt">Account Info</h3>
         <div className="card">
           <div className="card-content">
+            <p className="flow-text mb">
+              Email will only be used for account recovery purposes.
+              This app is password less. You can only login using a magic link sent by email.
+            </p>
             <Form
-               formData={this.state.formData}
+               formData={this.state.formData || auth.user}
                onSubmit={this.changeEmail}
                onChange={this.onChange}
                {...authSchema}>

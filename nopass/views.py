@@ -35,6 +35,7 @@ def change_email(request):
         return JsonResponse({'error': 'Another account already has that email.'},status=400)
     user = request.user
     user.email = user.username = email
+    user.save()
     return JsonResponse({"success": "Email address updated"})
 
 def send_login(request):
