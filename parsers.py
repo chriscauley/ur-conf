@@ -9,13 +9,11 @@ import requests
 import sys
 
 from main.models import Author, Talk, Room, TimeSlot, Conference
+from spider.cache import cache_year
 
-# arguments are years you wish to import
-YEARS = map(int,sys.argv[1:]) or [2017]
-
-CONFERENCE_YEARS = list(zip(
+CONFERENCE_YEAR_ID = dict(zip(
+    (2011,2013,2014,2015,2016,2017), # 2012 gives 404
     range(17,23),
-    [2011,2013,2014,2015,2016,2017] # 2012 gives 404
 ))
 
 DESCRIPTION_INDEX = 2
@@ -50,9 +48,17 @@ def curl(key,_id,name):
     with open(fname,'r') as _file:
         return _file.read()
 
-for _id, year in list(CONFERENCE_YEARS):
-    if not year in YEARS:
-        continue
+def make_timeslots(date_string):
+    for time in TIMES:
+        a = arrow.get(date_string+" " + time)
+        a = a.replace(tzinfo=tz.gettz("US/Eastern"))
+        if a.hour<6:
+            a = a.shift(hours=12)
+        ts,new = TimeSlot.objects.get_or_create(datetime=a.datetime)
+        yield ts
+
+def parse_year(year):
+    _id = CONFERENCE_YEAR_ID[year]
     text = curl('conference',_id,year)
     date_string = re.findall("({}-..-..)".format(year),text)[-1]
     soup = BeautifulSoup(text,'html.parser')
@@ -63,15 +69,8 @@ for _id, year in list(CONFERENCE_YEARS):
     )
     if _new:
         print("New conference",date_string)
-    timeslots = []
 
-    for time in TIMES:
-        a = arrow.get(date_string+" " + time)
-        a = a.replace(tzinfo=tz.gettz("US/Eastern"))
-        if a.hour<6:
-            a = a.shift(hours=12)
-        ts,new = TimeSlot.objects.get_or_create(datetime=a.datetime)
-        timeslots.append(ts)
+    timeslots = list(make_timeslots(date_string))
 
     for row in soup.findAll("tr",{"class":"sorting"}):
         room, new = Room.objects.get_or_create(name=row.find("th").text.strip())
@@ -120,3 +119,14 @@ for _id, year in list(CONFERENCE_YEARS):
             [talk.authors.add(a) for a in authors]
             if new:
                 print("new talk",talk)
+
+
+if __name__ == "__main__":
+    # arguments are years you wish to import
+    years = sys.argv[1:] or [2017]
+    year = int(years[0])
+
+    parse_year(year)
+    print(year)
+    cache_year(year)
+    print(year)
