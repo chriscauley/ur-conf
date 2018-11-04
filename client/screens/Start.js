@@ -27,11 +27,11 @@ class SignUp extends React.Component {
           BarCamp. I hope you find it useful.
         </p>
         <p className="flow-text">
-          If you are reading this now, it is because I invited you to preview
-          the app in "Bar Camp 2017" talks.
+          This app is currently in demo mode using data from Bar Camp 2017.
         </p>
         <p className="flow-text">
-          Using cheat codes, it should take about 5 minutes to complete this app.
+          Using cheat codes, it should take about 5 minutes to complete this
+          app.
         </p>
         <div className="flow-text center">- Chris Cauley</div>
         <p className="center">

@@ -33,7 +33,9 @@ export default class TalkCard extends React.Component {
     this.setState({ cardStyle: { left: -deltaX + 'px' } })
   }
   vote = value => {
-    if (!this.active || this.isPast) { return }
+    if (!this.active || this.isPast) {
+      return
+    }
     this.props.parent.vote(value, this.props.talk)
   }
   _vote(value) {
@@ -49,7 +51,7 @@ export default class TalkCard extends React.Component {
     color += ' lighten-4'
     const className = `talk ${active} index-${zIndex}`
     const cardClass = `card ${color}`
-    const actionClass = `card-action ${color} ${this.isPast?"grayscale":""}`
+    const actionClass = `card-action ${color} ${this.isPast ? 'grayscale' : ''}`
 
     return (
       <Swipeable
@@ -84,9 +86,9 @@ export default class TalkCard extends React.Component {
             </div>
             <div className={actionClass}>
               {vote_list.map(vote => (
-              <a key={vote.value} onClick={this._vote(vote.value)}>
-                <span className={getTalkIcon(talk, vote)} /> {vote.text}
-              </a>
+                <a key={vote.value} onClick={this._vote(vote.value)}>
+                  <span className={getTalkIcon(talk, vote)} /> {vote.text}
+                </a>
               ))}
             </div>
           </div>

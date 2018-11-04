@@ -53,7 +53,7 @@ class Help extends React.Component {
         <h4 className="red-text lighten-2">Step 3: Attend Talks</h4>
         <p className="flow-text">
           When you attend a talk, mark your attendance in the schedule to get a
-          <span class="em em-star"></span>
+          <span className="em em-star" />
         </p>
 
         <div className="hr" />
