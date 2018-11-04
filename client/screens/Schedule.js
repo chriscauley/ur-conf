@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from '@reach/router'
 import { format } from 'date-fns'
+import { reverse } from 'lodash'
 
 import { withTalks, withVotes } from '../graphql'
-import { prepTalkVotes, setAttendance } from '../lib/vote'
+import { prepTalkVotes, setAttendance, vote_list } from '../lib/vote'
 import date from '../lib/date'
 import { post } from '../lib/ajax'
 import _ from '../lib/translate'
@@ -111,32 +112,25 @@ class Schedule extends React.Component {
       const voteTalks = talkSet.filter(t => t.vote)
       ts.visibleTalks = voteTalks.filter(t => t.vote.value === 1)
 
-      const maybeVotes = voteTalks.filter(t => t.vote.value === 0).length
-      const noVotes = voteTalks.filter(t => t.vote.value === -1).length
-      const nullVotes = talkSet.filter(t => !t.vote).length
+      ts.voteList = reverse(
+        vote_list.map(({ icon, value }) => ({
+          icon,
+          count: voteTalks.filter(t => t.vote.value === value).length,
+          link: `/vote/${ts.id}/${value}/`,
+        })),
+      )
+      ts.voteList.push({
+        icon: 'em em-question',
+        count: talkSet.filter(t => !t.vote).length,
+        link: `/vote/${ts.id}/`,
+      })
 
-      ts.voteList = []
-      if (noVotes) {
-        ts.voteList.push({
-          icon: 'em em-x',
-          count: noVotes,
-          link: `/vote/${ts.id}/-1/`,
-        })
+      if (date.isPast(ts)) {
+        ts.visibleTalks = ts.visibleTalks.filter(t => t.attendance)
+      } else {
+        ts.voteList.shift() // pops first entry, the upvoted talks
       }
-      if (maybeVotes) {
-        ts.voteList.push({
-          icon: 'em em-thinking_face',
-          count: maybeVotes,
-          link: `/vote/${ts.id}/0/`,
-        })
-      }
-      if (nullVotes) {
-        ts.voteList.push({
-          icon: 'em em-question',
-          count: nullVotes,
-          link: `/vote/${ts.id}/`,
-        })
-      }
+      ts.voteList = ts.voteList.filter(({ count }) => count)
     })
     return (
       <div className="container" id="schedule">
