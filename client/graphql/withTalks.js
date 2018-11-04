@@ -1,5 +1,6 @@
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
+import { Client } from './client'
 
 const talkQuery = gql`
   {
@@ -27,6 +28,9 @@ const talkQuery = gql`
 `
 
 export const withTalks = graphql(talkQuery, {
+  options: {
+    client: Client("/static/talks2017.json"),
+  },
   props: ({ data }) => {
     return {
       talkGQL: data,

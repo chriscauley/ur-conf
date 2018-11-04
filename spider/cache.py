@@ -33,8 +33,6 @@ s = """
 
 def cache_year(year):
   fname = os.path.join(settings.STATIC_ROOT,"talks{}.json".format(year))
+  response = client.post('/graphql',data={'query': s})
   with open(fname,'w') as f:
-    response = client.post('/graphql',data={'query': s})
-    start = datetime.datetime.now()
     f.write(json.dumps(response.json()))
-    delta = datetime.datetime.now()-start
