@@ -30,8 +30,7 @@ class SignUp extends React.Component {
           This app is currently in demo mode using data from Bar Camp 2017.
         </p>
         <p className="flow-text">
-          Using cheat codes, it should take about 5 minutes to complete this
-          app.
+          Using cheat codes, this should take about 5 minutes to complete.
         </p>
         <div className="flow-text center">- Chris Cauley</div>
         <p className="center">
