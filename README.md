@@ -16,7 +16,7 @@ Create the database and pre-populate with barcamp 2017 data:
 
 ```
 python manage.py migrate
-python parsers.py
+python manage.py refresh_year 2017
 ```
 
 Start dev server. You can add `tmux` to this command to start each in a tmux screen.
