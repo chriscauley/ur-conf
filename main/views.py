@@ -22,13 +22,20 @@ def attendance(request):
     data = json.loads(request.body.decode("utf-8"))
     if not request.user.is_authenticated:
         raise NotImplementedError()
-    talkattendance, _new = TalkAttendance.objects.get_or_create(
-        user=request.user,
-        timeslot_id=data['timeslot_id'],
-        defaults={'talk_id': data['talk_id']},
-    )
-    talkattendance.attendance = data['talk_id']
-    talkattendance.save()
+    if not data.get('talk_id',None):
+        TalkAttendance.objects.filter(
+            user=request.user,
+            timeslot_id=data['timeslot_id']
+        ).delete()
+    else:
+        talkattendance, _new = TalkAttendance.objects.get_or_create(
+            user=request.user,
+            timeslot_id=data['timeslot_id'],
+            defaults={'talk_id': data['talk_id']},
+        )
+        talkattendance.attendance = data['talk_id']
+        talkattendance.save()
+
     return JsonResponse({'status': 'ok'})
 
 

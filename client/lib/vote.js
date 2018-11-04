@@ -33,8 +33,9 @@ export const setVote = (talk, vote) => {
 }
 
 export const setAttendance = (talk, timeslot) => {
+  const _attendance = talk.attendance
   timeslot.talkSet.forEach(t => (t.attendance = false))
-  talk.attendance = true
+  talk.attendance = !_attendance
 }
 
 export const getTalkIcon = (talk, vote) => {
