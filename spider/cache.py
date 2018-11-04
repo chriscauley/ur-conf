@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.test.client import Client
 
-import datetime, json, os
+import datetime, json, os, requests
 
 client = Client()
 s = """
@@ -36,3 +36,20 @@ def cache_year(year):
   response = client.post('/graphql',data={'query': s})
   with open(fname,'w') as f:
     f.write(json.dumps(response.json()))
+
+URLS = {
+    'presentation': "http://s.barcampphilly.org/presentations/",
+    'conference': 'http://s.barcampphilly.org/events/18/event_dates/',
+}
+
+def curl(key,_id,name):
+    url = URLS[key]+str(_id)
+    fname = os.path.join(".bc","{}.html".format(name))
+    if not os.path.exists(fname):
+        text = requests.get(url).text
+        with open(fname,'w') as _file:
+            _file.write(text)
+        print("downloading!",url)
+        return text
+    with open(fname,'r') as _file:
+        return _file.read()
