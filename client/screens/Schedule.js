@@ -29,7 +29,7 @@ const TalkRow = ({ talk, timeslot, attend }) => {
   return (
     <li className="collection-item" onClick={talk.attend}>
       <i className={icon} />
-      <span>{talk.title}</span>
+      <Link to={`/talk/${talk.id}/`}>{talk.title}</Link>
     </li>
   )
 }

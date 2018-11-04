@@ -15,5 +15,5 @@ urlpatterns = [
     path('500.html', main.views.fivehundred),
     path('',include('nopass.urls')),
     re_path("^$", client.views.index),
-    re_path("^(auth|help|schedule|vote)/", client.views.index),
+    re_path("^(auth|help|schedule|vote|talk)/", client.views.index),
 ]

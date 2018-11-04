@@ -17,7 +17,12 @@ class TalkList extends React.Component {
     this.timeslots = undefined
   }
   getVisibleTimeslot() {
-    // find the current talk being voted on and it's timeslot
+    if (this.props.talkId) {
+      return this.timeslots.find(
+        ts => ts.talkSet.find(t => t.id === this.props.talkId)
+      )
+    }
+    // timeslot from url
     const { timeslotId } = this.props
     return this.timeslots.find(ts => ts.id === timeslotId)
   }
@@ -40,8 +45,13 @@ class TalkList extends React.Component {
     if (this.state.activeIndex !== undefined) {
       return this.state.activeIndex
     }
+    const timeslot = this.getVisibleTimeslot()
+    if (this.props.talkId !== undefined) {
+      const index = timeslot.talkSet.findIndex(t => t.id === this.props.talkId)
+      this.scrollTo(index)
+      return index
+    }
     if (this.props.voteSort !== undefined) {
-      const timeslot = this.getVisibleTimeslot()
       const voteSort = parseInt(this.props.voteSort)
       const index = timeslot.talkSet.findIndex(
         ({ vote }) => vote && vote.value === voteSort,
@@ -55,7 +65,7 @@ class TalkList extends React.Component {
   }
   scrollTo(index) {
     setTimeout(() => {
-      const el = document.getElementById('vote').parentElement
+      const el = document.getElementById('vote')
       el.scrollTo(0, index * 30)
     }, 0)
   }
