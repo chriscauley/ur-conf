@@ -1,10 +1,18 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.contrib.auth import login, get_user_model
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ValidationError
+from django.urls import reverse
+from django.utils.http import urlsafe_base64_decode
 
 import json
 import random
+
+
+def bad_token(request):
+    message = "The link you are using is invalid or expired. Please try again."
+    return HttpResponse("<h1>Bad Token</h1><p>{}</p>".format(message))
 
 
 def create_account(request):
@@ -38,6 +46,7 @@ def change_email(request):
     user.save()
     return JsonResponse({"success": "Email address updated"})
 
+
 def send_login(request):
     data = json.loads(request.body.decode("utf-8"))
     form = PasswordResetForm(data)
@@ -46,12 +55,24 @@ def send_login(request):
             subject_template_name='email/nopass/subject.txt',
             email_template_name='email/nopass/body.txt',
         )
-        return JsonResponse({"status": "ok"})
+        return JsonResponse({"success":"Please check your email for a login link."})
     return JsonResponse({},status=400)
+
+
+# django.contrib.auth.views.PasswordResetConfirmView.get_user
+def get_user(uidb64):
+    User = get_user_model()
+    try:
+        # urlsafe_base64_decode() decodes to bytestring
+        uid = urlsafe_base64_decode(uidb64).decode()
+        return User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist, ValidationError):
+        return None
+
 
 # adapted from django.contrib.auth.views.PasswordResetConfirmView
 def complete_login(request, uidb64=None, token=None):
-    redirect_url = reverse("change-password")
+    redirect_url = '/'
     if request.user.is_authenticated:
         return HttpResponseRedirect(redirect_url)
     user = get_user(uidb64)
