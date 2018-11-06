@@ -1,10 +1,9 @@
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.test.client import Client
 
 import datetime, json, os, requests
+import requests
 
-client = Client()
 s = """
   {
     timeslots {
@@ -33,7 +32,7 @@ s = """
 
 def cache_year(year):
   fname = os.path.join(settings.STATIC_ROOT,"talks{}.json".format(year))
-  response = client.post('/graphql',data={'query': s})
+  response = requests.get(settings.SITE_ORIGIN+'/graphql',params={'query': s})
   with open(fname,'w') as f:
     f.write(json.dumps(response.json()))
 

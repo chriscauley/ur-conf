@@ -1,6 +1,8 @@
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 import json
+import os
 
 from main.models import Talk, TalkVote, TalkAttendance
 
@@ -59,5 +61,12 @@ def ajax_logout(request):
     logout(request)
     return JsonResponse({})
 
+
 def fivehundred(request):
     raise NotImplementedError()
+
+
+def cached(request,year):
+    fpath = os.path.join(settings.STATIC_ROOT,'talks{}.json'.format(year))
+    with open(fpath,'r') as f:
+        return HttpResponse(f.read(), content_type='application/json')
