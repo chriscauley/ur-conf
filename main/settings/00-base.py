@@ -100,3 +100,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, "../._staticfiles")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "../.static"),
 ]
+
+SITE_ID=1
