@@ -38,6 +38,7 @@ class Auth extends React.Component {
       navigate('/')
       return null
     }
+    const initial = auth.user.email.match(/guest-.+@example.com/)?{}:auth.user
     return (
       <div className="container">
         <h3 className="red-text lighten-2 mt">Account Info</h3>
@@ -49,7 +50,7 @@ class Auth extends React.Component {
               email.
             </p>
             <Form
-              formData={this.state.formData || auth.user}
+              formData={this.state.formData || initial}
               onSubmit={this.changeEmail}
               onChange={this.onChange}
               {...authSchema}
