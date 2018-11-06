@@ -38,7 +38,9 @@ class Auth extends React.Component {
       navigate('/')
       return null
     }
-    const initial = auth.user.email.match(/guest-.+@example.com/)?{}:auth.user
+    const initial = auth.user.email.match(/guest-.+@example.com/)
+      ? {}
+      : auth.user
     return (
       <div className="container">
         <h3 className="red-text lighten-2 mt">Account Info</h3>

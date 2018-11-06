@@ -44,7 +44,7 @@ class Nav extends React.Component {
             </ul>
           )}
         </div>
-        <Alert/>
+        <Alert />
       </nav>
     )
   }
