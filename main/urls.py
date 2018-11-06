@@ -6,6 +6,7 @@ import client.views
 import main.views
 
 urlpatterns = [
+    path("favicon.ico",main.views.redirect,kwargs={'url':'/static/favicon.ico'}),
     path("api/vote/",main.views.vote),
     path("api/attendance/",main.views.attendance),
     path('admin/', admin.site.urls),
