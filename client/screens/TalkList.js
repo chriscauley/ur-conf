@@ -18,8 +18,8 @@ class TalkList extends React.Component {
   }
   getVisibleTimeslot() {
     if (this.props.talkId) {
-      return this.timeslots.find(
-        ts => ts.talkSet.find(t => t.id === this.props.talkId)
+      return this.timeslots.find(ts =>
+        ts.talkSet.find(t => t.id === this.props.talkId),
       )
     }
     // timeslot from url

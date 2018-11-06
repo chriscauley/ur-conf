@@ -17,5 +17,5 @@ urlpatterns = [
     re_path('cached/talks(\d+).json', main.views.cached),
     path('',include('nopass.urls')),
     re_path("^$", client.views.index),
-    re_path("^(auth|help|schedule|vote|talk)/", client.views.index),
+    re_path("^(auth|help|schedule|vote|talk|login)/", client.views.index),
 ]

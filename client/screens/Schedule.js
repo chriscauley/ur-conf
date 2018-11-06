@@ -74,7 +74,7 @@ class Schedule extends React.Component {
   }
   attend = (talk, timeslot) => {
     post('/api/attendance/', {
-      talk_id: talk.attendance?"":talk.id,
+      talk_id: talk.attendance ? '' : talk.id,
       timeslot_id: timeslot.id,
     })
     setAttendance(talk, timeslot)

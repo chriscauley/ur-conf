@@ -38,6 +38,9 @@ class Nav extends React.Component {
               <li>
                 <Clock />
               </li>
+              <li>
+                <Link to="/login/">{_('Login')}</Link>
+              </li>
             </ul>
           )}
         </div>
