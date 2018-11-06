@@ -4,12 +4,13 @@ html, body, #root, #wrapper {
   min-height: 100%;
 }
 
-$root-width: 400px;
+.root-width {
+  width: 100%;
+  max-width: 400px;
+}
 
 #root {
-  max-width: $root-width;
   margin: 0 auto;
-  width: 100%;
 }
 
 body {

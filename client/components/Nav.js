@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from '@reach/router'
 import { withAuth } from '../graphql'
+import Alert from './Alert'
 import _ from '../lib/translate'
 import Clock from './Clock'
 
@@ -23,8 +24,7 @@ const links = auth => (
     </li>
   </ul>
 )
-const helpClass = 'fa fa-question-circle-o fa-3x'
-const HelpLink = <Link to="/help/" id="help-link" className={helpClass} />
+
 class Nav extends React.Component {
   render() {
     const auth = this.props.auth
@@ -44,7 +44,7 @@ class Nav extends React.Component {
             </ul>
           )}
         </div>
-        {auth.user && HelpLink}
+        <Alert/>
       </nav>
     )
   }
