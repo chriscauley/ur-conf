@@ -1,1 +1,26 @@
-[{"model": "sites.site", "pk": 1, "fields": {"domain": "example.com", "name": "example.com"}}, {"model": "sites.site", "pk": 2, "fields": {"domain": "uberfordogs.com", "name": "uberfordogs.com"}}]
+[
+{
+    "model": "sites.site",
+    "pk": 1,
+    "fields": {
+        "domain": "uberfordogs.com",
+        "name": "uberfordogs.com"
+    }
+},
+{
+    "model": "sites.site",
+    "pk": 2,
+    "fields": {
+        "domain": "localhost.com",
+        "name": "localhost.com"
+    }
+},
+{
+    "model": "sites.site",
+    "pk": 3,
+    "fields": {
+        "domain": "bar.tfibhodc.com:8076",
+        "name": "bar.tfibhodc.com:8076"
+    }
+}
+]
