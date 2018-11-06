@@ -1,10 +1,13 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+
 import json
 import os
 
 from main.models import Talk, TalkVote, TalkAttendance
+
+redirect = lambda request,url: HttpResponseRedirect(url)
 
 def vote(request):
     data = json.loads(request.body.decode("utf-8"))
