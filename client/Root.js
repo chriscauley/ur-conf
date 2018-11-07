@@ -12,7 +12,7 @@ export default class Root extends React.PureComponent {
 <ApolloProvider client={client}>
   <div id="wrapper" className="container">
     <Nav />
-    <Router>
+    <Router id="router">
       <Start path="/" />
       <Help path="/help/" />
       <TalkList path="/vote/:timeslotId/" />

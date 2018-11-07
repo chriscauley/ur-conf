@@ -3,6 +3,9 @@
   transform: translateZ(0);
   position: relative;
 }
+&:last-child {
+  height: auto;
+}
 
 h5 {
   font-size: 1.4rem;

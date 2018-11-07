@@ -27,6 +27,8 @@ class TalkList extends React.Component {
     return this.timeslots.find(ts => ts.id === timeslotId)
   }
   vote(vote, talk) {
+    window.ALERT.dismiss('post-vote')
+    window.ALERT.set('post-vote')
     post('/api/vote/', {
       talk_id: talk.id,
       vote,
@@ -70,6 +72,7 @@ class TalkList extends React.Component {
     }, 0)
   }
   render() {
+    window.ALERT.set('pre-vote')
     const { auth, talkGQL } = this.props
     if (talkGQL.loading || auth.loading) {
       return <div>{`Loading`}</div>

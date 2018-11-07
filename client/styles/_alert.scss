@@ -1,18 +1,32 @@
 #alert {
   align-items: center;
-  background: white;
   border-radius: 25px;
   bottom: 0;
-  color: grey;
   display: flex;
-  height: 50px;
-  line-height: 50px;
+  overflow: hidden;
+  padding: 5px;
   position: fixed;
-  width: 100%;
+  max-width: 100%;
+  min-height: 46px;
+  transform: translateZ(0);
+  transition: 0.25s linear;
+  width: 46px;
   z-index: 10000;
+  &.full { width: 320px; }
+  a, i, i:before { height: 36px; line-height: 36px; }
+  &.success {
+    border-color: #A5D6A7;
+  }
   i {
-    line-height: 50px;
+    cursor: pointer;
+    color: grey;
     text-align: center;
-    width: 50px;
+    width: 36px;
+  }
+  .message {
+    color: black;
+    line-height: 1.4;
+    padding: 0 10px;
+    width: 274px;
   }
 }
