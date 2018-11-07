@@ -47,7 +47,7 @@ class Alert extends React.PureComponent {
         clearTimeout(ALERT.timeout)
         ALERT.current = slug
         this.setState({ color: 'green', ...alerts[slug] })
-        DISMISSED[slug] = true
+        if (slug) { DISMISSED[slug] = true }
         localStorage.setItem('DISMISSED', JSON.stringify(DISMISSED))
         ALERT.timeout = setTimeout(ALERT.dismiss, 10000)
       }, 0)
