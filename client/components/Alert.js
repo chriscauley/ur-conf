@@ -17,6 +17,9 @@ const alerts = {
     text:
       'The first talk is starting. Be sure to mark your attendance in the schedule.',
   },
+  clock: {
+    text: 'Click the clock to move time at 0, 5, or 15 minutes/second.',
+  },
 }
 
 let DISMISSED = JSON.parse(localStorage.getItem('DISMISSED') || '{}')
@@ -47,7 +50,9 @@ class Alert extends React.PureComponent {
         clearTimeout(ALERT.timeout)
         ALERT.current = slug
         this.setState({ color: 'green', ...alerts[slug] })
-        if (slug) { DISMISSED[slug] = true }
+        if (slug) {
+          DISMISSED[slug] = true
+        }
         localStorage.setItem('DISMISSED', JSON.stringify(DISMISSED))
         ALERT.timeout = setTimeout(ALERT.dismiss, 10000)
       }, 0)

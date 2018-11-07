@@ -6,7 +6,17 @@ export default class Clock extends React.Component {
   componentWillUnmount() {
     clearInterval(window.CLOCK_INTERVAL)
   }
+  constructor(props) {
+    super(props)
+    // #! TODO
+    setTimeout(() => {
+      if (!this.clicked) {
+        window.ALERT.set('clock')
+      }
+    }, 90000)
+  }
   click = () => {
+    this.clicked = true
     clearInterval(window.CLOCK_INTERVAL)
     window.CLOCK_INTERVAL = setInterval(() => {
       date.tick()
