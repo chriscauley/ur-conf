@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from '@reach/router'
+import { Link, Match } from '@reach/router'
 import { withAuth } from '../graphql'
 import Alert from './Alert'
 import _ from '../lib/translate'
@@ -39,7 +39,15 @@ class Nav extends React.Component {
                 <Clock />
               </li>
               <li>
-                <Link to="/login/">{_('Login')}</Link>
+                <Match path="/login/">
+                  {props =>
+                    props.match ? (
+                      <Link to="/">{_('New Account')}</Link>
+                    ) : (
+                      <Link to="/login/">{_('Login')}</Link>
+                    )
+                  }
+                </Match>
               </li>
             </ul>
           )}

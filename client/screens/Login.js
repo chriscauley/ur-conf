@@ -33,8 +33,8 @@ class Login extends React.Component {
       return null
     }
     return (
-      <div className="container">
-        <h3 className="red-text lighten-2 mt">Login</h3>
+      <div className="container" id="login">
+        <h3 className="red-text lighten-2 center">Login</h3>
         <div className="card">
           <div className="card-content">
             <p className="flow-text mb">
