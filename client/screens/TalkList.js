@@ -1,4 +1,5 @@
 import React from 'react'
+import { compose } from 'react-apollo'
 import { format } from 'date-fns'
 
 import _ from '../lib/translate'
@@ -119,4 +120,8 @@ class TalkList extends React.Component {
   }
 }
 
-export default withAuth(withTalks(withVotes(TalkList)))
+export default compose(
+  withAuth,
+  withTalks,
+  withVotes,
+)(TalkList)

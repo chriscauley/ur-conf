@@ -30,6 +30,7 @@ const talkQuery = gql`
 export const withTalks = graphql(talkQuery, {
   options: {
     client: Client('/cached/talks2017.json'),
+    pollInterval: 60000,
   },
   props: ({ data }) => {
     return {

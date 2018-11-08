@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from '@reach/router'
 import { format } from 'date-fns'
 import { reverse } from 'lodash'
+import { compose } from 'react-apollo'
 
 import { withTalks, withVotes } from '../graphql'
 import { prepTalkVotes, setAttendance, vote_list } from '../lib/vote'
@@ -151,4 +152,7 @@ class Schedule extends React.Component {
   }
 }
 
-export default withTalks(withVotes(Schedule))
+export default compose(
+  withTalks,
+  withVotes,
+)(Schedule)
