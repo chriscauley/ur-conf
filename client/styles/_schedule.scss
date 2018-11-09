@@ -3,12 +3,6 @@
     display: flex;
     align-items: center;
     padding: 10px 15px;
-    i.trigger {
-      display: block;
-      height: 30px;
-      min-width: 30px;
-      width: 30px;
-    }
   }
   @media (max-width: 400px) {
     width: 100%;

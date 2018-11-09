@@ -62,11 +62,11 @@ h5 {
   overflow: hidden;
   position: relative;
   z-index: 2;
-  .card-content { padding: 20px 24px; }
 }
 
 &.inactive {
   color: gray;
+  .card-content { padding: 15px 24px; }
 }
 
 &.active .card {
