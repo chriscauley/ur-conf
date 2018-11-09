@@ -1,0 +1,17 @@
+#achievements {
+  h4 { margin: 0; }
+  .collection-item { min-height: 64px; }
+  .circle {
+    $height: 50px;
+    font-size: 30px;
+    height: $height;
+    left: 10px;
+    line-height: $height;
+    top: 50%;
+    margin-top: -$height/2;
+    width: $height;
+  }
+  .ec-heart-eyes, .ec-100, .ec-trophy, .ec-stars {
+    padding-top: 2px;
+  }
+}
