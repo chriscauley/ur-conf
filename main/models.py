@@ -33,12 +33,13 @@ class Author(models.Model):
 class Talk(models.Model):
     conference = models.ForeignKey(Conference,on_delete=models.PROTECT)
     title = models.CharField(max_length=256)
-    authors = models.ManyToManyField(Author)
+    authors = models.ManyToManyField(Author,blank=True)
     description = models.TextField(blank=True)
     room = models.ForeignKey(Room,on_delete=models.SET_NULL,null=True,blank=True)
     timeslot = models.ForeignKey(TimeSlot,on_delete=models.SET_NULL,null=True,blank=True)
     external_id = models.CharField(max_length=32,null=True,blank=True)
     external_url = models.CharField(max_length=512,null=True,blank=True)
+    sortable = models.BooleanField(default=True)
     def __str__(self):
         return self.title
 
