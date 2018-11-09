@@ -22,9 +22,9 @@ const TalkRow = ({ talk, timeslot, attend }) => {
   let icon = talk.vote.icon
   talk.attend = isNow ? () => attend(talk, timeslot) : undefined
   if (talk.attendance) {
-    icon = 'em em-star2'
+    icon = 'ec ec-star2'
   } else if (isNow) {
-    icon = 'em em-star2 grayscale'
+    icon = 'ec ec-star2 grayscale'
   }
   icon += ' trigger'
   return (
@@ -88,6 +88,7 @@ class Schedule extends React.Component {
   }
   render() {
     prepTalkVotes(this)
+    this.props.talkGQL.startPolling(120000)
     if (!this.timeslots) {
       // set by prepTalkVotes
       return <div>{_`Loading`}</div>
@@ -125,7 +126,7 @@ class Schedule extends React.Component {
         })),
       )
       ts.voteList.push({
-        icon: 'em em-question',
+        icon: 'ec ec-question',
         count: talkSet.filter(t => !t.vote).length,
         link: `/vote/${ts.id}/`,
       })

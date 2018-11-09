@@ -8,13 +8,17 @@
   border-bottom: 1px solid rgba(0,0,0,0.14);
 }
 
-.mr, li > .em, li .fa-em { margin-right: 0.8rem }
-.fa-em {
-  font-size: 1.8em;
-  height: 21px;
-  vertical-align: top;
+.mr, li > .ec, li .fa-ec { margin-right: 0.6rem }
+.ec {
+  font-size: 20px;
+  font-style: initial;
 }
-p > .em, p > .fa-em {
+.fa-ec {
+  font-size: 2.2em;
+  height: 30px;
+  vertical-align: middle;
+}
+p > .ec, p > .fa-ec {
   margin: 0 0.4rem !important;
 }
 .mb { margin-bottom: 0.8rem !important }

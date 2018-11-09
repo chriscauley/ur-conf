@@ -48,10 +48,11 @@ export default class TalkCard extends React.Component {
     const zIndex = Math.abs(index - activeIndex)
     const { vote } = talk
     let color = (vote && vote.className) || 'grey'
-    color += ' lighten-4'
+    color += active?' lighten-2':' lighten-4'
     const className = `talk ${active} index-${zIndex}`
     const cardClass = `card ${color}`
-    const actionClass = `card-action ${color} ${this.isPast ? 'grayscale' : ''}`
+    const gray = this.isPast || !active
+    const actionClass = `card-action ${color} ${gray ? 'grayscale' : ''}`
 
     return (
       <Swipeable

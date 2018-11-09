@@ -38,7 +38,7 @@ class Help extends React.Component {
               </li>
             ))}
           {/*<li className="mb">
-            <span className="em em-question" />
+            <span className="ec ec-question" />
             No vote cast
           </li>*/}
         </ul>
@@ -53,7 +53,7 @@ class Help extends React.Component {
         <h4 className="red-text lighten-2">Step 3: Attend Talks</h4>
         <p className="flow-text">
           When you attend a talk, mark your attendance in the schedule to get a
-          <span className="em em-star" />
+          <span className="ec ec-star" />
         </p>
 
         <div className="hr" />
