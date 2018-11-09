@@ -6,7 +6,7 @@ import _ from '../lib/translate'
 import navigate from '../lib/navigate'
 import { post } from '../lib/ajax'
 import { setVote, prepTalkVotes } from '../lib/vote'
-import { withTalks, withVotes, withAuth } from '../graphql'
+import { withTalks, withAuth } from '../graphql'
 import TalkCard from '../components/TalkCard'
 
 class TalkList extends React.Component {
@@ -36,7 +36,7 @@ class TalkList extends React.Component {
     })
     setVote(talk, vote)
     this.setState({ activeIndex: this.getActiveIndex() + 1 })
-    this.props.voteGQL.refetch()
+    this.props.auth.refetch()
   }
   onClick = index => {
     this.setState({ activeIndex: index })
@@ -123,5 +123,4 @@ class TalkList extends React.Component {
 export default compose(
   withAuth,
   withTalks,
-  withVotes,
 )(TalkList)

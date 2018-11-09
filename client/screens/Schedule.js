@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import { reverse } from 'lodash'
 import { compose } from 'react-apollo'
 
-import { withTalks, withVotes } from '../graphql'
+import { withTalks, withAuth } from '../graphql'
 import { prepTalkVotes, setAttendance, vote_list } from '../lib/vote'
 import date from '../lib/date'
 import { post } from '../lib/ajax'
@@ -86,7 +86,7 @@ class Schedule extends React.Component {
       timeslot_id: timeslot.id,
     })
     setAttendance(talk, timeslot)
-    this.props.voteGQL.refetch()
+    this.props.auth.refetch()
     this.forceUpdate()
   }
   render() {
@@ -161,5 +161,5 @@ class Schedule extends React.Component {
 
 export default compose(
   withTalks,
-  withVotes,
+  withAuth,
 )(Schedule)
