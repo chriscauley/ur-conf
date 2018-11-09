@@ -2,7 +2,16 @@ import graphene
 from graphene_django import DjangoObjectType
 
 from django.contrib.auth.models import User
-from main.models import Room, TimeSlot, Author, Talk, TalkVote, TalkAttendance
+from main.models import (
+    Room,
+    TimeSlot,
+    Author,
+    Talk,
+    TalkVote,
+    TalkAttendance,
+    Achievement,
+    UserAchievement
+)
 
 
 class UserType(DjangoObjectType):
@@ -43,3 +52,11 @@ class TalkAttendanceType(DjangoObjectType):
     talk_id = graphene.Int(source='talk_id')
     class Meta:
         model = TalkAttendance
+
+class UserAchievementType(DjangoObjectType):
+    class Meta:
+        model = UserAchievement
+
+class AchievementType(DjangoObjectType):
+    class Meta:
+        model = Achievement
