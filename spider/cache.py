@@ -15,6 +15,7 @@ s = """
         roomId
         timeslotId
         description
+        sortable
         authors {
           id
           name
