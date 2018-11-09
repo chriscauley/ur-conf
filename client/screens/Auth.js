@@ -6,6 +6,7 @@ import { authSchema } from '../schema'
 import { withAuth } from '../graphql'
 import _ from '../lib/translate'
 import { post } from '../lib/ajax'
+import Achievements from '../components/Achievements'
 
 class Auth extends React.Component {
   state = {
@@ -80,6 +81,7 @@ class Auth extends React.Component {
             </button>
           </div>
         </div>
+        <Achievements data={auth} />
       </div>
     )
   }
