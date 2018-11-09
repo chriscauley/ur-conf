@@ -52,6 +52,9 @@ def check_achievements(user):
 
     #print('votes',vote_count,max_vote) # confirms vote_one/vote_all
     #print('attend',attend_count,max_attend) # confirms attend_one/attend_all
+    #for key,value in sorted(results.items()):
+    #    print(key,'\t',value)
+
     return results
 
 
