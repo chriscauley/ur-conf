@@ -19,7 +19,7 @@ const hasVotes = timeslot => {
 
 const TalkRow = ({ talk, timeslot, attend }) => {
   const isNow = date.isNow(timeslot)
-  let icon = talk.vote.icon
+  let icon = talk.vote && talk.vote.icon
   talk.attend = isNow ? () => attend(talk, timeslot) : undefined
   if (talk.attendance) {
     icon = 'ec ec-star2'
@@ -30,7 +30,10 @@ const TalkRow = ({ talk, timeslot, attend }) => {
   return (
     <li className="collection-item" onClick={talk.attend}>
       <i className={icon} />
-      <Link to={`/talk/${talk.id}/`}>{talk.title}</Link>
+      { talk.sortable?
+        <Link to={`/talk/${talk.id}/`}>{talk.title}</Link>:
+        <div>{talk.title}</div>
+      }
     </li>
   )
 }
@@ -115,8 +118,11 @@ class Schedule extends React.Component {
 
     timeslots.forEach(ts => {
       const talkSet = ts.talkSet
-      const voteTalks = talkSet.filter(t => t.vote)
-      ts.visibleTalks = voteTalks.filter(t => t.vote.value === 1)
+      const voteTalks = ts.sortableTalks.filter(t => t.vote)
+      ts.visibleTalks = talkSet.filter(t => {
+        if (!t.sortable) { return true }
+        return t.vote && t.vote.value === 1
+      })
 
       ts.voteList = reverse(
         vote_list.map(({ icon, value }) => ({
@@ -127,7 +133,7 @@ class Schedule extends React.Component {
       )
       ts.voteList.push({
         icon: 'ec ec-question',
-        count: talkSet.filter(t => !t.vote).length,
+        count: ts.sortableTalks.filter(t => !t.vote).length,
         link: `/vote/${ts.id}/`,
       })
 

@@ -7,7 +7,7 @@ class NextTime extends React.Component {
   render() {
     if (!this.props.talkGQL.loading) {
       const slot = this.props.talkGQL.timeslots.find(ts => {
-        return ts.talkSet.length > 0
+        return ts.sortableTalks.length > 0
       })
       navigate(`/vote/${slot.id}/`)
     }

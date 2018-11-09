@@ -20,7 +20,7 @@ class TalkList extends React.Component {
   getVisibleTimeslot() {
     if (this.props.talkId) {
       return this.timeslots.find(ts =>
-        ts.talkSet.find(t => t.id === this.props.talkId),
+        ts.sortableTalks.find(t => t.id === this.props.talkId),
       )
     }
     // timeslot from url
@@ -89,7 +89,7 @@ class TalkList extends React.Component {
     }
     const timeslots = this.timeslots
     const timeslot = this.getVisibleTimeslot()
-    const selectableTimeslots = timeslots.filter(ts => ts && ts.talkSet.length)
+    const selectableTimeslots = timeslots.filter(ts => ts && ts.sortableTalks.length)
     const activeIndex = this.getActiveIndex()
     return (
       <div id="vote">
