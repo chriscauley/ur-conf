@@ -1,4 +1,4 @@
-from main.models import TimeSlot
+from main.models import TimeSlot, Achievement, UserAchievement
 from collections import defaultdict
 
 
@@ -47,9 +47,22 @@ def check_achievements(user):
             if results.get(key,None):
                 continue
             if sum([counts[v] for v in votes]) == slot_talks[_id]:
-                print(key,'unlocked by',_id)
+                # print(key,'unlocked by',_id) # confirm the stuff in sums
                 results[key] = True
 
     #print('votes',vote_count,max_vote) # confirms vote_one/vote_all
     #print('attend',attend_count,max_attend) # confirms attend_one/attend_all
     return results
+
+
+def make_achievements(user):
+    checks = check_achievements(user)
+    completed_slugs = user.userachievement_set.all().values_list('achievement__slug',flat=True)
+    for achievement in Achievement.objects.all():
+        if achievement.slug in completed_slugs:
+            continue
+        if checks.get(achievement.slug):
+            UserAchievement.objects.create(
+                achievement=achievement,
+                user=user
+            )
