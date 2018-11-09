@@ -6,6 +6,8 @@ class Conference(models.Model):
     name = models.CharField(max_length=64)
     external_id = models.CharField(max_length=32)
     date = models.DateField()
+    def __str__(self):
+        return self.name
 
 
 class Room(models.Model):
