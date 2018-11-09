@@ -1,27 +1,36 @@
 from django.contrib import admin
 
-from main.models import Room, TimeSlot, Author, Talk, TalkVote, TalkAttendance
+from main import models
 
-@admin.register(Room)
+@admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(TimeSlot)
+@admin.register(models.TimeSlot)
 class TimeSlotAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(Author)
+@admin.register(models.Author)
 class AuthorAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(Talk)
+@admin.register(models.Talk)
 class TalkAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(TalkVote)
+@admin.register(models.TalkVote)
 class TalkVoteAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(TalkAttendance)
+@admin.register(models.TalkAttendance)
 class TalkAttendanceAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(models.Achievement)
+class AchievementAdmin(admin.ModelAdmin):
+    list_display = ('title','order','description','slug','class_name')
+    list_editable = ('order',)
+
+@admin.register(models.UserAchievement)
+class UserAchievementAdmin(admin.ModelAdmin):
     pass
