@@ -1,0 +1,47 @@
+[
+{
+    "model": "main.talk",
+    "pk": 1,
+    "fields": {
+        "conference": 1,
+        "title": "Opening Remarks",
+        "description": "",
+        "room": null,
+        "timeslot": 1,
+        "external_id": null,
+        "external_url": null,
+        "sortable": false,
+        "authors": []
+    }
+},
+{
+    "model": "main.talk",
+    "pk": 2,
+    "fields": {
+        "conference": 1,
+        "title": "Lunch Break",
+        "description": "",
+        "room": null,
+        "timeslot": 5,
+        "external_id": null,
+        "external_url": null,
+        "sortable": false,
+        "authors": []
+    }
+},
+{
+    "model": "main.talk",
+    "pk": 3,
+    "fields": {
+        "conference": 1,
+        "title": "Closing Remarks",
+        "description": "",
+        "room": null,
+        "timeslot": 9,
+        "external_id": null,
+        "external_url": null,
+        "sortable": false,
+        "authors": []
+    }
+}
+]
