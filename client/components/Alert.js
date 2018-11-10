@@ -37,7 +37,11 @@ class Alert extends React.PureComponent {
     super(props)
     this.queueDismiss = debounce(this.dismiss,10000)
     window.ALERT = this
-    this.dismissed = JSON.parse(localStorage.getItem('DISMISSED') || '{}')
+    try {
+      this.dismissed = JSON.parse(localStorage.getItem('DISMISSED') || '{}')
+    } catch {
+      this.dismissed = {}
+    }
   }
   reset = () => {
     localStorage.setItem('DISMISSED', '{}')
@@ -71,14 +75,14 @@ class Alert extends React.PureComponent {
     }
     this._update()
   }
-  getAchievement = () => {
+  displayAchievement = () => {
     const user = this.props.auth.user
     if (!user || ! user.userachievementSet) { return }
     const achievement = user.userachievementSet
           .map(ua=> ua.achievement)
           .find(a => !this.dismissed[a.slug])
     if (achievement) {
-      return {
+      this.current = {
         ...achievement,
         iconClass: `ec ec-${achievement.className} circle grey lighten-2`,
         color: 'grey',
@@ -92,7 +96,7 @@ class Alert extends React.PureComponent {
       iconClass: 'fa fa-question-circle-o fa-3x',
       click: () => navigate('/help/'),
     }
-    this.current = this.current || this.getAchievement()
+    this.current = this.current
     this.current && this.queueDismiss()
 
     const current = this.current || defaultAlert

@@ -1,6 +1,11 @@
 import { format } from 'date-fns'
 
-const DEBUG = window.localStorage.getItem("DEBUG_DATE")
+let DEBUG
+try {
+  DEBUG = window.localStorage.getItem("DEBUG_DATE")
+} catch {
+  DEBUG = false
+}
 
 const _trigger_time = new Date('2018-11-10 10:15').valueOf()
 const date = {
