@@ -22,7 +22,8 @@ class Help extends React.Component {
     const randText = randTexts[Math.floor(Math.random() * randTexts.length)]
     return (
       <div className="mx" id="help">
-        <h3 className="red-text lighten-2 center">Halp! How to app?</h3>
+        <h3 className="red-text lighten-2">Halp! How to app?</h3>
+        <div className="hr" />
         <h4 className="red-text lighten-2">Step 1: Choose Talks</h4>
         <p className="flow-text">
           Swipe or tap talks to sort them into the following lists.
