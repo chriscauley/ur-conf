@@ -52,8 +52,8 @@ const TimeslotRow = ({ timeslot, attend }) => {
         <div className="card-title">
           <TimeTag to={`/vote/${timeslot.id}/`}>
             {format(timeslot.datetime, 'h:mm A')}
+            {date.isNow(timeslot) && <span className="right">Now!</span>}
           </TimeTag>
-          {date.isNow(timeslot) && <span className="right">Now!</span>}
         </div>
         <ul className="collection">
           {timeslot.visibleTalks.map(talk => (

@@ -2,13 +2,13 @@ import { format } from 'date-fns'
 
 const DEBUG = window.localStorage.getItem("DEBUG_DATE")
 
-const _trigger_time = new Date('2017-10-14 10:15').valueOf()
+const _trigger_time = new Date('2018-11-10 10:15').valueOf()
 const date = {
   DEBUG: DEBUG,
   SPEED: 0, // seconds per tick
   RATE: DEBUG?1000:30000, // refresh rate
-  start: new Date('2017-10-14 9:30'.valueOf()),
-  end: new Date('2017-10-14 17:30'.valueOf()),
+  start: new Date('2018-11-10 9:30'.valueOf()),
+  end: new Date('2018-11-10 18:00'.valueOf()),
   now: () => date.DEBUG?new Date(date.value):new Date(),
   tick: () => {
     if (date.DEBUG) {

@@ -28,7 +28,7 @@ class Start extends React.Component {
         </p>
         {/*
         <p className="flow-text">
-          This app is currently in demo mode using data from Bar Camp 2017.
+          This app is currently in demo mode using data from Bar Camp 2018.
         </p>
         <p className="flow-text">
           Using cheat codes, this should take about 5 minutes to complete.
