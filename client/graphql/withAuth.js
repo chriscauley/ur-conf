@@ -8,6 +8,23 @@ const rootQuery = gql`
       id
       username
       email
+      userachievementSet {
+        achievement {
+          title
+          slug
+          text
+          className
+          order
+          id
+        }
+      }
+    }
+    talkvotes {
+      vote
+      talkId
+    }
+    talkattendances {
+      talkId
     }
   }
 `

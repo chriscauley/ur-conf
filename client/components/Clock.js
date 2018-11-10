@@ -4,32 +4,45 @@ import date from '../lib/date'
 
 export default class Clock extends React.Component {
   componentWillUnmount() {
-    clearInterval(window.CLOCK_INTERVAL)
+    clearInterval(this.interval)
   }
   constructor(props) {
     super(props)
-    // #! TODO
-    setTimeout(() => {
+
+    date.DEBUG && setTimeout(() => {
+      // if debug is on, alert them that they can control the clock
       if (!this.clicked) {
         window.ALERT.set('clock')
       }
     }, 90000)
+
+    setTimeout(() => {
+      this.interval = setInterval(() => {
+        date.tick()
+        this.forceUpdate()
+      }, date.RATE)
+    },5000)
   }
+
   click = () => {
+    if (!date.DEBUG) { return }
+    if (!this.interval) {
+      console.log('clock not on yet') // eslint-disable-line
+      return
+    }
     this.clicked = true
-    clearInterval(window.CLOCK_INTERVAL)
-    window.CLOCK_INTERVAL = setInterval(() => {
-      date.tick()
-      this.forceUpdate()
-    }, 1000)
     const now = new Date()
-    if (now - this.lastClick < 500) {
+
+    if (now - this.lastClick < 400) {
+      // double clicked. reset the clock
       date.reset()
       date.SPEED = 0
       this.forceUpdate()
       return
     }
     this.lastClick = now
+
+    // cycle through speeds
     if (!date.SPEED) {
       date.SPEED = 5
     } else if (date.SPEED === 5) {

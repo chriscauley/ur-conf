@@ -2,6 +2,8 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 
+from main.achievements import make_achievements
+
 import json
 import os
 
@@ -20,6 +22,7 @@ def vote(request):
     )
     talkvote.vote = data['vote']
     talkvote.save()
+    make_achievements(request.user)
     return JsonResponse({'status': 'ok'})
 
 

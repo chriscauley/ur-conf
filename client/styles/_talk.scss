@@ -1,6 +1,5 @@
 & {
   height: 30px;
-  transform: translateZ(0);
   position: relative;
 }
 &:last-child {
@@ -11,6 +10,12 @@ h5 {
   font-size: 1.4rem;
   margin-top: 0;
 }
+
+.cardSlider {
+  position: relative;
+  transform: translateZ(0);
+}
+
 .card-action {
   bottom: 0;
   position: absolute;
@@ -27,6 +32,19 @@ h5 {
   margin: 0 auto;
   position: relative;
   width: 90%;
+  &:before {
+    box-shadow: 0 0 5px 5px rgba(100,100,100,0.25);
+    content: "";
+    right: 3%;
+    left: 3%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+  }
+}
+&:first-child,
+&last-child {
+  .card-wrapper:before { display: none; }
 }
 
 &.index-0 .card-wrapper { width: 95% }
@@ -36,12 +54,19 @@ h5 {
 &.index-4 .card-wrapper { width: 91% }*/
 
 .card {
+  border-radius: 4px;
+  box-shadow: none;
   height: 250px;
   min-height: 250px;
   margin: 0;
   overflow: hidden;
   position: relative;
-  .card-content { padding: 20px 24px; }
+  z-index: 2;
+}
+
+&.inactive {
+  color: gray;
+  .card-content { padding: 15px 24px; }
 }
 
 &.active .card {

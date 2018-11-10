@@ -13,6 +13,7 @@ const talkQuery = gql`
         roomId
         timeslotId
         description
+        sortable
         authors {
           id
           name
@@ -29,9 +30,14 @@ const talkQuery = gql`
 
 export const withTalks = graphql(talkQuery, {
   options: {
-    client: Client('/cached/talks2017.json'),
+    client: Client('/cached/talks2018.json'),
   },
   props: ({ data }) => {
+    if (data.timeslots) {
+      data.timeslots.forEach(ts => {
+        ts.sortableTalks = ts.talkSet.filter(t=>t.sortable)
+      })
+    }
     return {
       talkGQL: data,
     }

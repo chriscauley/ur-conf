@@ -6,6 +6,7 @@ import { authSchema } from '../schema'
 import { withAuth } from '../graphql'
 import _ from '../lib/translate'
 import { post } from '../lib/ajax'
+import Achievements from '../components/Achievements'
 
 class Auth extends React.Component {
   state = {
@@ -26,26 +27,29 @@ class Auth extends React.Component {
       })
   }
   logout = () => {
+    localStorage.setItem("DISMISSED","{}")
     fetch('/api/logout/')
       .then(this.props.auth.refetch)
       .then(() => navigate('/'))
   }
   onChange = ({ formData }) => this.setState({ formData })
   render() {
-    const { auth } = this.props
+    const { auth, loading } = this.props
     const { error, success } = this.state
     if (!auth.user) {
-      navigate('/')
       return null
     }
     const initial = auth.user.email.match(/guest-.+@example.com/)
       ? {}
       : auth.user
     return (
-      <div className="container">
-        <h3 className="red-text lighten-2 mt">Account Info</h3>
+      <div className="container" id="auth">
+        <Achievements data={auth} />
         <div className="card">
           <div className="card-content">
+            <div className="card-title">
+              <h4 className="red-text lighten-2">Account Info</h4>
+            </div>
             <p className="flow-text mb">
               Email will only be used for account recovery purposes. This app is
               password less. You can only login using a magic link sent by
@@ -68,7 +72,7 @@ class Auth extends React.Component {
                 </div>
               )}
               <p className="center">
-                <button className="btn btn-blue">{_('Create Account')}</button>
+                <button className="btn btn-blue">{_('Update Email')}</button>
               </p>
             </Form>
           </div>

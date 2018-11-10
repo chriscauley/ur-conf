@@ -1,11 +1,12 @@
 import React from 'react'
+import { compose } from 'react-apollo'
 import { format } from 'date-fns'
 
 import _ from '../lib/translate'
 import navigate from '../lib/navigate'
 import { post } from '../lib/ajax'
 import { setVote, prepTalkVotes } from '../lib/vote'
-import { withTalks, withVotes, withAuth } from '../graphql'
+import { withTalks, withAuth } from '../graphql'
 import TalkCard from '../components/TalkCard'
 
 class TalkList extends React.Component {
@@ -19,7 +20,7 @@ class TalkList extends React.Component {
   getVisibleTimeslot() {
     if (this.props.talkId) {
       return this.timeslots.find(ts =>
-        ts.talkSet.find(t => t.id === this.props.talkId),
+        ts.sortableTalks.find(t => t.id === this.props.talkId),
       )
     }
     // timeslot from url
@@ -27,7 +28,7 @@ class TalkList extends React.Component {
     return this.timeslots.find(ts => ts.id === timeslotId)
   }
   vote(vote, talk) {
-    window.ALERT.dismiss('post-vote')
+    window.ALERT.dismiss('pre-vote')
     window.ALERT.set('post-vote')
     post('/api/vote/', {
       talk_id: talk.id,
@@ -35,7 +36,7 @@ class TalkList extends React.Component {
     })
     setVote(talk, vote)
     this.setState({ activeIndex: this.getActiveIndex() + 1 })
-    this.props.voteGQL.refetch()
+    this.props.auth.refetch()
   }
   onClick = index => {
     this.setState({ activeIndex: index })
@@ -88,8 +89,37 @@ class TalkList extends React.Component {
     }
     const timeslots = this.timeslots
     const timeslot = this.getVisibleTimeslot()
-    const selectableTimeslots = timeslots.filter(ts => ts && ts.talkSet.length)
+    if (!timeslot) {
+      navigate('/schedule/')
+      return null
+    }
+    const selectableTimeslots = timeslots.filter(ts => ts && ts.sortableTalks.length)
+    const toNext = () => navigate(`/vote/${timeslot.nextSlotId}/`)
+    if (!timeslot.talkSet.find(t => t.sortable)) {
+      if (timeslot.nextSlotId) {
+        toNext()
+      } else {
+        navigate('/schedule/')
+      }
+      return null
+    }
     const activeIndex = this.getActiveIndex()
+    if (timeslot.sortableTalks.length <= activeIndex) {
+      if (timeslot.nextSlotId) {
+        ALERT.set('slot-complete',{
+          click: toNext,
+          force: true,
+          color: 'grey',
+        })
+      } else {
+        // #! TODO this doesn't actually appear because of closing remarks
+        ALERT.set('last-slot-complete',{
+          click: () => navigate(`/schedule/`),
+          force: true,
+          color: 'grey',
+        })
+      }
+    }
     return (
       <div id="vote">
         <select
@@ -119,4 +149,7 @@ class TalkList extends React.Component {
   }
 }
 
-export default withAuth(withTalks(withVotes(TalkList)))
+export default compose(
+  withAuth,
+  withTalks,
+)(TalkList)

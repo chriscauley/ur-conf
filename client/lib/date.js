@@ -1,18 +1,26 @@
 import { format } from 'date-fns'
 
-const _trigger_time = new Date('2017-10-14 10:15').valueOf()
+const DEBUG = window.localStorage.getItem("DEBUG_DATE")
+
+const _trigger_time = new Date('2018-11-10 10:15').valueOf()
 const date = {
+  DEBUG: DEBUG,
   SPEED: 0, // seconds per tick
-  start: new Date('2017-10-14 9:30'.valueOf()),
-  end: new Date('2017-10-14 17:30'.valueOf()),
-  now: () => new Date(date.value),
+  RATE: DEBUG?1000:30000, // refresh rate
+  start: new Date('2018-11-10 9:30'.valueOf()),
+  end: new Date('2018-11-10 18:00'.valueOf()),
+  now: () => date.DEBUG?new Date(date.value):new Date(),
   tick: () => {
-    date.value = date.now().valueOf() + date.SPEED * 60 * 1000
+    if (date.DEBUG) {
+      date.value = date.now().valueOf() + date.SPEED * 60 * 1000
+      if (date.value > date.end) {
+        date.value = date.start
+      }
+    } else {
+      date.value = new Date().valueOf()
+    }
     if (date.value >= _trigger_time) {
       window.ALERT.set('first-star')
-    }
-    if (date.value > date.end) {
-      date.value = date.start
     }
     date.visible && date.visible.forceUpdate()
   },

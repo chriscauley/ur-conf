@@ -5,21 +5,21 @@ export const vote_list = [
     text: 'no',
     verbose: 'No Thanks',
     value: -1,
-    icon: 'em em-x',
+    icon: 'ec ec-x',
     className: 'red',
   },
   {
     verbose: 'Maybe',
     text: 'maybe',
     value: 0,
-    icon: 'em em-thinking_face',
+    icon: 'ec ec-thinking',
     className: 'yellow',
   },
   {
     verbose: "Yes, I'm interested",
     text: 'yes',
     value: 1,
-    icon: 'fa fa-check-square-o green-text fa-em',
+    icon: 'fa fa-check-square-o green-text fa-ec',
     className: 'green',
   },
 ]
@@ -49,8 +49,8 @@ export const prepTalkVotes = (component, resort) => {
   // fold existing votes into the talk data
   // this needs to be called everytime a component is mounted
   // the cloned component.timeslots prevents the TalkList from re-prepping every render
-  const { talkGQL, voteGQL } = component.props
-  if (component.timeslots || talkGQL.loading || voteGQL.loading) {
+  const { talkGQL, auth } = component.props
+  if (component.timeslots || talkGQL.loading || auth.loading) {
     return
   }
 
@@ -61,10 +61,10 @@ export const prepTalkVotes = (component, resort) => {
     }
     return -talk.vote.value
   }
-  voteGQL.talkvotes.map(({ talkId, vote }) => (voteMap[talkId] = vote))
+  auth.talkvotes.map(({ talkId, vote }) => (voteMap[talkId] = vote))
 
   const attendances = {}
-  voteGQL.talkattendances.forEach(({ talkId }) => (attendances[talkId] = true))
+  auth.talkattendances.forEach(({ talkId }) => (attendances[talkId] = true))
 
   const timeslots = cloneDeep(talkGQL.timeslots)
   let lastslot
@@ -72,6 +72,7 @@ export const prepTalkVotes = (component, resort) => {
     timeslot.DATE = new Date(timeslot.datetime).valueOf()
     if (lastslot) {
       lastslot.END_DATE = timeslot.DATE - 15 * 60 * 1000
+      lastslot.nextSlotId = timeslot.id
     }
     lastslot = timeslot
     timeslot.talkSet.map(talk => {

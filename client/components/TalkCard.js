@@ -44,14 +44,15 @@ export default class TalkCard extends React.Component {
   render() {
     const { talk, activeIndex, index } = this.props
     this.isPast = date.isPast(talk.timeslot)
-    const active = (this.active = activeIndex === index && 'active')
+    const active = this.active = activeIndex === index
     const zIndex = Math.abs(index - activeIndex)
     const { vote } = talk
     let color = (vote && vote.className) || 'grey'
-    color += ' lighten-4'
-    const className = `talk ${active} index-${zIndex}`
+    color += active?' lighten-2':' lighten-4'
+    const className = `talk ${active?'active':'inactive'} index-${zIndex}`
     const cardClass = `card ${color}`
-    const actionClass = `card-action ${color} ${this.isPast ? 'grayscale' : ''}`
+    const gray = this.isPast || !active
+    const actionClass = `card-action ${color} ${gray ? 'grayscale' : ''}`
 
     return (
       <Swipeable
@@ -62,34 +63,36 @@ export default class TalkCard extends React.Component {
         onClick={this.onClick}
         style={{ zIndex: 100 - zIndex }}
       >
-        <div className="card-wrapper">
-          <div className={cardClass} style={this.state.cardStyle}>
-            <div className="card-content">
-              <div className="card-title">
-                <h5>{talk.title}</h5>
-              </div>
-              <div className="card-details">
-                <p>
-                  {_`with`}
-                  {talk.authors.map((author, i) => (
+        <div className="cardSlider" style={this.state.cardStyle}>
+          <div className="card-wrapper">
+            <div className={cardClass}>
+              <div className="card-content">
+                <div className="card-title">
+                  <h5>{talk.title}</h5>
+                </div>
+                <div className="card-details">
+                  <p>
+                    {_`with`}
+                    {talk.authors.map((author, i) => (
                     <span key={author.id}>
                       {' '}
                       <b>{author.name}</b>
                       {i === talk.authors.length && ','}
                     </span>
-                  ))}
-                  {_` in room`} <b>{talk.room.name}</b>
-                </p>
-                <hr />
-                <p className="description">{talk.description}</p>
+                    ))}
+                    {_` in room`} <b>{talk.room.name}</b>
+                  </p>
+                  <hr />
+                  <p className="description">{talk.description}</p>
+                </div>
               </div>
-            </div>
-            <div className={actionClass}>
-              {vote_list.map(vote => (
+              <div className={actionClass}>
+                {vote_list.map(vote => (
                 <a key={vote.value} onClick={this._vote(vote.value)}>
                   <span className={getTalkIcon(talk, vote)} /> {vote.text}
                 </a>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

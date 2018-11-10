@@ -1,7 +1,9 @@
 #alert {
   align-items: center;
   border-radius: 25px;
-  bottom: 0;
+  box-shadow: 0 0 3px 3px rgba(0,0,0,0.1);
+  bottom: 5px;
+  cursor: pointer;
   display: flex;
   overflow: hidden;
   padding: 5px;
@@ -18,7 +20,6 @@
     border-color: #A5D6A7;
   }
   i {
-    cursor: pointer;
     color: grey;
     text-align: center;
     width: 36px;

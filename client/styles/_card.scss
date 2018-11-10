@@ -1,16 +1,22 @@
 .card {
+  .card-title a { display: block; }
   .card-action {
     display: flex;
     justify-content: space-around;
-    padding: 16px;
+    padding: 0 16px;
     a {
       cursor: pointer;
       margin-right: 0 !important;
+      padding: 16px;
+      display: block;
     }
     @media (max-width: 400px) {
-      padding: 10px 16px;
+      padding: 0;
+    }
+    &.collection-item {
+      padding: 0 !important;
     }
   }
   .collection:last-child { margin-bottom: 0 }
-  .collection-item.card-action { padding: 10px 20px; }
+  .collection-item.card-action { padding: 10px 0; }
 }

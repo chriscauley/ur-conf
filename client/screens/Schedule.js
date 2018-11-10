@@ -2,8 +2,9 @@ import React from 'react'
 import { Link } from '@reach/router'
 import { format } from 'date-fns'
 import { reverse } from 'lodash'
+import { compose } from 'react-apollo'
 
-import { withTalks, withVotes } from '../graphql'
+import { withTalks, withAuth } from '../graphql'
 import { prepTalkVotes, setAttendance, vote_list } from '../lib/vote'
 import date from '../lib/date'
 import { post } from '../lib/ajax'
@@ -18,29 +19,41 @@ const hasVotes = timeslot => {
 
 const TalkRow = ({ talk, timeslot, attend }) => {
   const isNow = date.isNow(timeslot)
-  let icon = talk.vote.icon
+  let icon = talk.vote && talk.vote.icon
   talk.attend = isNow ? () => attend(talk, timeslot) : undefined
   if (talk.attendance) {
-    icon = 'em em-star2'
+    icon = 'ec ec-star2'
   } else if (isNow) {
-    icon = 'em em-star2 grayscale'
+    icon = 'ec ec-star2 grayscale'
   }
   icon += ' trigger'
   return (
     <li className="collection-item" onClick={talk.attend}>
       <i className={icon} />
-      <Link to={`/talk/${talk.id}/`}>{talk.title}</Link>
+      { talk.sortable?
+        <Link to={`/talk/${talk.id}/`}>{talk.title}</Link>:
+        <div>{talk.title}</div>
+      }
     </li>
   )
 }
 
+class Noop extends React.Component {
+  render() {
+    return this.props.children
+  }
+}
+
 const TimeslotRow = ({ timeslot, attend }) => {
+  const TimeTag = timeslot.sortableTalks.length?Link:Noop
   return (
     <div className="card">
       <div className="card-content">
         <div className="card-title">
-          {format(timeslot.datetime, 'h:mm A')}
-          {date.isNow(timeslot) && <span className="right">Now!</span>}
+          <TimeTag to={`/vote/${timeslot.id}/`}>
+            {format(timeslot.datetime, 'h:mm A')}
+            {date.isNow(timeslot) && <span className="right">Now!</span>}
+          </TimeTag>
         </div>
         <ul className="collection">
           {timeslot.visibleTalks.map(talk => (
@@ -58,6 +71,13 @@ const TimeslotRow = ({ timeslot, attend }) => {
                   <i className={vote.icon} /> x {vote.count}
                 </Link>
               ))}
+            </li>
+          )}
+          {!timeslot.visibleTalks.length && !hasVotes(timeslot) && (
+            <li className="collection-item">
+              <Link to={`/vote/${timeslot.id}/1`}>
+                {`0/${timeslot.talkSet.length} talks selected. Click to get started.`}
+              </Link>
             </li>
           )}
         </ul>
@@ -82,11 +102,12 @@ class Schedule extends React.Component {
       timeslot_id: timeslot.id,
     })
     setAttendance(talk, timeslot)
-    this.props.voteGQL.refetch()
+    this.props.auth.refetch()
     this.forceUpdate()
   }
   render() {
     prepTalkVotes(this)
+    this.props.talkGQL.startPolling(120000)
     if (!this.timeslots) {
       // set by prepTalkVotes
       return <div>{_`Loading`}</div>
@@ -113,8 +134,11 @@ class Schedule extends React.Component {
 
     timeslots.forEach(ts => {
       const talkSet = ts.talkSet
-      const voteTalks = talkSet.filter(t => t.vote)
-      ts.visibleTalks = voteTalks.filter(t => t.vote.value === 1)
+      const voteTalks = ts.sortableTalks.filter(t => t.vote)
+      ts.visibleTalks = talkSet.filter(t => {
+        if (!t.sortable) { return true }
+        return t.vote && t.vote.value === 1
+      })
 
       ts.voteList = reverse(
         vote_list.map(({ icon, value }) => ({
@@ -124,8 +148,8 @@ class Schedule extends React.Component {
         })),
       )
       ts.voteList.push({
-        icon: 'em em-question',
-        count: talkSet.filter(t => !t.vote).length,
+        icon: 'ec ec-question',
+        count: ts.sortableTalks.filter(t => !t.vote).length,
         link: `/vote/${ts.id}/`,
       })
 
@@ -135,6 +159,9 @@ class Schedule extends React.Component {
         ts.voteList.shift() // pops first entry, the upvoted talks
       }
       ts.voteList = ts.voteList.filter(({ count }) => count)
+      if (!ts.visibleTalks.length) {
+        ts.voteList = []
+      }
     })
     return (
       <div className="container" id="schedule">
@@ -151,4 +178,7 @@ class Schedule extends React.Component {
   }
 }
 
-export default withTalks(withVotes(Schedule))
+export default compose(
+  withTalks,
+  withAuth,
+)(Schedule)

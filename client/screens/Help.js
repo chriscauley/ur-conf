@@ -22,7 +22,8 @@ class Help extends React.Component {
     const randText = randTexts[Math.floor(Math.random() * randTexts.length)]
     return (
       <div className="mx" id="help">
-        <h3 className="red-text lighten-2 center">Halp! How to app?</h3>
+        <h3 className="red-text lighten-2">Halp! How to app?</h3>
+        <div className="hr" />
         <h4 className="red-text lighten-2">Step 1: Choose Talks</h4>
         <p className="flow-text">
           Swipe or tap talks to sort them into the following lists.
@@ -38,7 +39,7 @@ class Help extends React.Component {
               </li>
             ))}
           {/*<li className="mb">
-            <span className="em em-question" />
+            <span className="ec ec-question" />
             No vote cast
           </li>*/}
         </ul>
@@ -53,15 +54,21 @@ class Help extends React.Component {
         <h4 className="red-text lighten-2">Step 3: Attend Talks</h4>
         <p className="flow-text">
           When you attend a talk, mark your attendance in the schedule to get a
-          <span className="em em-star" />
+          <span className="ec ec-star" />
         </p>
 
+        <div className="hr" />
+        <p className="flow-text">
+          If you want to use this app or know more, contact me <a href="https://twitter.com/onefiercelinter" target="_blank">@oneFierceLinter</a> or checkout the <a href="https://github.com/chriscauley/ur-conf/">github repo</a>.
+        </p>
+        {/*
         <div className="hr" />
         <h4 className="red-text lighten-2">Step &infin;: Control TIME!!!</h4>
         <p className="flow-text">
           Click the clock to speed up time to 0, 5, or 15 minutes per second.
           Double click to reset. Use this power wisely, or you will break time.
         </p>
+         */}
         {null && (
           <p
             className="flow-text"
@@ -75,7 +82,7 @@ class Help extends React.Component {
         <p className="center flow-text">What are you waiting for?</p>
         <div className="center mb">
           <Link to="/vote/">
-            <button className="btn btn-blue">Start Voting</button>
+            <button className="btn btn-blue">Start Choosing Talks</button>
           </Link>
         </div>
       </div>
