@@ -55,7 +55,6 @@ class Alert extends React.PureComponent {
     if (this.current) {
       slug = slug || this.current.slug
     }
-    console.warn('d',slug,this.current)
     this.current = undefined
     if (slug) {
       this.dismissed[slug] = true

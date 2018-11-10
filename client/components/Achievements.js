@@ -5,7 +5,7 @@ const AchievementRow = ({ achievement }) => {
     <li className="collection-item avatar">
       <i className={`ec ec-${achievement.className} circle lighten-2 grey`}/>
       <div><b>{achievement.title}</b></div>
-      <p>{achievement.description}</p>
+      <p>{achievement.text}</p>
     </li>
   )
 }

@@ -56,12 +56,14 @@ class Help extends React.Component {
           <span className="ec ec-star" />
         </p>
 
+        {/*
         <div className="hr" />
         <h4 className="red-text lighten-2">Step &infin;: Control TIME!!!</h4>
         <p className="flow-text">
           Click the clock to speed up time to 0, 5, or 15 minutes per second.
           Double click to reset. Use this power wisely, or you will break time.
         </p>
+         */}
         {null && (
           <p
             className="flow-text"
