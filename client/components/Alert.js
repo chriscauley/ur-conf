@@ -63,7 +63,6 @@ class Alert extends React.PureComponent {
     this._update()
   }
   getAchievement = () => {
-    if (true) { return }
     const user = this.props.auth.user
     if (!user || ! user.userachievementSet) { return }
     const achievement = user.userachievementSet

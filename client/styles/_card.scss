@@ -10,9 +10,9 @@
       display: block;
     }
     @media (max-width: 400px) {
-      padding: 0 16px;
+      padding: 0;
     }
   }
   .collection:last-child { margin-bottom: 0 }
-  .collection-item.card-action { padding: 10px 20px; }
+  .collection-item.card-action { padding: 10px 0; }
 }
