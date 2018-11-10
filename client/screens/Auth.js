@@ -27,6 +27,7 @@ class Auth extends React.Component {
       })
   }
   logout = () => {
+    localStorage.setItem("DISMISSED","{}")
     fetch('/api/logout/')
       .then(this.props.auth.refetch)
       .then(() => navigate('/'))
