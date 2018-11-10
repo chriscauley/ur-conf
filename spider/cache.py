@@ -34,6 +34,7 @@ s = """
 def cache_year(year):
   fname = os.path.join(settings.STATIC_ROOT,"talks{}.json".format(year))
   response = requests.get(settings.SITE_ORIGIN+'/graphql',params={'query': s})
+  response.raise_for_status()
   with open(fname,'w') as f:
     f.write(json.dumps(response.json()))
 
@@ -45,7 +46,8 @@ URLS = {
 def curl(key,_id,name):
     url = URLS[key]+str(_id)
     fname = os.path.join(".bc","{}.html".format(name))
-    if not os.path.exists(fname):
+    #! TODO disabling curl caching for now
+    if False and not os.path.exists(fname):
         text = requests.get(url).text
         with open(fname,'w') as _file:
             _file.write(text)
