@@ -72,6 +72,7 @@ export const prepTalkVotes = (component, resort) => {
     timeslot.DATE = new Date(timeslot.datetime).valueOf()
     if (lastslot) {
       lastslot.END_DATE = timeslot.DATE - 15 * 60 * 1000
+      lastslot.nextSlotId = timeslot.id
     }
     lastslot = timeslot
     timeslot.talkSet.map(talk => {

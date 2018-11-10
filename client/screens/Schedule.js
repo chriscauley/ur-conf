@@ -38,12 +38,21 @@ const TalkRow = ({ talk, timeslot, attend }) => {
   )
 }
 
+class Noop extends React.Component {
+  render() {
+    return this.props.children
+  }
+}
+
 const TimeslotRow = ({ timeslot, attend }) => {
+  const TimeTag = timeslot.sortableTalks.length?Link:Noop
   return (
     <div className="card">
       <div className="card-content">
         <div className="card-title">
-          {format(timeslot.datetime, 'h:mm A')}
+          <TimeTag to={`/vote/${timeslot.id}/`}>
+            {format(timeslot.datetime, 'h:mm A')}
+          </TimeTag>
           {date.isNow(timeslot) && <span className="right">Now!</span>}
         </div>
         <ul className="collection">
@@ -62,6 +71,13 @@ const TimeslotRow = ({ timeslot, attend }) => {
                   <i className={vote.icon} /> x {vote.count}
                 </Link>
               ))}
+            </li>
+          )}
+          {!timeslot.visibleTalks.length && !hasVotes(timeslot) && (
+            <li className="collection-item">
+              <Link to={`/vote/${timeslot.id}/1`}>
+                {`0/${timeslot.talkSet.length} talks selected. Click to get started.`}
+              </Link>
             </li>
           )}
         </ul>
@@ -143,6 +159,9 @@ class Schedule extends React.Component {
         ts.voteList.shift() // pops first entry, the upvoted talks
       }
       ts.voteList = ts.voteList.filter(({ count }) => count)
+      if (!ts.visibleTalks.length) {
+        ts.voteList = []
+      }
     })
     return (
       <div className="container" id="schedule">

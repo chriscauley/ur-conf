@@ -22,6 +22,14 @@ const alerts = {
   clock: {
     text: 'Click the clock to move time at 0, 5, or 15 minutes/second.',
   },
+  'slot-complete': {
+    text: 'That is all for this timeslot.\n Click here to go to the next.',
+    iconClass: 'ec ec-clock1',
+  },
+  'last-slot-complete': {
+    text: 'That the last time. Go back to the schedule and see if you missed something?',
+    iconClass: 'ec ec-100',
+  }
 }
 
 class Alert extends React.PureComponent {
@@ -37,18 +45,19 @@ class Alert extends React.PureComponent {
   }
   _update = () => setTimeout(() => this.forceUpdate(),0)
   cheat = () => window.localStorage.setItem("DEBUG_DATE",1)
-  set = slug => {
-    if (this.dismissed[slug]) { return }
+  set = (slug,options={}) => {
+    if (this.dismissed[slug] && !options.force) { return }
     if (alerts[slug]) {
       this.current = {
         color: 'green',
         iconClass: 'fa fa-times-circle-o fa-3x',
         click: _e => this.dismiss(),
         slug,
-        ... alerts[slug]
+        ...alerts[slug],
+        ...options
       }
     }
-    slug && this.queueDismiss(slug)
+    slug && !options.force && this.queueDismiss(slug)
     this._update()
   }
   dismiss = slug => {
@@ -94,14 +103,13 @@ class Alert extends React.PureComponent {
     }
     const messageClass = 'message'
     return (
-      <div id="alert" className={`${className} ${current.color || 'grey'}`}>
-        <a onClick={current.click}>
-          <i className={current.iconClass} />
-        </a>
+      <div id="alert" className={`${className} ${current.color || 'grey'}`}
+           onClick={current.click}>
+        <i className={current.iconClass} />
         <div>
           <div className={messageClass}>
             <div><b>{current.title}</b></div>
-           {current.text}
+            {current.text}
           </div>
         </div>
       </div>

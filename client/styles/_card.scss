@@ -1,4 +1,5 @@
 .card {
+  .card-title a { display: block; }
   .card-action {
     display: flex;
     justify-content: space-around;
@@ -11,6 +12,9 @@
     }
     @media (max-width: 400px) {
       padding: 0;
+    }
+    &.collection-item {
+      padding: 0 !important;
     }
   }
   .collection:last-child { margin-bottom: 0 }
