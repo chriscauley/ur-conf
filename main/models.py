@@ -82,7 +82,7 @@ SLUG_CHOICES = zip(SLUG_CHOICES,SLUG_CHOICES)
 class Achievement(models.Model):
     slug = models.CharField(max_length=16,choices=SLUG_CHOICES)
     title = models.CharField(max_length=64)
-    description = models.CharField(max_length=128)
+    text = models.CharField(max_length=128)
     class_name = models.CharField(max_length=32)
     order = models.IntegerField(default=999)
     class Meta:

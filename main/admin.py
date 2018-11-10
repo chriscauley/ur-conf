@@ -28,7 +28,7 @@ class TalkAttendanceAdmin(admin.ModelAdmin):
 
 @admin.register(models.Achievement)
 class AchievementAdmin(admin.ModelAdmin):
-    list_display = ('title','order','description','slug','class_name')
+    list_display = ('title','order','text','slug','class_name')
     list_editable = ('order',)
 
 @admin.register(models.UserAchievement)
