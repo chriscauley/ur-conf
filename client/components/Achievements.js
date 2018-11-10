@@ -14,6 +14,7 @@ export default class Achievements extends React.Component {
   render() {
     const { user } = this.props.data
     const achievements = user.userachievementSet.map(a=>a.achievement)
+    if (!achievements) { return null }
     return (
       <ul className="collection with-header" id="achievements">
         <li className="collection-header pink-text"><h4>Achievements</h4></li>

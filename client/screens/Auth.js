@@ -33,20 +33,22 @@ class Auth extends React.Component {
   }
   onChange = ({ formData }) => this.setState({ formData })
   render() {
-    const { auth } = this.props
+    const { auth, loading } = this.props
     const { error, success } = this.state
     if (!auth.user) {
-      navigate('/')
       return null
     }
     const initial = auth.user.email.match(/guest-.+@example.com/)
       ? {}
       : auth.user
     return (
-      <div className="container">
-        <h3 className="red-text lighten-2 mt">Account Info</h3>
+      <div className="container" id="auth">
+        <Achievements data={auth} />
         <div className="card">
           <div className="card-content">
+            <div className="card-title">
+              <h4 className="red-text lighten-2">Account Info</h4>
+            </div>
             <p className="flow-text mb">
               Email will only be used for account recovery purposes. This app is
               password less. You can only login using a magic link sent by
@@ -69,7 +71,7 @@ class Auth extends React.Component {
                 </div>
               )}
               <p className="center">
-                <button className="btn btn-blue">{_('Create Account')}</button>
+                <button className="btn btn-blue">{_('Update Email')}</button>
               </p>
             </Form>
           </div>
@@ -81,7 +83,6 @@ class Auth extends React.Component {
             </button>
           </div>
         </div>
-        <Achievements data={auth} />
       </div>
     )
   }

@@ -28,7 +28,7 @@ class TalkList extends React.Component {
     return this.timeslots.find(ts => ts.id === timeslotId)
   }
   vote(vote, talk) {
-    window.ALERT.dismiss('post-vote')
+    window.ALERT.dismiss('pre-vote')
     window.ALERT.set('post-vote')
     post('/api/vote/', {
       talk_id: talk.id,

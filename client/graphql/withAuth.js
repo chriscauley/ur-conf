@@ -11,7 +11,8 @@ const rootQuery = gql`
       userachievementSet {
         achievement {
           title
-          description
+          slug
+          text
           className
           order
           id
