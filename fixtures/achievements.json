@@ -1,0 +1,79 @@
+[
+{
+    "model": "main.achievement",
+    "pk": 1,
+    "fields": {
+        "slug": "vote_one",
+        "title": "Participation Trophy",
+        "text": "Swipe or tap one talk",
+        "class_name": "trophy",
+        "order": 1
+    }
+},
+{
+    "model": "main.achievement",
+    "pk": 2,
+    "fields": {
+        "slug": "vote_all",
+        "title": "Completionist",
+        "text": "Mark every talk",
+        "class_name": "100",
+        "order": 6
+    }
+},
+{
+    "model": "main.achievement",
+    "pk": 3,
+    "fields": {
+        "slug": "attend_one",
+        "title": "Roll call",
+        "text": "Attend one talk",
+        "class_name": "stars",
+        "order": 2
+    }
+},
+{
+    "model": "main.achievement",
+    "pk": 4,
+    "fields": {
+        "slug": "attend_all",
+        "title": "Star struck",
+        "text": "Attend one talk in every slot",
+        "class_name": "star-struck",
+        "order": 7
+    }
+},
+{
+    "model": "main.achievement",
+    "pk": 5,
+    "fields": {
+        "slug": "all_maybeno",
+        "title": "Party Pooper",
+        "text": "Mark all talks in one slot with \"no\" or \"maybe\"",
+        "class_name": "poop",
+        "order": 3
+    }
+},
+{
+    "model": "main.achievement",
+    "pk": 6,
+    "fields": {
+        "slug": "all_yesno",
+        "title": "Decider",
+        "text": "Mark all talks in one slot with \"no\" or \"yes\"",
+        "class_name": "balance-scale",
+        "order": 4
+    }
+},
+{
+    "model": "main.achievement",
+    "pk": 7,
+    "fields": {
+        "slug": "all_yesmaybe",
+        "title": "I love it!",
+        "text": "Mark all talks in one slot with \"yes\" or \"maybe\"",
+        "class_name": "heart-eyes",
+        "order": 5
+    }
+}
+]
