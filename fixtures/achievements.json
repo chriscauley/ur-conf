@@ -5,7 +5,7 @@
     "fields": {
         "slug": "vote_one",
         "title": "Participation Trophy",
-        "text": "Swipe or tap one talk",
+        "text": "Mark one talk yes, no, or maybe",
         "class_name": "trophy",
         "order": 1
     }

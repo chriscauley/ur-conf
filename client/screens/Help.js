@@ -56,6 +56,10 @@ class Help extends React.Component {
           <span className="ec ec-star" />
         </p>
 
+        <div className="hr" />
+        <p className="flow-text">
+          If you want to use this app or know more, contact me <a href="https://twitter.com/onefiercelinter" target="_blank">@oneFierecLinter</a> or checkout the <a href="https://github.com/chriscauley/ur-conf/">github repo</a>.
+        </p>
         {/*
         <div className="hr" />
         <h4 className="red-text lighten-2">Step &infin;: Control TIME!!!</h4>
@@ -77,7 +81,7 @@ class Help extends React.Component {
         <p className="center flow-text">What are you waiting for?</p>
         <div className="center mb">
           <Link to="/vote/">
-            <button className="btn btn-blue">Start Voting</button>
+            <button className="btn btn-blue">Start Choosing Talks</button>
           </Link>
         </div>
       </div>
