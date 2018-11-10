@@ -1,5 +1,14 @@
 [
 {
+    "model": "main.conference",
+    "pk": 1,
+    "fields": {
+        "name": "BarCamp 2018",
+        "external_id": "23",
+        "date": "2018-11-10"
+    }
+},
+{
     "model": "main.talk",
     "pk": 1,
     "fields": {
