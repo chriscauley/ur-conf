@@ -1,4 +1,6 @@
+# ur-conf
 
+This is a conference app I made. It is currently running on uberfordogs.com using the 2018 BarCamp talks. If you're interested in using this for a conference, please contact me at chris@lablackey.com and I'll see what I can do. Feel free to install it locally and play around with it.
 
 
 # Installation
