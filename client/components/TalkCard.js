@@ -76,7 +76,10 @@ export default class TalkCard extends React.Component {
                     {talk.authors.map((author, i) => (
                     <span key={author.id}>
                       {' '}
-                      <b>{author.name}</b>
+                      <b>
+                        {author.name}
+                        {author.contactInfo || null}
+                      </b>
                       {i === talk.authors.length && ','}
                     </span>
                     ))}
