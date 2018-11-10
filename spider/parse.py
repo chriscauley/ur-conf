@@ -53,6 +53,12 @@ def parse_year(year):
             talk_fields = talk_soup.findAll("div",{"class":"field"})
             description = talk_fields[var.DESCRIPTION_INDEX].text
             description = description.replace("Description:","").strip()
+            contact_info = talk_fields[var.DESCRIPTION_INDEX-1].text
+            contact_info = contact_info.replace("Contact Info:","").strip()
+            if authors:
+                a = authors[0]
+                a.contact_info = contact_info
+                a.save()
             defaults = dict(
                 title=title,
                 timeslot=timeslots[i],
