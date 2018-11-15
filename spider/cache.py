@@ -47,7 +47,7 @@ def curl(key,_id,name):
     url = URLS[key]+str(_id)
     fname = os.path.join(".bc","{}.html".format(name))
     #! TODO disabling curl caching for now
-    if True: # and not os.path.exists(fname):
+    if not os.path.exists(fname):
         text = requests.get(url).text
         with open(fname,'w') as _file:
             _file.write(text)
