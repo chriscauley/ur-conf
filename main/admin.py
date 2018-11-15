@@ -4,7 +4,9 @@ from main import models
 
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('__str__','talk_count')
+    def talk_count(self,obj):
+        return obj.talk_set.all().count()
 
 @admin.register(models.TimeSlot)
 class TimeSlotAdmin(admin.ModelAdmin):
@@ -16,7 +18,8 @@ class AuthorAdmin(admin.ModelAdmin):
 
 @admin.register(models.Talk)
 class TalkAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title','room','timeslot')
+    list_filter = ('room','timeslot')
 
 @admin.register(models.TalkVote)
 class TalkVoteAdmin(admin.ModelAdmin):
