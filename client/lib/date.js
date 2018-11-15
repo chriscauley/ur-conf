@@ -2,19 +2,19 @@ import { format } from 'date-fns'
 
 let DEBUG
 try {
-  DEBUG = window.localStorage.getItem("DEBUG_DATE")
+  DEBUG = window.localStorage.getItem('DEBUG_DATE')
 } catch {
   DEBUG = false
 }
-
+DEBUG = true
 const _trigger_time = new Date('2018-11-10 10:15').valueOf()
 const date = {
   DEBUG: DEBUG,
   SPEED: 0, // seconds per tick
-  RATE: DEBUG?1000:30000, // refresh rate
+  RATE: DEBUG ? 1000 : 30000, // refresh rate
   start: new Date('2018-11-10 9:30'.valueOf()),
   end: new Date('2018-11-10 18:00'.valueOf()),
-  now: () => date.DEBUG?new Date(date.value):new Date(),
+  now: () => (date.DEBUG ? new Date(date.value) : new Date()),
   tick: () => {
     if (date.DEBUG) {
       date.value = date.now().valueOf() + date.SPEED * 60 * 1000

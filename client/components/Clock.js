@@ -9,23 +9,26 @@ export default class Clock extends React.Component {
   constructor(props) {
     super(props)
 
-    date.DEBUG && setTimeout(() => {
-      // if debug is on, alert them that they can control the clock
-      if (!this.clicked) {
-        window.ALERT.set('clock')
-      }
-    }, 90000)
+    date.DEBUG &&
+      setTimeout(() => {
+        // if debug is on, alert them that they can control the clock
+        if (!this.clicked) {
+          window.ALERT.set('clock')
+        }
+      }, 90000)
 
     setTimeout(() => {
       this.interval = setInterval(() => {
         date.tick()
         this.forceUpdate()
       }, date.RATE)
-    },5000)
+    }, 5000)
   }
 
   click = () => {
-    if (!date.DEBUG) { return }
+    if (!date.DEBUG) {
+      return
+    }
     if (!this.interval) {
       console.log('clock not on yet') // eslint-disable-line
       return

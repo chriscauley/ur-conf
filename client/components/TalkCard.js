@@ -44,12 +44,12 @@ export default class TalkCard extends React.Component {
   render() {
     const { talk, activeIndex, index } = this.props
     this.isPast = date.isPast(talk.timeslot)
-    const active = this.active = activeIndex === index
+    const active = (this.active = activeIndex === index)
     const zIndex = Math.abs(index - activeIndex)
     const { vote } = talk
     let color = (vote && vote.className) || 'grey'
-    color += active?' lighten-2':' lighten-4'
-    const className = `talk ${active?'active':'inactive'} index-${zIndex}`
+    color += active ? ' lighten-2' : ' lighten-4'
+    const className = `talk ${active ? 'active' : 'inactive'} index-${zIndex}`
     const cardClass = `card ${color}`
     const gray = this.isPast || !active
     const actionClass = `card-action ${color} ${gray ? 'grayscale' : ''}`
@@ -73,17 +73,21 @@ export default class TalkCard extends React.Component {
                 <div className="card-details">
                   <p>
                     {_`with`}
-                    {talk.authors.map((author, i) => (
-                    <span key={author.id}>
-                      {' '}
-                      <b>
-                        {author.name}
-                        {author.contactInfo || null}
-                      </b>
-                      {i === talk.authors.length && ','}
-                    </span>
+                    {talk.authors.filter(a => a).map((author, i) => (
+                      <span key={author.id}>
+                        {' '}
+                        <b>
+                          {author.name}
+                          <span> {author.contactInfo || null}</span>
+                        </b>
+                        {i === talk.authors.length && ','}
+                      </span>
                     ))}
-                    {_` in room`} <b>{talk.room.name}</b>
+                    {talk.room && (
+                      <span>
+                        {_` in room`} <b>{talk.room.name}</b>
+                      </span>
+                    )}
                   </p>
                   <hr />
                   <p className="description">{talk.description}</p>
@@ -91,9 +95,9 @@ export default class TalkCard extends React.Component {
               </div>
               <div className={actionClass}>
                 {vote_list.map(vote => (
-                <a key={vote.value} onClick={this._vote(vote.value)}>
-                  <span className={getTalkIcon(talk, vote)} /> {vote.text}
-                </a>
+                  <a key={vote.value} onClick={this._vote(vote.value)}>
+                    <span className={getTalkIcon(talk, vote)} /> {vote.text}
+                  </a>
                 ))}
               </div>
             </div>

@@ -35,7 +35,7 @@ export const withTalks = graphql(talkQuery, {
   props: ({ data }) => {
     if (data.timeslots) {
       data.timeslots.forEach(ts => {
-        ts.sortableTalks = ts.talkSet.filter(t=>t.sortable)
+        ts.sortableTalks = ts.talkSet.filter(t => t.sortable)
       })
     }
     return {

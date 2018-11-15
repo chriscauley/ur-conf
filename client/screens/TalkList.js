@@ -93,7 +93,9 @@ class TalkList extends React.Component {
       navigate('/schedule/')
       return null
     }
-    const selectableTimeslots = timeslots.filter(ts => ts && ts.sortableTalks.length)
+    const selectableTimeslots = timeslots.filter(
+      ts => ts && ts.sortableTalks.length,
+    )
     const toNext = () => navigate(`/vote/${timeslot.nextSlotId}/`)
     if (!timeslot.talkSet.find(t => t.sortable)) {
       if (timeslot.nextSlotId) {
@@ -106,14 +108,14 @@ class TalkList extends React.Component {
     const activeIndex = this.getActiveIndex()
     if (timeslot.sortableTalks.length <= activeIndex) {
       if (timeslot.nextSlotId) {
-        ALERT.set('slot-complete',{
+        window.ALERT.set('slot-complete', {
           click: toNext,
           force: true,
           color: 'grey',
         })
       } else {
         // #! TODO this doesn't actually appear because of closing remarks
-        ALERT.set('last-slot-complete',{
+        window.ALERT.set('last-slot-complete', {
           click: () => navigate(`/schedule/`),
           force: true,
           color: 'grey',

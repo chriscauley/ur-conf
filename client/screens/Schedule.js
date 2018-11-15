@@ -30,10 +30,11 @@ const TalkRow = ({ talk, timeslot, attend }) => {
   return (
     <li className="collection-item" onClick={talk.attend}>
       <i className={icon} />
-      { talk.sortable?
-        <Link to={`/talk/${talk.id}/`}>{talk.title}</Link>:
+      {talk.sortable ? (
+        <Link to={`/talk/${talk.id}/`}>{talk.title}</Link>
+      ) : (
         <div>{talk.title}</div>
-      }
+      )}
     </li>
   )
 }
@@ -45,7 +46,7 @@ class Noop extends React.Component {
 }
 
 const TimeslotRow = ({ timeslot, attend }) => {
-  const TimeTag = timeslot.sortableTalks.length?Link:Noop
+  const TimeTag = timeslot.sortableTalks.length ? Link : Noop
   return (
     <div className="card">
       <div className="card-content">
@@ -73,13 +74,16 @@ const TimeslotRow = ({ timeslot, attend }) => {
               ))}
             </li>
           )}
-          {!timeslot.visibleTalks.length && !hasVotes(timeslot) && (
-            <li className="collection-item">
-              <Link to={`/vote/${timeslot.id}/1`}>
-                {`0/${timeslot.talkSet.length} talks selected. Click to get started.`}
-              </Link>
-            </li>
-          )}
+          {!timeslot.visibleTalks.length &&
+            !hasVotes(timeslot) && (
+              <li className="collection-item">
+                <Link to={`/vote/${timeslot.id}/1`}>
+                  {`0/${
+                    timeslot.talkSet.length
+                  } talks selected. Click to get started.`}
+                </Link>
+              </li>
+            )}
         </ul>
       </div>
     </div>
@@ -136,7 +140,9 @@ class Schedule extends React.Component {
       const talkSet = ts.talkSet
       const voteTalks = ts.sortableTalks.filter(t => t.vote)
       ts.visibleTalks = talkSet.filter(t => {
-        if (!t.sortable) { return true }
+        if (!t.sortable) {
+          return true
+        }
         return t.vote && t.vote.value === 1
       })
 

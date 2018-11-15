@@ -28,17 +28,15 @@ class Auth extends React.Component {
   }
   logout = () => {
     try {
-      localStorage.setItem("DISMISSED","{}")
-    } catch {
-
-    }
+      localStorage.setItem('DISMISSED', '{}')
+    } catch {} // eslint-disable-line
     fetch('/api/logout/')
       .then(this.props.auth.refetch)
       .then(() => navigate('/'))
   }
   onChange = ({ formData }) => this.setState({ formData })
   render() {
-    const { auth, loading } = this.props
+    const { auth } = this.props
     const { error, success } = this.state
     if (!auth.user) {
       return null

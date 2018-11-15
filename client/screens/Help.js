@@ -59,7 +59,16 @@ class Help extends React.Component {
 
         <div className="hr" />
         <p className="flow-text">
-          If you want to use this app or know more, contact me <a href="https://twitter.com/onefiercelinter" target="_blank">@oneFierceLinter</a> or checkout the <a href="https://github.com/chriscauley/ur-conf/">github repo</a>.
+          If you want to use this app or know more, contact me{' '}
+          <a
+            href="https://twitter.com/onefiercelinter"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @oneFierceLinter
+          </a>{' '}
+          or checkout the{' '}
+          <a href="https://github.com/chriscauley/ur-conf/">github repo</a>.
         </p>
         {/*
         <div className="hr" />

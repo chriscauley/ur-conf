@@ -27,15 +27,16 @@ const alerts = {
     iconClass: 'ec ec-clock1',
   },
   'last-slot-complete': {
-    text: 'That the last time. Go back to the schedule and see if you missed something?',
+    text:
+      'That the last time. Go back to the schedule and see if you missed something?',
     iconClass: 'ec ec-100',
-  }
+  },
 }
 
 class Alert extends React.PureComponent {
   constructor(props) {
     super(props)
-    this.queueDismiss = debounce(this.dismiss,10000)
+    this.queueDismiss = debounce(this.dismiss, 10000)
     window.ALERT = this
     try {
       this.dismissed = JSON.parse(localStorage.getItem('DISMISSED') || '{}')
@@ -47,10 +48,12 @@ class Alert extends React.PureComponent {
     localStorage.setItem('DISMISSED', '{}')
     this.dismissed = {}
   }
-  _update = () => setTimeout(() => this.forceUpdate(),0)
-  cheat = () => window.localStorage.setItem("DEBUG_DATE",1)
-  set = (slug,options={}) => {
-    if (this.dismissed[slug] && !options.force) { return }
+  _update = () => setTimeout(() => this.forceUpdate(), 0)
+  cheat = () => window.localStorage.setItem('DEBUG_DATE', 1)
+  set = (slug, options = {}) => {
+    if (this.dismissed[slug] && !options.force) {
+      return
+    }
     if (alerts[slug]) {
       this.current = {
         color: 'green',
@@ -58,7 +61,7 @@ class Alert extends React.PureComponent {
         click: _e => this.dismiss(),
         slug,
         ...alerts[slug],
-        ...options
+        ...options,
       }
     }
     slug && !options.force && this.queueDismiss(slug)
@@ -77,16 +80,18 @@ class Alert extends React.PureComponent {
   }
   displayAchievement = () => {
     const user = this.props.auth.user
-    if (!user || ! user.userachievementSet) { return }
+    if (!user || !user.userachievementSet) {
+      return
+    }
     const achievement = user.userachievementSet
-          .map(ua=> ua.achievement)
-          .find(a => !this.dismissed[a.slug])
+      .map(ua => ua.achievement)
+      .find(a => !this.dismissed[a.slug])
     if (achievement) {
       this.current = {
         ...achievement,
         iconClass: `ec ec-${achievement.className} circle grey lighten-2`,
         color: 'grey',
-        click: () => navigate("/auth/#achievements"),
+        click: () => navigate('/auth/#achievements'),
       }
     }
   }
@@ -101,18 +106,23 @@ class Alert extends React.PureComponent {
 
     const current = this.current || defaultAlert
 
-    let className = "flex lighten-4 "
+    let className = 'flex lighten-4 '
     if (current.text) {
       className += 'open full'
     }
     const messageClass = 'message'
     return (
-      <div id="alert" className={`${className} ${current.color || 'grey'}`}
-           onClick={current.click}>
+      <div
+        id="alert"
+        className={`${className} ${current.color || 'grey'}`}
+        onClick={current.click}
+      >
         <i className={current.iconClass} />
         <div>
           <div className={messageClass}>
-            <div><b>{current.title}</b></div>
+            <div>
+              <b>{current.title}</b>
+            </div>
             {current.text}
           </div>
         </div>
