@@ -4,7 +4,7 @@ from django.db import models
 
 class Conference(models.Model):
     name = models.CharField(max_length=64)
-    external_id = models.CharField(max_length=32)
+    external_id = models.CharField(max_length=32,null=True,blank=True)
     date = models.DateField()
     def __str__(self):
         return self.name
@@ -12,6 +12,7 @@ class Conference(models.Model):
 
 class Room(models.Model):
     name = models.CharField(max_length=32)
+    conference = models.ForeignKey(Conference,null=True,blank=True,on_delete=models.CASCADE)
     def __str__(self):
         return self.name
 
@@ -20,6 +21,8 @@ class TimeSlot(models.Model):
     class Meta:
         ordering = ('datetime',)
     datetime = models.DateTimeField()
+    endtime = models.DateTimeField(null=True,blank=True)
+    conference = models.ForeignKey(Conference,on_delete=models.CASCADE,null=True, blank=True)
     def __str__(self):
         return str(self.datetime)
 
@@ -28,6 +31,7 @@ class Author(models.Model):
     name = models.CharField(max_length=64)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,null=True,blank=True)
     contact_info = models.CharField(max_length=64,null=True,blank=True)
+    conference = models.ForeignKey(Conference,on_delete=models.CASCADE,null=True, blank=True)
     def __str__(self):
         return self.name
 
@@ -62,6 +66,7 @@ class TalkAttendance(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     timeslot = models.ForeignKey(TimeSlot,on_delete=models.CASCADE)
     modofied = models.DateTimeField(auto_now=True)
+    conference = models.ForeignKey(Conference,on_delete=models.CASCADE,null=True, blank=True)
 
 
 SLUG_CHOICES = [
