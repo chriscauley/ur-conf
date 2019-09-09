@@ -17,7 +17,7 @@ def bad_token(request):
 
 def create_account(request):
     data = json.loads(request.body.decode("utf-8"))
-    username = email = data.get("email",None)
+    username = email = data.get("email", None)
     User = get_user_model()
     if email and User.objects.filter(email=email):
         raise NotImplemented()
@@ -25,22 +25,21 @@ def create_account(request):
         _hash = "{:032x}".format(random.getrandbits(128))
         username = "guest-{}".format(_hash[:8])
         email = username + "@example.com"
-    user = User.objects.create(
-        username=username,
-        email=email
-    )
+    user = User.objects.create(username=username, email=email)
     user.backend = "django.contrib.auth.backends.ModelBackend"
-    login(request,user)
+    login(request, user)
     return JsonResponse({"status": "ok"})
 
 
 def change_email(request):
     data = json.loads(request.body.decode("utf-8"))
-    email = data.get("email",None)
+    email = data.get("email", None)
     User = get_user_model()
     user = request.user
     if User.objects.exclude(id=user.id).filter(email=email):
-        return JsonResponse({'error': 'Another account already has that email.'},status=400)
+        return JsonResponse(
+            {"error": "Another account already has that email."}, status=400
+        )
     user = request.user
     user.email = user.username = email
     user.save()
@@ -52,11 +51,11 @@ def send_login(request):
     form = PasswordResetForm(data)
     if form.is_valid():
         form.save(
-            subject_template_name='email/nopass/subject.txt',
-            email_template_name='email/nopass/body.txt',
+            subject_template_name="email/nopass/subject.txt",
+            email_template_name="email/nopass/body.txt",
         )
-        return JsonResponse({"success":"Please check your email for a login link."})
-    return JsonResponse({},status=400)
+        return JsonResponse({"success": "Please check your email for a login link."})
+    return JsonResponse({}, status=400)
 
 
 # django.contrib.auth.views.PasswordResetConfirmView.get_user
@@ -72,7 +71,7 @@ def get_user(uidb64):
 
 # adapted from django.contrib.auth.views.PasswordResetConfirmView
 def complete_login(request, uidb64=None, token=None):
-    redirect_url = '/'
+    redirect_url = "/"
     if request.user.is_authenticated:
         return HttpResponseRedirect(redirect_url)
     user = get_user(uidb64)

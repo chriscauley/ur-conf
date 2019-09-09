@@ -1,8 +1,9 @@
-django==2.1.2
-BeautifulSoup4==4.6.3
 arrow==0.12.1
+BeautifulSoup4==4.6.3
+black==19.3b0
+django==2.1.2
 graphene-django==2.2.0
-whitenoise==4.1
 django-mailer==1.2.5
-requests==2.20.0
 psycopg2-binary==2.8.3
+requests==2.20.0
+whitenoise==4.1
