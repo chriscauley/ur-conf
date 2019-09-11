@@ -3,6 +3,11 @@ from django.contrib import admin
 from main import models
 
 
+@admin.register(models.Conference)
+class ConfernceAdmin(admin.ModelAdmin):
+    pass
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
     list_display = ("__str__", "talk_count")
