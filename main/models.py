@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Conference(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=256)
     external_id = models.CharField(max_length=32, null=True, blank=True)
     date = models.DateField()
 
@@ -12,7 +12,7 @@ class Conference(models.Model):
 
 
 class Room(models.Model):
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=256)
     conference = models.ForeignKey(
         Conference, null=True, blank=True, on_delete=models.CASCADE
     )
@@ -31,12 +31,15 @@ class TimeSlot(models.Model):
         Conference, on_delete=models.CASCADE, null=True, blank=True
     )
 
+    class Meta:
+        ordering = ("datetime",)
+
     def __str__(self):
         return str(self.datetime)
 
 
 class Author(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=256)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
     )
