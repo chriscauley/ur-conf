@@ -23,11 +23,13 @@ TIMES = [
 ]
 
 
-def make_timeslots(date_string):
+def make_timeslots(date_string, conference):
     for time in TIMES:
         a = arrow.get(date_string + " " + time)
         a = a.replace(tzinfo=tz.gettz("US/Eastern"))
         if a.hour < 6:
             a = a.shift(hours=12)
-        ts, new = TimeSlot.objects.get_or_create(datetime=a.datetime)
+        ts, new = TimeSlot.objects.get_or_create(
+            datetime=a.datetime, conference=conference
+        )
         yield ts

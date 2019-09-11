@@ -21,10 +21,13 @@ def parse_year(year):
     if _new:
         print("New conference", date_string)
 
-    timeslots = list(var.make_timeslots(date_string))
+    timeslots = list(var.make_timeslots(date_string, conference))
 
     for row in soup.findAll("tr", {"class": "sorting"}):
-        room, new = Room.objects.get_or_create(name=row.find("th").text.strip())
+        room, new = Room.objects.get_or_create(
+            name=row.find("th").text.strip(),
+            conference=conference,
+        )
         if new:
             print("Room created", room.name)
         for i, div in enumerate(row.findAll("div")):
@@ -36,10 +39,19 @@ def parse_year(year):
             title = anchor.text.strip()
             url = anchor.attrs["href"]
             external_id = int(url.split("/")[-1])
-            authors = text.replace(title, "").strip()
-            authors = authors.replace(" and ", ",").replace("&", ",")
-            authors = [a.strip() for a in authors.split(",")]
-            authors = [Author.objects.get_or_create(name=name)[0] for name in authors]
+            author_names = text.replace(title, "").strip()
+            author_names = author_names.replace(" and ", ",").replace("&", ",")
+            author_names = [a.strip() for a in author_names.split(",")]
+            authors = []
+            for name in author_names:
+                a, new = Author.objects.get_or_create(
+                    name=name,
+                    conference=conference,
+                )
+                authors.append(a)
+                if new:
+                    print("Author created:",a)
+
             talk_text = curl("presentation", external_id, "p{}".format(external_id))
 
             talk_soup = BeautifulSoup(talk_text, "html.parser")
@@ -57,14 +69,16 @@ def parse_year(year):
                 a.contact_info = contact_info
                 a.save()
             defaults = dict(
-                title=title,
+                title=title.strip(),
                 timeslot=timeslots[i],
                 room=room,
                 external_url=url,
                 description=description,
             )
             talk, new = Talk.objects.get_or_create(
-                external_id=external_id, conference=conference, defaults=defaults
+                external_id=external_id,
+                conference=conference,
+                defaults=defaults
             )
             for key, value in defaults.items():
                 setattr(talk, key, value)

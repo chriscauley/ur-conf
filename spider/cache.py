@@ -47,6 +47,10 @@ URLS = {
 
 def curl(key, _id, name):
     url = URLS[key] + str(_id)
+    try:
+        os.mkdir(".bc")
+    except FileExistsError:
+        pass
     fname = os.path.join(".bc", "{}.html".format(name))
     #! TODO disabling curl caching for now
     if not os.path.exists(fname):
