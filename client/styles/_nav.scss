@@ -1,3 +1,8 @@
+nav {
+  flex-basis: 56px;
+  flex-shrink: 0;
+}
+
 #nav-mobile {
   display: flex;
   justify-content: space-between;
