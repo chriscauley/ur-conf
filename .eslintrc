@@ -38,7 +38,7 @@
     "no-console": [2, { "allow": ["warn", "error"] }],
     "eol-last": [2, "always"],
     "no-multiple-empty-lines": [2, {"max": 1, "maxEOF": 0}],
-    "react/jsx-no-bind": 2,
+    "react/jsx-no-bind": "off",
     "eqeqeq": 2,
     "prefer-const": ["error", { "destructuring": "all" }],
     "no-unused-vars": ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
