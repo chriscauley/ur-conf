@@ -5,11 +5,8 @@ import Alert from './Alert'
 import _ from '../lib/translate'
 import Clock from './Clock'
 
-const links = auth => (
-  <ul id="nav-mobile">
-    <li>
-      <Clock />
-    </li>
+const AuthLinks = ({ user }) => (
+  <>
     <li>
       <Link to="/schedule/">{_`Schedule`}</Link>
     </li>
@@ -19,38 +16,39 @@ const links = auth => (
     <li className="auth">
       <Link to="/auth/">
         <i className="fa fa-user" />
-        {auth.user.username}
+        {user.username}
       </Link>
     </li>
-  </ul>
+  </>
+)
+
+const AnonymousLinks = () => (
+  <li>
+    <Match path="/login/">
+      {props =>
+        props.match ? (
+          <Link to="/">{_('New Account')}</Link>
+        ) : (
+          <Link to="/login/">{_('Login')}</Link>
+        )
+      }
+    </Match>
+  </li>
 )
 
 class Nav extends React.Component {
   render() {
-    const auth = this.props.auth
+    const { auth } = this.props
+    const Links = auth.user ? AuthLinks : AnonymousLinks
     return (
       <nav>
         <div className="nav-wrapper">
-          {auth.user ? (
-            links(auth)
-          ) : (
-            <ul id="nav-mobile">
-              <li>
-                <Clock />
-              </li>
-              <li>
-                <Match path="/login/">
-                  {props =>
-                    props.match ? (
-                      <Link to="/">{_('New Account')}</Link>
-                    ) : (
-                      <Link to="/login/">{_('Login')}</Link>
-                    )
-                  }
-                </Match>
-              </li>
-            </ul>
-          )}
+          <ul id="nav-mobile">
+            <li>
+              <Clock />
+            </li>
+            <Links {...auth} />
+          </ul>
         </div>
         <Alert />
       </nav>
