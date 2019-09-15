@@ -1,5 +1,6 @@
 import React from 'react'
 
+import alert from '../lib/alert'
 import date from '../lib/date'
 
 export default class Clock extends React.Component {
@@ -9,20 +10,18 @@ export default class Clock extends React.Component {
   constructor(props) {
     super(props)
 
-    date.DEBUG &&
+    date.inDebugMode() &&
       setTimeout(() => {
         // if debug is on, alert them that they can control the clock
         if (!this.clicked) {
-          window.ALERT.set('clock')
+          alert.set('clock')
         }
       }, 90000)
 
-    setTimeout(() => {
-      this.interval = setInterval(() => {
-        date.tick()
-        this.forceUpdate()
-      }, date.RATE)
-    }, 5000)
+    this.interval = setInterval(() => {
+      date.tick()
+      this.forceUpdate()
+    }, date.getRate())
   }
 
   click = () => {

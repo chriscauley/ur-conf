@@ -1,22 +1,19 @@
 import { format, isAfter } from 'date-fns'
-
-let DEBUG
-try {
-  DEBUG = window.localStorage.getItem('DEBUG_DATE')
-} catch {
-  DEBUG = false
-}
+import config from './config'
+import alert from './alert'
 
 const _trigger_time = new Date('2018-11-10 10:15').valueOf()
 const date = {
-  DEBUG: DEBUG,
   SPEED: 0, // seconds per tick
-  RATE: DEBUG ? 1000 : 30000, // refresh rate
+  turnDebugOn: () => config.setItem('TIMELESS', true),
+  turnDebugOff: () => config.setItem('TIMELESS', null),
+  inDebugMode: () => config.getItem('TIMELESS'),
+  getRate: () => (date.inDebugMode() ? 1000 : 30000), // refresh rate
   start: new Date('2018-11-10 9:30'.valueOf()),
   end: new Date('2018-11-10 18:00'.valueOf()),
-  now: () => (date.DEBUG ? new Date(date.value) : new Date()),
+  now: () => (date.inDebugMode() ? new Date(date.value) : new Date()),
   tick: () => {
-    if (date.DEBUG) {
+    if (date.inDebugMode()) {
       date.value = date.now().valueOf() + date.SPEED * 60 * 1000
       if (date.value > date.end) {
         date.value = date.start
@@ -25,7 +22,7 @@ const date = {
       date.value = new Date().valueOf()
     }
     if (date.value >= _trigger_time) {
-      window.ALERT.set('first-star')
+      alert.set('first-star')
     }
     date.visible && date.visible.forceUpdate()
   },

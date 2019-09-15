@@ -6,8 +6,9 @@ import { compose } from 'react-apollo'
 
 import { withTalks, withAuth } from '../graphql'
 import { prepTalkVotes, setAttendance, vote_list } from '../lib/vote'
-import date from '../lib/date'
+import alert from '../lib/alert'
 import { post } from '../lib/ajax'
+import date from '../lib/date'
 import _ from '../lib/translate'
 
 const hasVotes = timeslot => {
@@ -95,10 +96,10 @@ class Schedule extends React.Component {
     const el = document.querySelector('[role="group"]')
     el && el.scrollTo(0, 0)
     date.visible = this
-    window.ALERT.set('schedule')
+    alert.set('schedule')
   }
   componentWillUnmount() {
-    window.ALERT.dismiss('schedule')
+    alert.dismiss('schedule')
   }
   attend = (talk, timeslot) => {
     post('/api/attendance/', {

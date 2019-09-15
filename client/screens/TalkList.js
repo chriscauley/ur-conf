@@ -2,7 +2,7 @@ import React from 'react'
 import { compose } from 'react-apollo'
 import { format } from 'date-fns'
 
-import _ from '../lib/translate'
+import alert from '../lib/alert'
 import navigate from '../lib/navigate'
 import { post } from '../lib/ajax'
 import { setVote, prepTalkVotes } from '../lib/vote'
@@ -28,8 +28,8 @@ class TalkList extends React.Component {
     return this.timeslots.find(ts => ts.id === timeslotId)
   }
   vote(vote, talk) {
-    window.ALERT.dismiss('pre-vote')
-    window.ALERT.set('post-vote')
+    alert.dismiss('pre-vote')
+    alert.set('post-vote')
     post('/api/vote/', {
       talk_id: talk.id,
       vote,
@@ -73,7 +73,7 @@ class TalkList extends React.Component {
     }, 0)
   }
   render() {
-    window.ALERT.set('pre-vote')
+    alert.set('pre-vote')
     const { auth, talkGQL } = this.props
     if (talkGQL.loading || auth.loading) {
       return <div>{`Loading`}</div>
@@ -108,14 +108,14 @@ class TalkList extends React.Component {
     const activeIndex = this.getActiveIndex()
     if (timeslot.sortableTalks.length <= activeIndex) {
       if (timeslot.nextSlotId) {
-        window.ALERT.set('slot-complete', {
+        alert.set('slot-complete', {
           click: toNext,
           force: true,
           color: 'grey',
         })
       } else {
         // #! TODO this doesn't actually appear because of closing remarks
-        window.ALERT.set('last-slot-complete', {
+        alert.set('last-slot-complete', {
           click: () => navigate(`/schedule/`),
           force: true,
           color: 'grey',
