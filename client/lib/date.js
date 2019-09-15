@@ -1,4 +1,4 @@
-import { format } from 'date-fns'
+import { format, isAfter } from 'date-fns'
 
 let DEBUG
 try {
@@ -6,7 +6,7 @@ try {
 } catch {
   DEBUG = false
 }
-DEBUG = true
+
 const _trigger_time = new Date('2018-11-10 10:15').valueOf()
 const date = {
   DEBUG: DEBUG,
@@ -30,13 +30,15 @@ const date = {
     date.visible && date.visible.forceUpdate()
   },
   reset: () => (date.value = date.start),
+  set: (start, end) => {
+    date.start = start
+    date.end = end
+  },
   print: () => format(date.now(), 'h:mm'),
   isNow: timeslot => {
     return timeslot.DATE < date.value && timeslot.END_DATE > date.value
   },
-  isPast: timeslot => {
-    return timeslot.END_DATE < date.value
-  },
+  isPast: timeslot => isAfter(timeslot.END_DATE, date.value),
 }
 
 date.reset()
