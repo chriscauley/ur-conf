@@ -1,5 +1,5 @@
 import React from 'react'
-import { compose } from 'react-apollo'
+import { compose } from 'recompose'
 import { format } from 'date-fns'
 
 import alert from '../lib/alert'

@@ -1,4 +1,6 @@
 import React from 'react'
+import { navigate } from '@reach/router'
+
 import withQuery from '../graphql/withQuery'
 import config from '../lib/config'
 
@@ -12,6 +14,7 @@ const query = `{
 
 const selectConference = id => {
   config.setItem('CURRENT_CONFERENCE', id)
+  navigate('/')
 }
 
 class ConferencePicker extends React.Component {
