@@ -6,7 +6,7 @@ nav {
   display: flex;
   justify-content: space-between;
   i { height: auto; }
-  .fa { line-height: 2 }
+  .fa { line-height: unset; }
   .auth a {
     overflow: hidden;
     text-overflow: ellipsis;

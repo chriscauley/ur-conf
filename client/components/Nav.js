@@ -5,7 +5,7 @@ import Alert from './Alert'
 import _ from '../lib/translate'
 import Clock from './Clock'
 
-const AuthLinks = ({ user }) => (
+const AuthLinks = () => (
   <>
     <li>
       <Link to="/schedule/">{_`Schedule`}</Link>
@@ -14,10 +14,7 @@ const AuthLinks = ({ user }) => (
       <Link to="/vote/">{_`Vote`}</Link>
     </li>
     <li className="auth">
-      <Link to="/auth/">
-        <i className="fa fa-user" />
-        {user.username}
-      </Link>
+      <Link to="/auth/" className="fa fa-user fa-lg" />
     </li>
   </>
 )
@@ -47,7 +44,7 @@ class Nav extends React.Component {
             <li>
               <Clock />
             </li>
-            <Links {...auth} />
+            <Links />
           </ul>
         </div>
         <Alert />

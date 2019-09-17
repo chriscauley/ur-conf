@@ -5,9 +5,11 @@ import { ApolloProvider } from 'react-apollo'
 import Nav from "./components/Nav"
 import { NextTime, TalkList, Schedule, Start, Help, Auth, Login } from "./screens"
 import { client } from './graphql'
+import date from './lib/date'
 
 export default class Root extends React.PureComponent {
   render() {
+    date.root = this
     return (
 <ApolloProvider client={client}>
   <div id="wrapper" className="container">

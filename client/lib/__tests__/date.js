@@ -1,7 +1,7 @@
 import date from '../date'
 
 test('date', () => {
-  date.turnDebugOn()
+  date.DEBUG = true
   date.set("2019-01-01 09:00", "2019-01-01 05:00")
   date.reset()
   const slot = {
@@ -13,4 +13,5 @@ test('date', () => {
   expect(date.print()).toEqual("9:00")
   date.tick()
   console.log(date.print())
+  date.DEBUG = false
 })

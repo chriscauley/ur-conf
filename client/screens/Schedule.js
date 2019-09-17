@@ -95,7 +95,6 @@ class Schedule extends React.Component {
   componentDidMount() {
     const el = document.querySelector('[role="group"]')
     el && el.scrollTo(0, 0)
-    date.visible = this
     alert.set('schedule')
   }
   componentWillUnmount() {
@@ -138,9 +137,8 @@ class Schedule extends React.Component {
       ) : null
 
     timeslots.forEach(ts => {
-      const talkSet = ts.talkSet
       const voteTalks = ts.sortableTalks.filter(t => t.vote)
-      ts.visibleTalks = talkSet.filter(t => {
+      ts.visibleTalks = ts.talkSet.filter(t => {
         if (!t.sortable) {
           return true
         }
