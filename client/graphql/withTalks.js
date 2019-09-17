@@ -1,27 +1,30 @@
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
-import { Client } from './client'
+
+import { Client } from './client' // eslint-disable-line
 
 const talkQuery = gql`
-  {
-    timeslots {
-      id
-      datetime
-      talkSet {
+  query Conference($id: Int!) {
+    conference(id: $id) {
+      timeslotSet {
         id
-        title
-        roomId
-        timeslotId
-        description
-        sortable
-        authors {
+        datetime
+        talkSet {
           id
-          name
-          contactInfo
-        }
-        room {
-          id
-          name
+          title
+          roomId
+          timeslotId
+          description
+          sortable
+          authors {
+            id
+            name
+            contactInfo
+          }
+          room {
+            id
+            name
+          }
         }
       }
     }
@@ -30,11 +33,11 @@ const talkQuery = gql`
 
 export const withTalks = graphql(talkQuery, {
   options: {
-    client: Client('/cached/talks2018.json'),
+    // client: Client('/cached/talks2018.json'),
   },
   props: ({ data }) => {
-    if (data.timeslots) {
-      data.timeslots.forEach(ts => {
+    if (data.conference && data.conference.timeslotSet) {
+      data.conference.timeslotSet.forEach(ts => {
         ts.sortableTalks = ts.talkSet.filter(t => t.sortable)
       })
     }

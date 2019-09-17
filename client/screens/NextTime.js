@@ -6,7 +6,7 @@ import { withTalks } from '../graphql'
 class NextTime extends React.Component {
   render() {
     if (!this.props.talkGQL.loading) {
-      const slot = this.props.talkGQL.timeslots.find(ts => {
+      const slot = this.props.talkGQL.conference.timeslotSet.find(ts => {
         return ts.sortableTalks.length > 0
       })
       navigate(`/vote/${slot.id}/`)

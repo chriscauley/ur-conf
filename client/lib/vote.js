@@ -66,7 +66,7 @@ export const prepTalkVotes = (component, resort) => {
   const attendances = {}
   auth.talkattendances.forEach(({ talkId }) => (attendances[talkId] = true))
 
-  const timeslots = cloneDeep(talkGQL.timeslots)
+  const timeslots = cloneDeep(talkGQL.conference.timeslotSet)
   let lastslot
   timeslots.forEach(timeslot => {
     timeslot.DATE = new Date(timeslot.datetime).valueOf()

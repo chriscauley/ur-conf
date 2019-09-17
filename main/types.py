@@ -3,6 +3,7 @@ from graphene_django import DjangoObjectType
 
 from django.contrib.auth.models import User
 from main.models import (
+    Conference,
     Room,
     TimeSlot,
     Author,
@@ -17,6 +18,12 @@ from main.models import (
 class UserType(DjangoObjectType):
     class Meta:
         model = User
+
+
+class ConferenceType(DjangoObjectType):
+    class Meta:
+        model = Conference
+        filter_fields = ["id"]
 
 
 class RoomType(DjangoObjectType):

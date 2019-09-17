@@ -25,8 +25,7 @@ def parse_year(year):
 
     for row in soup.findAll("tr", {"class": "sorting"}):
         room, new = Room.objects.get_or_create(
-            name=row.find("th").text.strip(),
-            conference=conference,
+            name=row.find("th").text.strip(), conference=conference
         )
         if new:
             print("Room created", room.name)
@@ -44,13 +43,10 @@ def parse_year(year):
             author_names = [a.strip() for a in author_names.split(",")]
             authors = []
             for name in author_names:
-                a, new = Author.objects.get_or_create(
-                    name=name,
-                    conference=conference,
-                )
+                a, new = Author.objects.get_or_create(name=name, conference=conference)
                 authors.append(a)
                 if new:
-                    print("Author created:",a)
+                    print("Author created:", a)
 
             talk_text = curl("presentation", external_id, "p{}".format(external_id))
 
@@ -76,9 +72,7 @@ def parse_year(year):
                 description=description,
             )
             talk, new = Talk.objects.get_or_create(
-                external_id=external_id,
-                conference=conference,
-                defaults=defaults
+                external_id=external_id, conference=conference, defaults=defaults
             )
             for key, value in defaults.items():
                 setattr(talk, key, value)

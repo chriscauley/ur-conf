@@ -2,8 +2,17 @@ import graphene
 from graphene_django import DjangoObjectType
 
 from django.contrib.auth.models import User
-from main.models import Room, TimeSlot, Author, Talk, TalkVote, TalkAttendance
+from main.models import (
+    Conference,
+    Room,
+    TimeSlot,
+    Author,
+    Talk,
+    TalkVote,
+    TalkAttendance,
+)
 from main.types import (
+    ConferenceType,
     UserType,
     RoomType,
     TimeSlotType,
@@ -19,6 +28,8 @@ _id = 1
 
 class Query(graphene.ObjectType):
     user = graphene.Field(UserType)
+    conferences = graphene.List(ConferenceType)
+    conference = graphene.Field(ConferenceType, id=graphene.Int())
     rooms = graphene.List(RoomType)
     timeslots = graphene.List(TimeSlotType)
     authors = graphene.List(AuthorType)
@@ -30,6 +41,12 @@ class Query(graphene.ObjectType):
         if not info.context.user.is_authenticated:
             return
         return info.context.user
+
+    def resolve_conference(self, info, id=None):
+        return Conference.objects.get(id=id)
+
+    def resolve_conferences(self, info):
+        return Conference.objects.all()
 
     def resolve_talks(self, info):
         return Talk.objects.filter(conference_id=_id).prefetch_related("authors")

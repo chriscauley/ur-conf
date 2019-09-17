@@ -18,7 +18,8 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(models.TimeSlot)
 class TimeSlotAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("__str__", "conference")
+    list_filter = ("conference",)
 
 
 @admin.register(models.Author)
@@ -29,7 +30,7 @@ class AuthorAdmin(admin.ModelAdmin):
 @admin.register(models.Talk)
 class TalkAdmin(admin.ModelAdmin):
     list_display = ("title", "room", "timeslot")
-    list_filter = ("room", "timeslot")
+    list_filter = ("room", "timeslot", "conference")
 
 
 @admin.register(models.TalkVote)

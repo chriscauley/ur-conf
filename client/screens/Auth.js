@@ -7,6 +7,7 @@ import { withAuth } from '../graphql'
 import _ from '../lib/translate'
 import { post } from '../lib/ajax'
 import Achievements from '../components/Achievements'
+import ConferencePicker from '../components/ConferencePicker'
 
 class Auth extends React.Component {
   state = {
@@ -84,6 +85,11 @@ class Auth extends React.Component {
             <button className="btn btn-blue" onClick={this.logout}>
               logout
             </button>
+          </div>
+        </div>
+        <div className="card">
+          <div className="card-content center">
+            <ConferencePicker user={auth.user} />
           </div>
         </div>
       </div>

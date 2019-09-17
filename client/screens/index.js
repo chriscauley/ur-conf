@@ -6,4 +6,12 @@ import Auth from './Auth'
 import Login from './Login'
 import NextTime from './NextTime'
 
-export { TalkList, Start, Schedule, Help, NextTime, Auth, Login }
+export {
+  TalkList,
+  Start,
+  Schedule,
+  Help,
+  NextTime,
+  Auth,
+  Login,
+}
