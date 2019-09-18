@@ -13,9 +13,7 @@ class Conference(models.Model):
 
 class Room(models.Model):
     name = models.CharField(max_length=256)
-    conference = models.ForeignKey(
-        Conference, null=True, blank=True, on_delete=models.CASCADE
-    )
+    conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.name} ({self.conference})"
@@ -27,9 +25,7 @@ class TimeSlot(models.Model):
 
     datetime = models.DateTimeField()
     endtime = models.DateTimeField(null=True, blank=True)
-    conference = models.ForeignKey(
-        Conference, on_delete=models.CASCADE, null=True, blank=True
-    )
+    conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ("datetime",)
@@ -44,9 +40,7 @@ class Author(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
     )
     contact_info = models.CharField(max_length=64, null=True, blank=True)
-    conference = models.ForeignKey(
-        Conference, on_delete=models.CASCADE, null=True, blank=True
-    )
+    conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -81,9 +75,7 @@ class TalkAttendance(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     timeslot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
     modofied = models.DateTimeField(auto_now=True)
-    conference = models.ForeignKey(
-        Conference, on_delete=models.CASCADE, null=True, blank=True
-    )
+    conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
 
 
 SLUG_CHOICES = [
