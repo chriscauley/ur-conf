@@ -8,12 +8,17 @@ nav {
   i { height: auto; }
   .fa { line-height: unset; }
   .auth a {
+    /* this is used when showing the username in the nav */
+    /* #! TODO remove it? */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    @media (max-width: 400px) {
+      max-width: 100px;
+    }
   }
-  @media (max-width: 400px) {
-    a { padding: 0 5px; }
-    .auth a { max-width: 100px; }
+  li:first-child {
+    flex-grow: 1;
+    a { display: inline-block; }
   }
 }
