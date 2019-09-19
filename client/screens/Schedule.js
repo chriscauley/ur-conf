@@ -114,12 +114,14 @@ class Schedule extends React.Component {
   }
   render() {
     prepTalkVotes(this)
-    this.props.talkGQL.startPolling(120000)
     if (!this.timeslots) {
       // set by prepTalkVotes
       return <div>{_`Loading`}</div>
     }
 
+    this.props.auth.user.userachievementSet.forEach(({ achievement }) =>
+      alert.set(achievement.slug, achievement),
+    )
     let tsFilter = ts => !date.isPast(ts)
     let _CN = 'past-link'
     let _to = '/schedule/past/'

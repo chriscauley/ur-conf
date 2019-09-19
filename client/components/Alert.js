@@ -13,23 +13,6 @@ class Alert extends React.PureComponent {
   cheat = () => {
     throw 'TODO' //window.localStorage.setItem('DEBUG_DATE', 1)
   }
-  displayAchievement = () => {
-    const user = this.props.auth.user
-    if (!user || !user.userachievementSet) {
-      return
-    }
-    const achievement = user.userachievementSet
-      .map(ua => ua.achievement)
-      .find(a => !this.dismissed[a.slug])
-    if (achievement) {
-      this.current = {
-        ...achievement,
-        iconClass: `ec ec-${achievement.className} circle grey lighten-2`,
-        color: 'grey',
-        click: () => navigate('/auth/#achievements'),
-      }
-    }
-  }
 
   render() {
     const defaultAlert = {

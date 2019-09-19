@@ -42,7 +42,7 @@ export const withTalks = Component =>
         {({ loading, error, data = {}, startPolling }) => {
           data.loading = loading
           data.error = error
-          data.startPolling = startPolling
+          startPolling(1000 * 120)
           if (data && data.conference && data.conference.timeslotSet) {
             data.conference.timeslotSet.forEach(ts => {
               ts.sortableTalks = ts.talkSet.filter(t => t.sortable)

@@ -14,7 +14,7 @@
   transition: 0.25s linear;
   width: 46px;
   z-index: 10000;
-  &.full { width: 320px; }
+  &.full { width: 375px; }
   a, i, i:before { height: 36px; line-height: 36px; }
   &.success {
     border-color: #A5D6A7;
@@ -29,5 +29,8 @@
     line-height: 1.4;
     padding: 0 10px;
     width: 274px;
+  }
+  .ec {
+    font-size: 26px;
   }
 }

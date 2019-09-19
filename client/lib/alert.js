@@ -44,6 +44,10 @@ export default {
     if (this.dismissed[slug] && !options.force) {
       return
     }
+    if (this.current) {
+      // only show one alert at a time
+      return
+    }
     if (alerts[slug]) {
       this.current = {
         color: 'green',
@@ -54,7 +58,17 @@ export default {
         ...options,
       }
     }
-    slug && !options.force && this.queueDismiss(slug)
+    if (options.className) {
+      // this is an achievment
+      this.current = {
+        ...options,
+        color: 'amber lighten-3',
+        click: _e => this.dismiss(),
+        iconClass: 'ec ec-' + options.className,
+        title: 'Achievement Unlocked: ' + options.title,
+      }
+    }
+    //slug && !options.force && this.queueDismiss(slug)
     this._update()
   },
   dismiss(slug) {
@@ -69,6 +83,7 @@ export default {
     this._update()
   },
   queueDismiss(slug) {
-    setTimeout(() => this.dismiss(slug), 10000)
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(() => this.dismiss(slug), 10000)
   },
 }
