@@ -45,6 +45,10 @@ class TalkList extends React.Component {
     navigate(`/vote/${event.target.value}/`)
   }
   getActiveIndex() {
+    if (this.props.timeslotId !== this._timeslotId) {
+      this._timeslotId = this.props.timeslotId
+      return 0
+    }
     if (this.state.activeIndex !== undefined) {
       return this.state.activeIndex
     }
