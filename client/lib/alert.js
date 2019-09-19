@@ -30,11 +30,12 @@ const alerts = {
   },
 }
 
+const KEY = 'DISMISSED_ALERTS'
+
 export default {
-  key: 'DISMISSED_ALERTS',
-  dismissed: {},
+  dismissed: config.getItem(KEY, {}),
   reset() {
-    config.setItem(this.key, (this.dismissed = {}))
+    config.setItem(KEY, (this.dismissed = {}))
   },
   _update() {
     setTimeout(() => this.component && this.component.forceUpdate(), 0)
@@ -63,7 +64,7 @@ export default {
     delete this.current
     if (slug) {
       this.dismissed[slug] = true
-      config.setItem('DISMISSED_ALERTS', this.dimissed)
+      config.setItem(KEY, this.dismissed || {})
     }
     this._update()
   },

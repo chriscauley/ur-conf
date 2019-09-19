@@ -16,9 +16,9 @@ export default {
     this._data[id] = val
     this.visible && this.visible.forceUpdate()
   },
-  getItem: function(id) {
+  getItem: function(id, _default) {
     const value = ls && JSON.parse(ls.getItem(id))
-    return this._data[id] || value
+    return this._data[id] || value || _default
   },
   removeItem: function(id) {
     ls && ls.removeItem(id)

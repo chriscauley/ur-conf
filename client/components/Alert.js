@@ -45,11 +45,16 @@ class Alert extends React.PureComponent {
       className += 'open full'
     }
     const messageClass = 'message'
+    const onClick = () => {
+      const { click } = current
+      alert.dismiss()
+      setTimeout(() => click && click(), 0)
+    }
     return (
       <div
         id="alert"
         className={`${className} ${current.color || 'grey'}`}
-        onClick={current.click}
+        onClick={onClick}
       >
         <i className={current.iconClass} />
         <div>

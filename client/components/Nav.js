@@ -5,7 +5,7 @@ import Alert from './Alert'
 import _ from '../lib/translate'
 import Clock from './Clock'
 
-const AuthLinks = ({user}) => (
+const AuthLinks = ({ _user }) => (
   <>
     <li>
       <Link to="/schedule/">{_`Schedule`}</Link>
@@ -41,10 +41,10 @@ class Nav extends React.Component {
       <nav>
         <div className="nav-wrapper">
           <ul id="nav-mobile">
-            <li style={{flexGrow: 2}}>
+            <li>
               <Clock />
             </li>
-            <Links {...auth}/>
+            <Links {...auth} />
           </ul>
         </div>
         <Alert />
