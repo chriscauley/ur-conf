@@ -28,14 +28,17 @@ const TalkRow = ({ talk, timeslot, attend }) => {
     icon = 'ec ec-star2 grayscale'
   }
   icon += ' trigger'
+  const Tag = talk.sortable ? Link : 'div'
   return (
     <li className="collection-item" onClick={talk.attend}>
       <i className={icon} />
-      {talk.sortable ? (
-        <Link to={`/talk/${talk.id}/`}>{talk.title}</Link>
-      ) : (
-        <div>{talk.title}</div>
-      )}
+      <Tag to={`/talk/${talk.id}/`}>
+        {talk.room &&
+          talk.room.name && (
+            <span className="grey-text">[{talk.room.name}] </span>
+          )}
+        {talk.title}
+      </Tag>
     </li>
   )
 }
