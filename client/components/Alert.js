@@ -7,7 +7,6 @@ import { withAuth } from '../graphql'
 class Alert extends React.PureComponent {
   constructor(props) {
     super(props)
-    setTimeout(() => alert.set('clock'), 2000)
     alert.component = this
   }
   cheat = () => {

@@ -17,7 +17,7 @@ const alerts = {
       'The first talk is starting. Be sure to mark your attendance in the schedule.',
   },
   clock: {
-    text: 'Click the clock to move time at 0, 5, or 15 minutes/second.',
+    text: 'Time warp enabled, click the clock to move into the future!',
   },
   'slot-complete': {
     text: 'That is all for this timeslot.\n Click here to go to the next.',
