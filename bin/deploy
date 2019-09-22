@@ -1,0 +1,19 @@
+git pull
+yarn build
+. .venv/bin/activate
+./manage.py migrate
+./manage.py collectstatic --noinput
+
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PID=`cat /tmp/ur-conf.pid 2>/dev/null`
+
+if kill -HUP $PID
+then
+    echo "uwsgi reset"
+else
+    source .venv/bin/activate
+    echo "uwsgi wasn't running, starting it now"
+    uwsgi -M --ini $DIR/../server/wsgi.ini -p 3&
+fi
+exit 0

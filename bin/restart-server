@@ -1,6 +1,0 @@
-git pull
-yarn build
-. .venv/bin/activate
-./manage.py migrate
-./manage.py collectstatic --noinput
-sudo systemctl restart uwsgi # this specific command won't require a password

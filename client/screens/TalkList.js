@@ -47,6 +47,7 @@ class TalkList extends React.Component {
   getActiveIndex() {
     if (this.props.timeslotId !== this._timeslotId) {
       this._timeslotId = this.props.timeslotId
+      setTimeout(() => this.setState({activeIndex: 0}),0)
       return 0
     }
     if (this.state.activeIndex !== undefined) {
