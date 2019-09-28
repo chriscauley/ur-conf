@@ -1,0 +1,47 @@
+.MapScreen .map {
+  border: 1px solid black;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.MapScreen .room {
+  align-items: center;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  &.stairs1, &.stairs2, &.stairs3, &.escalators1, &.escalators2 {
+    color: transparent;
+  }
+  &.stairs1, &.escalators1, &.escalators2 {
+    background: repeating-linear-gradient(
+      0,
+      #888,
+      #888 5px,
+      #FFF 5px,
+      #FFF 10px
+    );
+  }
+  &.stairs2 {
+    background: repeating-linear-gradient(
+      90deg,
+      #888,
+      #888 5px,
+      #FFF 5px,
+      #FFF 10px
+    );
+  }
+  &.stairs3 {
+    background: repeating-linear-gradient(
+      270deg,
+      #888,
+      #888 5px,
+      #FFF 5px,
+      #FFF 10px
+    );
+  }
+  &.landing {
+    color: transparent;
+  }
+}

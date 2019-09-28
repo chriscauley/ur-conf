@@ -3,7 +3,7 @@ import { Router } from '@reach/router'
 import { ApolloProvider } from 'react-apollo'
 
 import Nav from "./components/Nav"
-import { NextTime, TalkList, Schedule, Start, Help, Auth, Login } from "./screens"
+import { NextTime, TalkList, Schedule, Map, Start, Help, Auth, Login } from "./screens"
 import { client } from './graphql'
 import date from './lib/date'
 import config from './lib/config'
@@ -49,6 +49,7 @@ export default class Root extends React.PureComponent {
       <TalkList path="/vote/:timeslotId/" />
       <TalkList path="/vote/:timeslotId/:voteSort/" />
       <TalkList path="/talk/:talkId/" />
+      <Map path="/map/" />
       <NextTime path="/vote/" />
       <Schedule path="/schedule/" />
       <Schedule path="/schedule/:showPast/" />

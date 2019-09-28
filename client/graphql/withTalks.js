@@ -9,6 +9,16 @@ const talkQuery = gql`
     conference(id: $id) {
       name
       id
+      locations {
+        id
+        geometry
+        name
+        roomSet {
+          id
+          name
+          geometry
+        }
+      }
       timeslotSet {
         id
         datetime

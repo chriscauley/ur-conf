@@ -12,6 +12,6 @@ export const authSchema = {
   uiSchema: {
     email: {
       'ui:widget': 'email',
-    },         
-  },          
+    },
+  },
 }
