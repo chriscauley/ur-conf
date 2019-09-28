@@ -10,6 +10,7 @@ from main.models import (
     Talk,
     TalkVote,
     TalkAttendance,
+    Location,
 )
 from main.types import (
     ConferenceType,
@@ -20,6 +21,7 @@ from main.types import (
     TalkType,
     TalkVoteType,
     TalkAttendanceType,
+    LocationType,
 )
 
 

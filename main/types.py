@@ -1,5 +1,6 @@
 import graphene
 from graphene_django import DjangoObjectType
+from graphene.types import generic
 
 from django.contrib.auth.models import User
 from main.models import (
@@ -12,7 +13,13 @@ from main.models import (
     TalkAttendance,
     Achievement,
     UserAchievement,
+    Location,
 )
+
+class LocationType(DjangoObjectType):
+    geometry = generic.GenericScalar()
+    class Meta:
+        model = Location
 
 
 class UserType(DjangoObjectType):
@@ -27,6 +34,7 @@ class ConferenceType(DjangoObjectType):
 
 
 class RoomType(DjangoObjectType):
+    geometry = generic.GenericScalar()
     class Meta:
         model = Room
 
