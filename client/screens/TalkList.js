@@ -8,6 +8,7 @@ import { post } from '../lib/ajax'
 import { setVote, prepTalkVotes } from '../lib/vote'
 import { withTalks, withAuth } from '../graphql'
 import TalkCard from '../components/TalkCard'
+import SelectTimeSlot from '../components/SelectTimeSlot'
 
 class TalkList extends React.Component {
   state = {
@@ -41,7 +42,7 @@ class TalkList extends React.Component {
   onClick = index => {
     this.setState({ activeIndex: index })
   }
-  setTimeslot = event => {
+  setTimeSlot = event => {
     navigate(`/vote/${event.target.value}/`)
   }
   getActiveIndex() {
@@ -129,17 +130,11 @@ class TalkList extends React.Component {
     }
     return (
       <div id="vote">
-        <select
-          onChange={this.setTimeslot}
-          className="browser-default"
+        <SelectTimeSlot
+          onChange={this.setTimeSlot}
+          timeslots={selectableTimeslots}
           defaultValue={timeslot.id}
-        >
-          {selectableTimeslots.map(ts => (
-            <option key={ts.id} value={ts.id} onClick={this.SetVote}>
-              {format(ts.datetime, 'h:mm A')}
-            </option>
-          ))}
-        </select>
+        />
         {timeslot.talkSet.map((talk, index) => (
           <TalkCard
             talk={talk}
