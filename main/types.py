@@ -16,8 +16,10 @@ from main.models import (
     Location,
 )
 
+
 class LocationType(DjangoObjectType):
     geometry = generic.GenericScalar()
+
     class Meta:
         model = Location
 
@@ -35,6 +37,7 @@ class ConferenceType(DjangoObjectType):
 
 class RoomType(DjangoObjectType):
     geometry = generic.GenericScalar()
+
     class Meta:
         model = Room
 
