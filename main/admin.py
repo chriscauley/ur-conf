@@ -8,6 +8,11 @@ class ConfernceAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(models.Location)
+class LocationAdmin(admin.ModelAdmin):
+    pass
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
     list_display = ("__str__", "talk_count")

@@ -1,11 +1,21 @@
 from django.conf import settings
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 
 class Conference(models.Model):
     name = models.CharField(max_length=256)
     external_id = models.CharField(max_length=32, null=True, blank=True)
     date = models.DateField()
+    locations = models.ManyToManyField('Location')
+
+    def __str__(self):
+        return self.name
+
+
+class Location(models.Model):
+    name = models.CharField(max_length=128)
+    geometry = JSONField(default=dict)
 
     def __str__(self):
         return self.name
@@ -14,6 +24,8 @@ class Conference(models.Model):
 class Room(models.Model):
     name = models.CharField(max_length=256)
     conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
+    geometry = JSONField(default=dict)
 
     def __str__(self):
         return f"{self.name} ({self.conference})"
