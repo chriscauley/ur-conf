@@ -18,7 +18,7 @@ const hasVotes = timeslot => {
   return null
 }
 
-const TalkRow = ({ talk, timeslot, attend }) => {
+export const TalkRow = ({ talk, timeslot, attend }) => {
   const isNow = date.isNow(timeslot)
   let icon = talk.vote && talk.vote.icon
   talk.attend = isNow ? () => attend(talk, timeslot) : undefined

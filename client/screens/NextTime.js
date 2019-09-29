@@ -11,7 +11,7 @@ class NextTime extends React.Component {
     const slot = this.props.talkGQL.conference.timeslotSet.find(ts => {
       return ts.sortableTalks.length > 0
     })
-    navigate(`/vote/${slot.id}/`)
+    navigate(`${this.props.path}${slot.id}/`)
     return null
   }
 }

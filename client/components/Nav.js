@@ -13,6 +13,9 @@ const AuthLinks = ({ _user }) => (
     <li>
       <Link to="/vote/">{_`Vote`}</Link>
     </li>
+    <li>
+      <Link to="/map/" className="fa fa-map" />
+    </li>
     <li className="auth">
       <Link to="/auth/" className="fa fa-user fa-lg" />
     </li>

@@ -7,41 +7,70 @@
 
 .MapScreen .room {
   align-items: center;
+  background: #f0f0f0;
   border: 1px solid black;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   position: absolute;
-  &.stairs1, &.stairs2, &.stairs3, &.escalators1, &.escalators2 {
-    color: transparent;
+  .name {
+    display: none;
   }
+  .ec {
+    font-size: 1em;
+  }
+  .fa-ec {
+    font-size: 1.5em;
+    height: auto;
+  }
+  $w: 4px;
   &.stairs1, &.escalators1, &.escalators2 {
     background: repeating-linear-gradient(
       0,
-      #888,
-      #888 5px,
-      #FFF 5px,
-      #FFF 10px
+      #444,
+      #444 $w,
+      #FFF $w,
+      #FFF 2*$w
     );
   }
   &.stairs2 {
     background: repeating-linear-gradient(
       90deg,
-      #888,
-      #888 5px,
-      #FFF 5px,
-      #FFF 10px
+      #444,
+      #444 $w,
+      #FFF $w,
+      #FFF 2*$w
     );
   }
   &.stairs3 {
     background: repeating-linear-gradient(
       270deg,
-      #888,
-      #888 5px,
-      #FFF 5px,
-      #FFF 10px
+      #444,
+      #444 $w,
+      #FFF $w,
+      #FFF 2*$w
     );
   }
   &.landing {
-    color: transparent;
+    background: white;
+    border-width: 1px 0 0;
+  }
+  &.stairs1 {
+    border-top: 0;
+  }
+  &.stairs2 {
+    border-left: 0;
+  }
+  &.stairs3 {
+    border-right: 0;
+  }
+  &.has-talk, &.drum {
+    background: white;
+    .name {
+      display: block;
+    }
+    &.yes-vote {
+      font-weight: bold;
+    }
   }
 }

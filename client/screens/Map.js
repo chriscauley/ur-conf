@@ -1,8 +1,11 @@
 import React from 'react'
-import { withTalks, withAuth } from '../graphql'
+import { navigate } from '@reach/router'
 import { cloneDeep } from 'lodash'
-
 import { compose } from 'recompose'
+
+import { prepTalkVotes } from '../lib/vote'
+import { withTalks, withAuth } from '../graphql'
+import SelectTimeSlot from '../components/SelectTimeSlot'
 
 const rotate = geo => {
   geo = cloneDeep(geo)
@@ -44,7 +47,7 @@ const prepGeometry = location => {
     room.alt = room.name
     const geo = rotate(room.geometry)
     flipHorizontal(geo, W, H)
-    room.className = `room ${geo.className || ''}`
+    room.className = `room ${room.name.replace(/ /g, '').toLowerCase()}`
     const style = (room.style = {})
     if (geo.shape === 'polygon') {
       const xs = geo.points.map(p => p[0])
@@ -69,22 +72,66 @@ const prepGeometry = location => {
   return location
 }
 
-const Map = props => {
-  const { loading, error, conference } = props.talkGQL
-  if (loading || error) {
-    return null
-  }
+class Map extends React.Component {
+  render() {
+    const { loading, error, conference } = this.props.talkGQL
+    prepTalkVotes(this)
+    if (loading || error || !this.timeslots) {
+      return null
+    }
 
-  const location = prepGeometry(conference.locations[0])
-  return (
-    <div className="MapScreen">
-      <div style={location.style} className="map">
-        {location.roomSet.map(room => (
-          <div {...room} key={room.id}>
-            {room.name}
-          </div>
-        ))}
+    const location = prepGeometry(conference.locations[0])
+    const { timeslotId } = this.props
+    const timeslot = this.timeslots.find(ts => ts.id === timeslotId)
+    const roomTalkMap = {}
+    const visibleTalks = timeslot.talkSet.filter(
+      talk => talk.vote && talk.vote.value === 1,
+    )
+    timeslot.talkSet.forEach(talk => {
+      roomTalkMap[talk.roomId] = talk
+    })
+
+    return (
+      <div className="MapScreen">
+        <SelectTimeSlot
+          timeslots={this.timeslots}
+          defaultValue={timeslotId}
+          onChange={e => navigate(`/map/${e.target.value}/`)}
+        />
+        <div style={location.style} className="map">
+          {location.roomSet.map(room => (
+            <Room room={room} talk={roomTalkMap[room.id]} key={room.id} />
+          ))}
+        </div>
+        <ul className="collection">
+          {visibleTalks.map(talk => (
+            <li className="collection-item" key={talk.id}>
+              <i className={talk.vote.icon} />
+              <span className="grey-text">[{talk.room.name}]</span> {talk.title}
+            </li>
+          ))}
+        </ul>
       </div>
+    )
+  }
+}
+
+const Room = ({ room, talk }) => {
+  if (talk) {
+    room.className += ' has-talk'
+    if (talk.vote && talk.vote.value === 1) {
+      room.className += ' yes-vote'
+    }
+  }
+  return (
+    <div {...room} key={room.id}>
+      <div className="name">{room.name}</div>
+      {talk &&
+        talk.vote && (
+          <div>
+            <i className={talk.vote.icon} />
+          </div>
+        )}
     </div>
   )
 }

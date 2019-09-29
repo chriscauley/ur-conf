@@ -33,6 +33,7 @@ rectangles = [
     ("Stairs1", [105 + _d, 188], [212, 232]),
     ("Stairs2", [105, 188 - _d], [105 + _d, 188]),
     ("Stairs3", [105, 232], [105 + _d, 232 + _d]),
+    ("Operations", [470, 280], [679, 404]),
 ]
 
 location, new = Location.objects.get_or_create(name="Huntsman Hall")
@@ -61,7 +62,6 @@ for name, radius, center in circles:
     drum.geometry = {"shape": "circle", "radius": radius, "center": center}
     drum.save()
 
-stairs = ["Escalators2", "Escalators1", "Stairs1", "Stairs2", "Stairs3", "Landing"]
-for room in Room.objects.filter(name__in=stairs):
-    room.geometry["className"] = room.name.lower()
-    room.save()
+r = Room.objects.filter(name="Restrooms")[0]
+r.geometry["className"] = "ec ec-restroom"
+r.save()
