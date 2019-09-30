@@ -23,7 +23,7 @@
     font-size: 1.5em;
     height: auto;
   }
-  $w: 4px;
+  $w: 3px;
   &.stairs1, &.escalators1, &.escalators2 {
     background: repeating-linear-gradient(
       0,
@@ -64,9 +64,22 @@
   &.stairs3 {
     border-right: 0;
   }
-  &.restrooms {
+  &.restrooms, &.restroomsdown {
     background: url(../static/restrooms.png) no-repeat center;
     background-size: 24px;
+    z-index: 1;
+  }
+  &.restroomsdown {
+    border: 0;
+    &:after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      border: 10px transparent solid;
+      border-top-color: black;
+      position: absolute;
+      top: 100%;
+    }
   }
   &.has-talk, &.drum {
     background: white;
