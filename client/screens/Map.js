@@ -117,20 +117,18 @@ class Map extends React.Component {
 }
 
 const Room = ({ room, talk }) => {
+  const voteValue = talk && talk.vote && talk.vote.value
   if (talk) {
     room.className += ' has-talk'
-    if (talk.vote && talk.vote.value === 1) {
+    if (voteValue === 1) {
       room.className += ' yes-vote'
     }
   }
   return (
     <div {...room} key={room.id}>
       <div className="name">{room.name}</div>
-      {talk &&
-        talk.vote && (
-          <div>
+      {[0,1].includes(voteValue) && (
             <i className={talk.vote.icon} />
-          </div>
         )}
     </div>
   )

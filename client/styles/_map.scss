@@ -64,6 +64,10 @@
   &.stairs3 {
     border-right: 0;
   }
+  &.restrooms {
+    background: url(../static/restrooms.png) no-repeat center;
+    background-size: 24px;
+  }
   &.has-talk, &.drum {
     background: white;
     .name {
