@@ -17,8 +17,12 @@ export default {
     this.visible && this.visible.forceUpdate()
   },
   getItem: function(id, _default) {
-    const value = ls && JSON.parse(ls.getItem(id))
-    return this._data[id] || value || _default
+    try {
+      const value = ls && JSON.parse(ls.getItem(id))
+      return this._data[id] || value || _default
+    } catch {
+      throw `Failed to parse config item:\nKEY: ${id}\nVALUE:${ls.getItem(id)}`
+    }
   },
   removeItem: function(id) {
     ls && ls.removeItem(id)
