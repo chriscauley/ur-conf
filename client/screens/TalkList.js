@@ -81,7 +81,8 @@ class TalkList extends React.Component {
   render() {
     alert.set('pre-vote')
     const { auth, talkGQL } = this.props
-    if (talkGQL.loading || auth.loading) {
+    const loading = talkGQL.loading || auth.loading
+    if (!this.timeslots && loading) {
       return <div>{`Loading`}</div>
     }
     if (!auth.user) {

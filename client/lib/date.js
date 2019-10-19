@@ -6,7 +6,7 @@ const _trigger_time = new Date('2018-11-10 10:15').valueOf()
 const date = {
   SPEED: 0, // seconds per tick
   get DEBUG() {
-    return config.getItem('TIMELESS', true)
+    return config.getItem('TIMELESS', false)
   },
   set DEBUG(value) {
     config.setItem('TIMELESS', value)

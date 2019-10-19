@@ -119,9 +119,9 @@ class Schedule extends React.Component {
       return <div>{_`Loading`}</div>
     }
 
-    this.props.auth.user.userachievementSet.forEach(({ achievement }) =>
-      alert.set(achievement.slug, achievement),
-    )
+    // this.props.auth.user.userachievementSet.forEach(({ achievement }) =>
+    //   alert.set(achievement.slug, achievement),
+    // )
     let tsFilter = ts => !date.isPast(ts)
     let _CN = 'past-link'
     let _to = '/schedule/past/'
