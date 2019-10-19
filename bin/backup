@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ -e urconf.dump ];
+then
+    mv urconf.dump _backup.dump
+fi
+pg_dump ur-conf > urconf.dump
