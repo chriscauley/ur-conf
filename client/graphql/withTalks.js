@@ -17,6 +17,7 @@ const talkQuery = gql`
           id
           name
           geometry
+          conference { id }
         }
       }
       timeslotSet {

@@ -73,11 +73,12 @@ const prepGeometry = location => {
 }
 
 class Map extends React.Component {
+  cached = null
   render() {
     const { loading, error, conference } = this.props.talkGQL
     prepTalkVotes(this)
-    if (loading || error || !this.timeslots) {
-      return null
+    if (!this.timeslots || !conference) {
+      return this.cached
     }
 
     const location = prepGeometry(conference.locations[0])
@@ -87,11 +88,14 @@ class Map extends React.Component {
     const visibleTalks = timeslot.talkSet.filter(
       talk => talk.vote && talk.vote.value === 1,
     )
+    const roomSet = location.roomSet.filter(
+      r => r.conference.id === conference.id
+    )
     timeslot.talkSet.forEach(talk => {
       roomTalkMap[talk.roomId] = talk
     })
 
-    return (
+    this.cached = (
       <div className="MapScreen">
         <SelectTimeSlot
           timeslots={this.timeslots}
@@ -99,7 +103,7 @@ class Map extends React.Component {
           onChange={e => navigate(`/map/${e.target.value}/`)}
         />
         <div style={location.style} className="map">
-          {location.roomSet.map(room => (
+          {roomSet.map(room => (
             <Room room={room} talk={roomTalkMap[room.id]} key={room.id} />
           ))}
         </div>
@@ -113,6 +117,7 @@ class Map extends React.Component {
         </ul>
       </div>
     )
+    return this.cached
   }
 }
 
