@@ -46,7 +46,7 @@ const talkQuery = gql`
 
 export const withTalks = Component =>
   function withTalks(props) {
-    const client = Client('/cached/talks2017.json')
+    const client = Client('/cached/talks2019.json')
     return (
       <Query query={talkQuery} variables={{ id: 1 }} client={client}>
         {({ loading, error, data = {}, startPolling }) => {

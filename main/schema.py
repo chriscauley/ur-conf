@@ -24,14 +24,11 @@ from main.types import (
     LocationType,
 )
 
-#! TODO un-hard-code
-_id = 3
-
 
 class Query(graphene.ObjectType):
     user = graphene.Field(UserType)
     conferences = graphene.List(ConferenceType)
-    conference = graphene.Field(ConferenceType, id=graphene.Int())
+    conference = graphene.Field(ConferenceType, year=graphene.Int())
     rooms = graphene.List(RoomType)
     timeslots = graphene.List(TimeSlotType)
     authors = graphene.List(AuthorType)
@@ -44,8 +41,8 @@ class Query(graphene.ObjectType):
             return
         return info.context.user
 
-    def resolve_conference(self, info, id=None):
-        return Conference.objects.get(id=_id)
+    def resolve_conference(self, info, year=None):
+        return Conference.objects.get(date__year=year)
 
     def resolve_conferences(self, info):
         return Conference.objects.all()
