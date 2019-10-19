@@ -5,25 +5,39 @@ import datetime, json, os, requests
 import requests
 
 s = """
-  {
-    timeslots {
+  query Conference($id: Int!) {
+    conference(id: $id) {
+      name
       id
-      datetime
-      talkSet {
+      locations {
         id
-        title
-        roomId
-        timeslotId
-        description
-        sortable
-        authors {
+        geometry
+        name
+        roomSet {
           id
           name
-          contactInfo
+          geometry
         }
-        room {
+      }
+      timeslotSet {
+        id
+        datetime
+        talkSet {
           id
-          name
+          title
+          roomId
+          timeslotId
+          description
+          sortable
+          authors {
+            id
+            name
+            contactInfo
+          }
+          room {
+            id
+            name
+          }
         }
       }
     }
@@ -33,7 +47,7 @@ s = """
 
 def cache_year(year):
     fname = os.path.join(settings.STATIC_ROOT, "talks{}.json".format(year))
-    response = requests.get(settings.SITE_ORIGIN + "/graphql", params={"query": s})
+    response = requests.get(settings.SITE_ORIGIN + "/graphql", params={"query": s, "variables": '{"id": 1}'})
     response.raise_for_status()
     with open(fname, "w") as f:
         f.write(json.dumps(response.json()))

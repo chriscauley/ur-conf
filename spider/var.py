@@ -4,7 +4,16 @@ import arrow
 from main.models import TimeSlot
 
 CONFERENCE_YEAR_ID = dict(
-    zip((2011, 2013, 2014, 2015, 2016, 2017, 2018), range(17, 24))  # 2012 gives 404
+    [
+        (2011, 17),
+        (2013, 18),
+        (2014, 19),
+        (2015, 20),
+        (2016, 21),
+        (2017, 22),
+        (2018, 23),
+        (2019, 25),
+    ]
 )
 
 DESCRIPTION_INDEX = 2
