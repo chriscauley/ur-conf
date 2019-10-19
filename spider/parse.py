@@ -5,7 +5,7 @@ import re
 import requests
 import sys
 
-from main.models import Author, Talk, Room, Conference
+from main.models import Author, Talk, Room, Conference, _lazy_room
 from spider import var
 from spider.cache import curl
 
@@ -24,9 +24,8 @@ def parse_year(year):
     timeslots = list(var.make_timeslots(date_string, conference))
 
     for row in soup.findAll("tr", {"class": "sorting"}):
-        room, new = Room.objects.get_or_create(
-            name=row.find("th").text.strip(), conference=conference
-        )
+        name = row.find("th").text.strip()
+        room, new = _lazy_room(name, conference=conference)
         if new:
             print("Room created", room.name)
         for i, div in enumerate(row.findAll("div")):

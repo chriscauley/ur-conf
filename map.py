@@ -3,7 +3,7 @@ import os, django
 os.environ["DJANGO_SETTINGS_MODULE"] = "main.settings"
 django.setup()  # noqa
 
-from main.models import Room, Conference, Location
+from main.models import Room, Conference, Location, _lazy_room, Talk
 
 _d = 50
 
@@ -42,28 +42,38 @@ location, new = Location.objects.get_or_create(name="Huntsman Hall")
 location.geometry = {"width": 540, "height": 403}
 location.save()
 
-conference = Conference.objects.get(id=1)
-conference.locations.add(location)
+for cid in [1, 2]:
+    conference = Conference.objects.filter(id=cid).first()
+    if not conference:
+        print("skipping conference", cid)
+        continue
+    conference.locations.add(location)
 
-for name, [x0, y0], [x1, y1] in rectangles:
-    room, new = Room.objects.get_or_create(name=name, conference_id=1)
-    if new:
-        print("New room", room)
-    room.location = location
-    room.geometry = {
-        "shape": "polygon",
-        "points": [[x0, y0], [x1, y0], [x1, y1], [x0, y1]],
-    }
-    room.save()
+    for name, [x0, y0], [x1, y1] in rectangles:
+        room, new = _lazy_room(name, conference_id=cid)
 
-circles = [("big", 160, [605, 205]), ("drum", 25, [391, 215])]
+        if new:
+            print("New room", room)
+        else:
+            print("no",name)
+        room.location = location
+        room.geometry = {
+            "shape": "polygon",
+            "points": [[x0, y0], [x1, y0], [x1, y1], [x0, y1]],
+        }
+        room.save()
 
-for name, radius, center in circles:
-    drum, new = Room.objects.get_or_create(name=name, conference_id=1)
-    drum.location = location
-    drum.geometry = {"shape": "circle", "radius": radius, "center": center}
-    drum.save()
+    circles = [("big", 160, [605, 205]), ("drum", 25, [391, 215])]
 
-r = Room.objects.filter(name="Restrooms")[0]
-r.geometry["className"] = "ec ec-restroom"
-r.save()
+    for name, radius, center in circles:
+        drum, new = _lazy_room(name=name, conference_id=cid)
+        drum.location = location
+        drum.geometry = {"shape": "circle", "radius": radius, "center": center}
+        drum.save()
+
+    r = Room.objects.filter(name="Restrooms")[0]
+    r.geometry["className"] = "ec ec-restroom"
+    r.save()
+    print(f"\n\n{conference}\n--------")
+    for m in [Room, Location, Talk]:
+        print(m.__name__,m.objects.filter(conference=conference).count())
