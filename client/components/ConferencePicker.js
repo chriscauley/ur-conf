@@ -20,6 +20,9 @@ const selectConference = id => {
 class ConferencePicker extends React.Component {
   render() {
     const { conferences } = this.props.data
+    if (true) {
+      return null
+    }
     return (
       <ul>
         {conferences.map(({ id, name }) => (
