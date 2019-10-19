@@ -90,11 +90,11 @@ class Auth extends React.Component {
             </button>
           </div>
         </div>
-        <div className="card">
+        {/*<div className="card">
           <div className="card-content center">
             <ConferencePicker user={auth.user} />
           </div>
-        </div>
+        </div>*/}
       </div>
     )
   }
