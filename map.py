@@ -42,7 +42,7 @@ location, new = Location.objects.get_or_create(name="Huntsman Hall")
 location.geometry = {"width": 540, "height": 403}
 location.save()
 
-for cid in [1, 2]:
+for cid in [1, 2, 3]:
     conference = Conference.objects.filter(id=cid).first()
     if not conference:
         print("skipping conference", cid)
