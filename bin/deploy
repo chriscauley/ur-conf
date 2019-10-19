@@ -14,6 +14,6 @@ then
 else
     source .venv/bin/activate
     echo "uwsgi wasn't running, starting it now"
-    uwsgi -M --ini $DIR/../server/wsgi.ini -p 3&
+    uwsgi -M --ini $DIR/../server/wsgi.ini -p 16&
 fi
 exit 0

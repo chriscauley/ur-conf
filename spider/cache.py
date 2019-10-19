@@ -47,7 +47,7 @@ s = """
 
 def cache_year(year):
     fname = os.path.join(settings.STATIC_ROOT, "talks{}.json".format(year))
-    response = requests.get(settings.SITE_ORIGIN + "/graphql", params={"query": s, "variables": '{"year": 2018}'})
+    response = requests.get(settings.SITE_ORIGIN + "/graphql", params={"query": s, "variables": '{"year": 2019}'})
     response.raise_for_status()
     with open(fname, "w") as f:
         f.write(json.dumps(response.json()))
