@@ -20,7 +20,8 @@ const selectConference = id => {
 class ConferencePicker extends React.Component {
   render() {
     const { conferences } = this.props.data
-    if (true) {
+    // #! TODO disabling picker for bar camp 2019
+    if (true) { // eslint-disable-line
       return null
     }
     return (
