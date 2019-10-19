@@ -5,7 +5,7 @@
 # only use in emergency
 dropdb ur-conf
 createdb ur-conf
-psql ur-conf-dev < urconf.dump
+psql ur-conf < urconf.dump
 ./manage.py migrate
 
 #! TODO one off scripts for this year

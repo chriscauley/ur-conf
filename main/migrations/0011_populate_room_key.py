@@ -3,7 +3,6 @@
 from django.db import migrations
 
 def create_room_slug(apps,schema_editor):
-    from main.models import _lazy_room
     Room = apps.get_model("main","room")
     for room in Room.objects.all():
         room.slug = room.name.replace(" ","").lower()
