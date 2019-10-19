@@ -32,7 +32,10 @@ class Auth extends React.Component {
       localStorage.setItem('DISMISSED', '{}')
     } catch {} // eslint-disable-line
     fetch('/api/logout/')
-      .then(this.props.auth.refetch)
+      .then(() => {
+        window.localStorage.clear()
+        return this.props.auth.refetch()
+      })
       .then(() => navigate('/'))
   }
   onChange = ({ formData }) => this.setState({ formData })
