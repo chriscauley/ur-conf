@@ -89,7 +89,7 @@ class Map extends React.Component {
       talk => talk.vote && talk.vote.value === 1,
     )
     const roomSet = location.roomSet.filter(
-      r => r.conference.id === conference.id
+      r => r.conference.id === conference.id,
     )
     timeslot.talkSet.forEach(talk => {
       roomTalkMap[talk.roomId] = talk
@@ -111,7 +111,16 @@ class Map extends React.Component {
           {visibleTalks.map(talk => (
             <li className="collection-item" key={talk.id}>
               <i className={talk.vote.icon} />
-              <span className="grey-text">[{talk.room.name.replace(/ /g,'')}]</span> {talk.title}
+              <span className="grey-text">
+                [{talk.room.name.replace(/ /g, '')}]
+              </span>
+              {talk.title}
+              {talk.authors.filter(a => a).map((author, i) => (
+                <b key={author.id}>
+                  {i ? ', ' : ' with '}
+                  {author.name}
+                </b>
+              ))}
             </li>
           ))}
         </ul>
@@ -131,10 +140,8 @@ const Room = ({ room, talk }) => {
   }
   return (
     <div {...room} key={room.id}>
-      <div className="name">{room.name.replace(/ /g,'')}</div>
-      {[0,1].includes(voteValue) && (
-            <i className={talk.vote.icon} />
-        )}
+      <div className="name">{room.name.replace(/ /g, '')}</div>
+      {[0, 1].includes(voteValue) && <i className={talk.vote.icon} />}
     </div>
   )
 }
