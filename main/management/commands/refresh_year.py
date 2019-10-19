@@ -8,7 +8,6 @@ class Command(BaseCommand):
         parser.add_argument("years", nargs="+", type=int)
 
     def handle(self, *args, **kwargs):
-        years = kwargs.get("years", 2018)
-        for year in years:
+        for year in kwargs['years']:
             parse_year(year)
             cache_year(year)
