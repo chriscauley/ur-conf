@@ -23,6 +23,7 @@ class Location(models.Model):
 
 class Room(models.Model):
     name = models.CharField(max_length=256)
+    slug = models.CharField(max_length=256)
     conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
     location = models.ForeignKey(
         Location, on_delete=models.CASCADE, null=True, blank=True
@@ -31,6 +32,12 @@ class Room(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.conference})"
+
+def _lazy_room(name, **kwargs):
+    #print(name,Room.objects.filter(name=name,**kwargs))
+    kwargs["defaults"] = { 'name': name }
+    slug = name.replace(" ","").lower()
+    return Room.objects.get_or_create(slug=slug, **kwargs)
 
 
 class TimeSlot(models.Model):
