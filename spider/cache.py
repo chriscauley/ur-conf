@@ -17,6 +17,9 @@ s = """
           id
           name
           geometry
+          conference {
+            id
+          }
         }
       }
       timeslotSet {
